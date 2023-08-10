@@ -1,5 +1,4 @@
 # The Github Page For The Script Of Bobhub!
-Planning on Adding LuaGuard Soon
 
 ## Bobhub Script
  ```lua
