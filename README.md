@@ -31,3 +31,11 @@
 ## Supported Executors (Bobhub)
  #### Paid
    - Synapse X`DOWN`
+   - Script Ware Windows`DOWN`
+   - Script Ware Mac
+ #### Free
+   - Fluxus
+   - Electron
+   - Script Ware iOS
+   - Codex
+   - Krnl`DOWN`
