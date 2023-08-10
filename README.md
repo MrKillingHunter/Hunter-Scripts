@@ -1,5 +1,7 @@
 # The Github Page For The Script Of Bobhub!
 
+ ## The Script For Doors (WIP). Credits To wvpul, a00pkidd and KingHub. im just a publisher (a00pkidd's friend)
+
 ## For Supported Executors, Go Down
 ## Bobhub Script
  ```lua
