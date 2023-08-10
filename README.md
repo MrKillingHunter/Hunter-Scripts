@@ -25,6 +25,6 @@ Planning on Adding LuaGuard Soon
 
 
    ### VynixiusHUB
-   
-   loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Vynixius/main/Doors/Script.lua"))()
-   
+   ```lua
+   loadstring(game:HttpGet(("https://raw.githubusercontent.com/RegularVynixu/Vynixius/main/Doors/Script.lua"),true))()
+   ```
