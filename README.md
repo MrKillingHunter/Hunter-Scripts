@@ -22,3 +22,7 @@ Planning on Adding LuaGuard Soon
     
    loadstring(game:HttpGet(("https://raw.githubusercontent.com/KINGHUB01/KING-HUB-NO-1/main/kingshubno1"),true))()
     
+   ### VynixiusHUB
+    ```lua
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Vynixius/main/Doors/Script.lua"))()
+    ```
