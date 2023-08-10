@@ -41,7 +41,7 @@
    - Codex
    - Krnl`DOWN`
 
-## Supported Executors (MShub)
+## Supported Executors (MSHUB)
  #### Paid
    - Synapse X`DOWN`
    - Script Ware Windows`DOWN`
