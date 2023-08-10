@@ -30,4 +30,4 @@
 
 ## Supported Executors (Bobhub)
  #### Paid
-   - Synapse X`#0969DA`
+   - Synapse X`DOWN`
