@@ -40,3 +40,13 @@
    - Script Ware iOS
    - Codex
    - Krnl`DOWN`
+
+## Supported Executors (MShub)
+ #### Paid
+   - Synapse X`DOWN`
+   - Script Ware Windows`DOWN`
+   - Script Ware Mac`DOWN`
+ #### Free
+   - Krnl`DOWN`
+   - Fluxus
+   - Electron
