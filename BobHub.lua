@@ -245,7 +245,7 @@ local hum = char:FindFirstChildOfClass("Humanoid") or char:WaitForChild("Humanoi
 local LatestRoom = game:GetService("ReplicatedStorage").GameData.LatestRoom
 local Players = game:GetService("Players")
 local inRooms = false
-local entitynames = {"RushMoving","AmbushMoving","Snare","A60","A120","SeekMoving","JeffTheKiller","Eyes"}
+local entitynames = {"RushMoving","AmbushMoving","Snare","A60","A120","JeffTheKiller","Eyes"}
 
 local entityinfo = nil
 task.spawn(function()
@@ -1324,7 +1324,7 @@ LeftGroupBox:AddSlider('MySlider', {
     Text = 'Speed Boost',
     Default = 0,
     Min = 0,
-    Max = 30,
+    Max = 25,
     Rounding = 1,
     Compact = false,
 
@@ -1555,11 +1555,11 @@ Text = 'Auto Complete Breaker Box',
 
     Callback = function(val)
     if elevatorbreakerbox == val then
-			elevatorbreakerbox = true
-			normalmessage("ROOM 100", "Trying to comeplete breaker box...", "Please wait...", 5)
+    normalmessage("ROOM 100", "Trying to comeplete breaker box...", "Please wait...", 5)
 			game:GetService("ReplicatedStorage").EntityInfo.EBF:FireServer()
 			for i = 0, 50 do game:GetService("ReplicatedStorage").EntityInfo.EBF:FireServer()task.wait(.1) end
 			game:GetService("ReplicatedStorage").EntityInfo.EBF:FireServer()
+			elevatorbreakerbox = false
 		end
 	end
 })
