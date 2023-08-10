@@ -1554,14 +1554,15 @@ Text = 'Auto Complete Breaker Box',
     Tooltip = '',
 
     Callback = function(val)
-    if elevatorbreakerbox == val then
-    normalmessage("ROOM 100", "Trying to comeplete breaker box...", "Please wait...", 5)
-			game:GetService("ReplicatedStorage").EntityInfo.EBF:FireServer()
-			for i = 0, 50 do game:GetService("ReplicatedStorage").EntityInfo.EBF:FireServer()task.wait(.1) end
-			game:GetService("ReplicatedStorage").EntityInfo.EBF:FireServer()
-			elevatorbreakerbox = false
-		end
-	end
+    normalmessage("ROOM 100", "Trying to comeplete breaker box...", "Then go elevator now...", 5)
+    NoBreaker = val
+    while task.wait(1) do
+        if not NoBreaker then
+            break
+        end
+        EntityInfo.EBF:FireServer()
+    end
+end
 })
 
 local Tab2 = TabBox:AddTab('Notify')
@@ -3046,7 +3047,7 @@ RightGroupbox2:AddToggle('MyToggle', {
 
         while wait() and _G.Fake_Hitbox == true do
             for i, v in ipairs(workspace:GetDescendants()) do
-                if v.Name == "DoorFake" then
+                if v.Name == "Closet" then
                     local Hitbox = v:FindFirstChild("Hitbox")
             
                     Hitbox.CanTouch = false
