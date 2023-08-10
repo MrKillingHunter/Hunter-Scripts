@@ -14,7 +14,7 @@ Planning on Adding LuaGuard Soon
    ```
 
    ### BlackKing Mobile
-    
+    lua
     loadstring(game:HttpGet(("https://raw.githubusercontent.com/KINGHUB01/BlackKing/main/BlackKingMb"),true))()
     
     
