@@ -15,10 +15,10 @@ Planning on Adding LuaGuard Soon
 
    ### BlackKing Mobile
     ```lua
-    loadstring(game:HttpGet(("https://raw.githubusercontent.com/KINGHUB01/BlackKing/main/BlackKingMb").true))()
+    loadstring(game:HttpGet(("https://raw.githubusercontent.com/KINGHUB01/BlackKing/main/BlackKingMb"),true))()
     ```
     
    ### BlackKing
     ```lua
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/KINGHUB01/KING-HUB-NO-1/main/kingshubno1"))()
+    loadstring(game:HttpGet(("https://raw.githubusercontent.com/KINGHUB01/KING-HUB-NO-1/main/kingshubno1"),true))()
     ```
