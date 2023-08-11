@@ -4,8 +4,8 @@
 
 ## For Supported Executors, Go Down
 ## Bobhub Script
- ```
- private due to a00pkidd having anger issues and not allowing me to post. srry yall
+ ```lua
+ loadstring(game:HttpGet(("https://raw.githubusercontent.com/MrKillingHunter/Bobhub/main/BobHub.lua"),true))()
  ```
 
 ## Other Scripts
