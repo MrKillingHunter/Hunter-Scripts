@@ -5,7 +5,7 @@
 ## For Supported Executors, Go Down
 ## Bobhub Script (credits to a00pkidd, KingHUb and Wvpul)
  ```lua
- loadstring(game:HttpGet(("https://raw.githubusercontent.com/MrKillingHunter/Bobhub/main/BobHub.lua"),true))()
+ loadstring(game:HttpGet(("https://raw.githubusercontent.com/MrKillingHunter/Hunter-Scripts/main/BobHub.lua"),true))()
  ```
 ## Bloxburg Epic Thing CRACKED
  ```lua
