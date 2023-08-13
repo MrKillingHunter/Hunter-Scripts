@@ -7,9 +7,13 @@
  ```lua
  loadstring(game:HttpGet(("https://raw.githubusercontent.com/MrKillingHunter/Hunter-Scripts/main/BobHub.lua"),true))()
  ```
-## Bloxburg Epic Thing CRACKED
+## Script Cracker
  ```lua
- loadstring(game:HttpGet(("https://raw.githubusercontent.com/MrKillingHunter/Hunter-Scripts/main/Bloxburg%20Epic%20Thing%20CRACKED.lua"),true))()
+ loadstring(game:HttpGet(("https://raw.githubusercontent.com/MrKillingHunter/Hunter-Scripts/main/Script%20Cracker.lua"),true))()
+ ```
+## Bloxburg Epic Thing?
+ ```lua
+ loadstring(game:HttpGet(("https://raw.githubusercontent.com/MrKillingHunter/Hunter-Scripts/main/Bloxburg%20Epic%20Thing.lua"),true))()
  ```
 
 ## Other Scripts
