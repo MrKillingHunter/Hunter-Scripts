@@ -7,11 +7,15 @@
  ```lua
  loadstring(game:HttpGet(("https://raw.githubusercontent.com/MrKillingHunter/Hunter-Scripts/main/BobHub.lua"),true))()
  ```
+## Evo V4
+ ```lua
+ loadstring(game:HttpGetAsync("https://projectevo.xyz/v4/script.lua", true))();
+ ```
 ## Script Cracker
  ```lua
  loadstring(game:HttpGet(("https://raw.githubusercontent.com/MrKillingHunter/Hunter-Scripts/main/Script%20Cracker.lua"),true))()
  ```
-## Bloxburg Epic Thing?
+## Bloxburg Epic Thing?(crack doesnt work due to insane obfuscation)
  ```lua
  loadstring(game:HttpGet(("https://raw.githubusercontent.com/MrKillingHunter/Hunter-Scripts/main/Bloxburg%20Epic%20Thing.lua"),true))()
  ```
