@@ -1,11 +1,15 @@
-# The Github Page For The Script Of Bobhub!
+# The Github Page For Hunter's Favourite Scripts!
 
- ## The Script For Doors (WIP). Credits To wvpul, a00pkidd and KingHub. im just a publisher (a00pkidd's friend)
+ ## The best Scripts.
 
 ## For Supported Executors, Go Down
-## Bobhub Script
+## Bobhub Script (credits to a00pkidd, KingHUb and Wvpul)
  ```lua
  loadstring(game:HttpGet(("https://raw.githubusercontent.com/MrKillingHunter/Bobhub/main/BobHub.lua"),true))()
+ ```
+## Bloxburg Epic Thing CRACKED
+ ```lua
+
  ```
 
 ## Other Scripts
