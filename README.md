@@ -9,7 +9,7 @@
  ```
 ## Bloxburg Epic Thing CRACKED
  ```lua
-
+ loadstring(game:HttpGet(("https://raw.githubusercontent.com/MrKillingHunter/Hunter-Scripts/main/Bloxburg%20Epic%20Thing%20CRACKED.lua"),true))()
  ```
 
 ## Other Scripts
