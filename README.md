@@ -13,7 +13,7 @@
  ```
 ## Bloxburg GUI (TESTING)
  ```lua
- https://raw.githubusercontent.com/MrKillingHunter/Hunter-Scripts/main/Bloxburg-GUI.lua
+ loadstring(game:HttpGet(("https://raw.githubusercontent.com/MrKillingHunter/Hunter-Scripts/main/Bloxburg-GUI.lua"),true))()
  ```
 
 ## Other Scripts
