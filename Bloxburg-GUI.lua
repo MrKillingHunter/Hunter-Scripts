@@ -1,100 +1,142 @@
-wt = 0.6
-Workstations = game.Workspace.PizzaPlanet.BakerWorkstations
 
---Rename--
-for i, v in pairs(Workstations:GetChildren()) do
-if v.Name == "Workstation" then
-v.Name = v.Name..i
-end
-end
---End-- We will only use Workstaion 4... it will make it so much easier
+-- Instances:
 
---Idendify Remotes--
-number = 0
-for i, v in pairs(game.ReplicatedStorage.Modules.DataManager:GetChildren()) do
-if v:IsA("RemoteEvent") then
-number = number + 1
-if number == 10 then
-FO = v--Finish Order
-elseif number == 17 then
-GC = v--Get Crate
-elseif number == 18 then
-RF = v--Refill
-end
-end
-end
---End--
+local Bloxburg_GUI = Instance.new("ScreenGui")
+local Frame = Instance.new("Frame")
+local Frame_2 = Instance.new("Frame")
+local Gamepasses = Instance.new("TextButton")
+local Skills = Instance.new("TextButton")
+local Info = Instance.new("TextLabel")
+local CLOSE = Instance.new("TextButton")
+local Credit = Instance.new("TextLabel")
 
---Positions--
-pos = {{1158.62, 17, 265.31}, {1168.72, 14, 262.29}, {1177.12, 17, 259.78}}
---Done Positions--
+--Properties:
 
---Function For Teleporting--
-function teleport(posi)
-game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(posi[1], posi[2], posi[3])
-end
---Finish For Teleporting--
+Bloxburg_GUI.Name = "Bloxburg_GUI"
+Bloxburg_GUI.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+Bloxburg_GUI.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
---Function Take Crate--
-function TC()
-Crate = {["Object"] = game.Workspace.PizzaPlanet.IngredientCrates.Crate}
-GC:FireServer(Crate)
-end
---End Of Function
+Frame.Parent = Bloxburg_GUI
+Frame.AnchorPoint = Vector2.new(0.5, 0.5)
+Frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+Frame.BackgroundTransparency = 0.500
+Frame.BorderSizePixel = 0
+Frame.Position = UDim2.new(0.925454557, 0, 0.499393195, 0)
+Frame.Size = UDim2.new(0, 210, 0, 222)
 
---Function Refill Station--
-function RS(S)
-Station = {["Workstation"] = Workstations[S]}
-RF:FireServer(Station)
-end
---End Of Function--
+Frame_2.Parent = Frame
+Frame_2.AnchorPoint = Vector2.new(0.5, 0.5)
+Frame_2.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+Frame_2.BackgroundTransparency = 0.500
+Frame_2.Position = UDim2.new(0.499221087, 0, 0.499458939, 0)
+Frame_2.Size = UDim2.new(0, 192, 0, 202)
 
---Function Finish Order
-function Finish(Tp, S)
---Get Type--
-if Tp == "Cheese Pizza" then
-tpy = false
-elseif Tp == "Pepperoni Pizza" then
-tpy = "Pepperoni"
-elseif Tp == "Vegetable Pizza" then
-tpy = "Vegetable"
-elseif Tp == "Ham Pizza" then
-tpy = "Ham"
-end
-wait()
---End Of Types--
-StationOrder = {["Order"] = {[1] = true, [2] = true, [3] = true, [4] = tpy}, ["Workstation"] = Workstations[S]}
-FO:FireServer(StationOrder)
-end
---End--
+Gamepasses.Name = "Gamepasses"
+Gamepasses.Parent = Frame_2
+Gamepasses.AnchorPoint = Vector2.new(0.5, 0.5)
+Gamepasses.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+Gamepasses.BackgroundTransparency = 0.700
+Gamepasses.BorderColor3 = Color3.fromRGB(107, 107, 107)
+Gamepasses.BorderSizePixel = 4
+Gamepasses.Position = UDim2.new(0.497575104, 0, 0.212871283, 0)
+Gamepasses.Size = UDim2.new(0, 175, 0, 42)
+Gamepasses.Font = Enum.Font.TitilliumWeb
+Gamepasses.Text = "Get All Gamepasses"
+Gamepasses.TextColor3 = Color3.fromRGB(255, 255, 255)
+Gamepasses.TextSize = 17.000
+Gamepasses.TextStrokeColor3 = Color3.fromRGB(135, 135, 135)
+Gamepasses.TextTransparency = 0.200
+Gamepasses.TextWrapped = true
 
-game.Players.LocalPlayer.Chatted:connect(function(msg)
-if msg == "Stop" then
-a = false
-elseif msg == "Start" then
-start()
-end
-end)
+Skills.Name = "Skills"
+Skills.Parent = Frame_2
+Skills.AnchorPoint = Vector2.new(0.5, 0.5)
+Skills.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+Skills.BackgroundTransparency = 0.700
+Skills.BorderColor3 = Color3.fromRGB(107, 107, 107)
+Skills.BorderSizePixel = 4
+Skills.Position = UDim2.new(0.492366761, 0, 0.50000006, 0)
+Skills.Size = UDim2.new(0, 175, 0, 42)
+Skills.Font = Enum.Font.TitilliumWeb
+Skills.Text = "Max Skills"
+Skills.TextColor3 = Color3.fromRGB(255, 255, 255)
+Skills.TextSize = 17.000
+Skills.TextStrokeColor3 = Color3.fromRGB(135, 135, 135)
+Skills.TextTransparency = 0.200
+Skills.TextWrapped = true
 
-function start()
-a = true
-repeat
-wait(wt)
-teleport(pos[1])
-wait(wt)
-TC()
-wait(wt)
-teleport(pos[2])
-wait(wt)
-teleport(pos[3])
-wait(wt)
-RS("Workstation4")
-wait(wt)
-for i = 1, 10 do
-Finish(Workstations["Workstation4"].OrderDisplay.DisplayMain.BakerGUI.Frame.TitleLabel.Text, "Workstation4")
-wait(wt + 0.2)
+Info.Name = "Info"
+Info.Parent = Frame_2
+Info.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+Info.BackgroundTransparency = 0.700
+Info.BorderColor3 = Color3.fromRGB(107, 107, 107)
+Info.BorderSizePixel = 5
+Info.Position = UDim2.new(0.0446683578, 0, 0.663366318, 0)
+Info.Size = UDim2.new(0, 175, 0, 60)
+Info.Font = Enum.Font.SourceSansSemibold
+Info.Text = "This will give you all gamepasses but Premium doesn't work and Radio is only client sided. Everything else works fine."
+Info.TextColor3 = Color3.fromRGB(145, 145, 145)
+Info.TextSize = 13.000
+Info.TextWrapped = true
+Info.TextXAlignment = Enum.TextXAlignment.Left
+Info.TextYAlignment = Enum.TextYAlignment.Top
+
+CLOSE.Name = "CLOSE"
+CLOSE.Parent = Frame
+CLOSE.AnchorPoint = Vector2.new(0.5, 0.5)
+CLOSE.BackgroundColor3 = Color3.fromRGB(127, 10, 0)
+CLOSE.BackgroundTransparency = 0.400
+CLOSE.BorderColor3 = Color3.fromRGB(75, 0, 0)
+CLOSE.BorderSizePixel = 0
+CLOSE.Position = UDim2.new(0.49695614, 0, -0.0953107178, 0)
+CLOSE.Size = UDim2.new(0, 209, 0, 25)
+CLOSE.Font = Enum.Font.RobotoMono
+CLOSE.Text = "CLOSE"
+CLOSE.TextColor3 = Color3.fromRGB(255, 255, 255)
+CLOSE.TextSize = 14.000
+
+Credit.Name = "Credit"
+Credit.Parent = Frame
+Credit.AnchorPoint = Vector2.new(0.5, 0.5)
+Credit.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Credit.BackgroundTransparency = 1.000
+Credit.Position = UDim2.new(0.371354342, 0, 1.15942347, 0)
+Credit.Size = UDim2.new(0, 157, 0, 49)
+Credit.Font = Enum.Font.Sarpanch
+Credit.Text = "Credit to 0 x 3 7 -                Join his discord server discord.gg/cdUyBMe"
+Credit.TextColor3 = Color3.fromRGB(0, 0, 0)
+Credit.TextSize = 16.000
+Credit.TextWrapped = true
+Credit.TextXAlignment = Enum.TextXAlignment.Left
+Credit.TextYAlignment = Enum.TextYAlignment.Top
+
+-- Scripts:
+
+local function CVYOO_fake_script() -- Gamepasses.LocalScript 
+	local script = Instance.new('LocalScript', Gamepasses)
+
+	script.Parent.MouseButton1Down:Connect(function()
+		for i,v in pairs(game:service'ReplicatedStorage'.Stats[game:service'Players'.LocalPlayer.Name].Gamepasses:GetChildren()) do
+			v.Value = true
+		end
+	end)
 end
-teleport(pos[2])
-until a == false
+coroutine.wrap(CVYOO_fake_script)()
+local function NROB_fake_script() -- Skills.LocalScript 
+	local script = Instance.new('LocalScript', Skills)
+
+	script.Parent.MouseButton1Down:Connect(function()
+		for i,v in pairs(game:service'ReplicatedStorage'.Stats[game:service'Players'.LocalPlayer.Name].SkillData:GetChildren()) do
+			v.Value = 10
+		end
+	end)
 end
-start()
+coroutine.wrap(NROB_fake_script)()
+local function JJVV_fake_script() -- CLOSE.LocalScript 
+	local script = Instance.new('LocalScript', CLOSE)
+
+	script.Parent.MouseButton1Down:Connect(function()
+		script.Parent.Parent.Visible = false
+	end)
+end
+coroutine.wrap(JJVV_fake_script)()
