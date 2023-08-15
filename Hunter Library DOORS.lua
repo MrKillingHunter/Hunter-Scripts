@@ -1,4 +1,4 @@
-local BOBHUB_START_TIME = os.time()
+local Hunter Library_START_TIME = os.time()
 local customnotifid = "10469938989"
 local oldcustomnotifid = "4590657391"
 function waitframes(ii) for i = 1, ii do task.wait() end end
