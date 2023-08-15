@@ -1,4 +1,4 @@
-local Hunter Library_START_TIME = os.time()
+local BOBHUB_START_TIME = os.time()
 local customnotifid = "10469938989"
 local oldcustomnotifid = "4590657391"
 function waitframes(ii) for i = 1, ii do task.wait() end end
@@ -179,7 +179,7 @@ function PathModule.new(char, goal, agentParameters, jumpingAllowed, offset)
 		PathModule.visualize(waypoints)
 
 		for i, v in pairs(waypoints) do
-			if Hunter Library LOADED == false or not v then return end
+			if BOBHUBLOADED == false or not v then return end
 
 			if char.HumanoidRootPart.Anchored == false then
 				if jumpingAllowed == true then if v.Action == Enum.PathWaypointAction.Jump then Humanoid:ChangeState(Enum.HumanoidStateType.Jumping) end end
@@ -202,12 +202,12 @@ local s,e = pcall(function()
 	gui_data = game:GetService("HttpService"):JSONDecode(gui_data)
 end)
 if e then
-	oldwarnmessage("Hunter Library"..currentver, "Failed to get script data.", 10)
+	oldwarnmessage("Hunter Library v"..currentver, "Failed to get script data.", 10)
 end
 
-if BOBHUBLOADED == true then warnmessage("Hunter Library"..currentver, "GUI already loaded!", "", 10) return end
+if BOBHUBLOADED == true then warnmessage("Hunter Library v"..currentver, "GUI already loaded!", "", 10) return end
 if game.PlaceId ~= 6839171747 and game.PlaceId == 6516141723 then 
-	--warnmessage("Hunter Library"..currentver, "You need to be in a elevator to run this script.", 10) 
+	warnmessage("Hunter Library"..currentver, "You need to be in a elevator to run this script.", 10) 
 	confirmnotification("Hunter Library"..currentver, "Do you want to join a game?", 15, function(state)
 		if state == true then
 			task.spawn(function()
@@ -218,12 +218,12 @@ if game.PlaceId ~= 6839171747 and game.PlaceId == 6516141723 then
 	return
 end
 if game.PlaceId ~= 6839171747 and game.PlaceId ~= 6516141723 then 
-	oldwarnmessage("Hunter Library"..currentver, "You need to join DOORS to run this script.", 10) 
+	oldwarnmessage("Hunter Library v"..currentver, "You need to join DOORS to run this script.", 10) 
 	return
 end
 if gui_data ~= nil then
 	if currentver ~= gui_data.ver or gui_data.ver ~= currentver then
-		warnmessage("Hunter Library"..currentver, "You are using an outdated version of this script", "Loading latest version.", 10) 
+		warnmessage("Hunter Library v"..currentver, "You are using an outdated version of this script", "Loading latest version.", 10) 
 		loadstring(game:HttpGet((gui_data.loadstring.."?" .. tostring(math.random(0, 9999999)) ),true))()
 		return
 	else
@@ -231,7 +231,7 @@ if gui_data ~= nil then
 	end
 end
 pcall(function() getgenv().BOBHUBLOADED = true end)
-normalmessage("Hunter Library"..currentver, "Loading script...", "", 2)
+normalmessage("Hunter Library v"..currentver, "Loading script...", "", 2)
 if gui_data ~= nil then
 	oldnormalmessage("INFO", gui_data.changelog, 20)
 end
@@ -570,7 +570,7 @@ local SaveManager = loadstring(game:HttpGet(repo .. 'addons/SaveManager.lua'))()
 
 local Window = Library:CreateWindow({
 
-    Title = 'Hunter Library'..currentver..' (DOORS 👁️)',
+    Title = 'Hunter Library v'..currentver..' (DOORS 👁️)',
     Center = true,
     AutoShow = true,
     Resizable = true,
@@ -581,7 +581,7 @@ local Window = Library:CreateWindow({
 
 local Tabs = {
     Main = Window:AddTab('Main'),
-    Credits = WIndow:AddTab('Credits')
+    Credits = Window:AddTab('Credits')
     ['UI Settings'] = Window:AddTab('Config'),
 }
     
@@ -589,7 +589,7 @@ local LeftGroupBox = Tabs.Main:AddLeftGroupbox('Main')
 LeftGroupBox:AddToggle('MyToggle', {
     Text = 'Door ESP',
     Default = true,
-    Tooltip = '',
+    Tooltip = 'Shows ESP For Doors',
 
     Callback = function(val)
     flags.espdoors = val
@@ -633,7 +633,7 @@ LeftGroupBox:AddToggle('MyToggle', {
 				setup(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)])
 			end
 
-			repeat task.wait() until Hunter Library LOADED == false or not flags.espdoors
+			repeat task.wait() until BOBHUBLOADED == false or not flags.espdoors
 			addconnect:Disconnect()
 
 			for i,v in pairs(esptable.doors) do
@@ -646,7 +646,7 @@ end
 LeftGroupBox:AddToggle('MyToggle', {
     Text = 'Key/Lever ESP',
     Default = true,
-    Tooltip = '',
+    Tooltip = 'Shows ESP For Keys',
 
     Callback = function(val)
     flags.espkeys = val
@@ -724,7 +724,7 @@ LeftGroupBox:AddToggle('MyToggle', {
 
 			setup(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)])
 
-			repeat task.wait() until Hunter Library LOADED == false or not flags.espkeys
+			repeat task.wait() until BOBHUBLOADED == false or not flags.espkeys
 			addconnect:Disconnect()
 
 			for i,v in pairs(esptable.keys) do
@@ -737,7 +737,7 @@ LeftGroupBox:AddToggle('MyToggle', {
 LeftGroupBox:AddToggle('MyToggle', {
     Text = 'Item ESP',
     Default = true,
-    Tooltip = '',
+    Tooltip = 'ESP for items',
 
     Callback = function(val)
     flags.espitems = val
@@ -795,7 +795,7 @@ LeftGroupBox:AddToggle('MyToggle', {
 				setup(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)])
 			end
 
-			repeat task.wait() until Hunter Library LOADED == false or not flags.espitems
+			repeat task.wait() until BOBHUBLOADED == false or not flags.espitems
 			addconnect:Disconnect()
 
 			for i,v in pairs(esptable.items) do
@@ -808,7 +808,7 @@ LeftGroupBox:AddToggle('MyToggle', {
 LeftGroupBox:AddToggle('MyToggle', {
     Text = 'Book/Breaker ESP',
     Default = true,
-    Tooltip = '',
+    Tooltip = 'ESP for books and breakers',
 
     Callback = function(val)
     flags.espbooks = val
@@ -866,7 +866,7 @@ LeftGroupBox:AddToggle('MyToggle', {
 				setup(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)])
 			end
 
-			repeat task.wait() until Hunter Library LOADED == false or not flags.espbooks
+			repeat task.wait() until BOBHUBLOADED == false or not flags.espbooks
 			addconnect:Disconnect()
 
 			for i,v in pairs(esptable.books) do
@@ -879,7 +879,7 @@ LeftGroupBox:AddToggle('MyToggle', {
     LeftGroupBox:AddToggle('MyToggle', {
     Text = 'Entity ESP',
     Default = true,
-    Tooltip = '',
+    Tooltip = 'Esp for Entities like rush and figure',
 
     Callback = function(val)
     flags.esprush = val
@@ -947,7 +947,7 @@ LeftGroupBox:AddToggle('MyToggle', {
 
 			setup(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)])
 
-			repeat task.wait() until Hunter Library LOADED == false or not flags.esprush
+			repeat task.wait() until BOBHUBLOADED == false or not flags.esprush
 			addconnect:Disconnect()
 			roomconnect:Disconnect()
 
@@ -961,7 +961,7 @@ LeftGroupBox:AddToggle('MyToggle', {
     LeftGroupBox:AddToggle('MyToggle', {
     Text = 'Chest ESP',
     Default = true,
-    Tooltip = '',
+    Tooltip = 'esp for loot chests',
 
     Callback = function(val)
     flags.espchest = val
@@ -1012,7 +1012,7 @@ LeftGroupBox:AddToggle('MyToggle', {
 				end
 
 				task.spawn(function()
-					repeat task.wait() until Hunter Library LOADED == false or not flags.espchest
+					repeat task.wait() until BOBHUBLOADED == false or not flags.espchest
 					subaddcon:Disconnect()  
 				end)  
 			end
@@ -1033,7 +1033,7 @@ LeftGroupBox:AddToggle('MyToggle', {
 				setup(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)])
 			end
 
-			repeat task.wait() until Hunter Library LOADED == false or not flags.espchest
+			repeat task.wait() until BOBHUBLOADED == false or not flags.espchest
 			addconnect:Disconnect()
 
 			for i,v in pairs(esptable.chests) do
@@ -1046,7 +1046,7 @@ LeftGroupBox:AddToggle('MyToggle', {
     LeftGroupBox:AddToggle('MyToggle', {
     Text = 'Player ESP',
     Default = true,
-    Tooltip = '',
+    Tooltip = 'ESP for other players',
 
     Callback = function(val)
     flags.esphumans = val
@@ -1093,7 +1093,7 @@ LeftGroupBox:AddToggle('MyToggle', {
 				personesp(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)])
 			end
 
-			repeat task.wait() until Hunter Library LOADED == false or not flags.esphumans
+			repeat task.wait() until BOBHUBLOADED == false or not flags.esphumans
 			addconnect:Disconnect()
 
 			for i,v in pairs(esptable.people) do
@@ -1106,7 +1106,7 @@ LeftGroupBox:AddToggle('MyToggle', {
     LeftGroupBox:AddToggle('MyToggle', {
     Text = 'Gold ESP',
     Default = true,
-    Tooltip = '',
+    Tooltip = 'Esp for gold',
 
     Callback = function(val)
     flags.espgold = val
@@ -1166,7 +1166,7 @@ LeftGroupBox:AddToggle('MyToggle', {
 				setup(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)])
 			end
 
-			repeat task.wait() until Hunter Library LOADED == false or not flags.espgold
+			repeat task.wait() until BOBHUBLOADED == false or not flags.espgold
 			addconnect:Disconnect()
 
 			for i,v in pairs(esptable.gold) do
@@ -1193,7 +1193,7 @@ LeftGroupBox:AddToggle('MyToggle', {
 				fireproximityprompt(p)
 			end)
 
-			repeat task.wait() until Hunter Library LOADED == false or not flags.instapp
+			repeat task.wait() until BOBHUBLOADED == false or not flags.instapp
 			holdconnect:Disconnect()
 		end
 	})
@@ -1228,7 +1228,7 @@ LeftGroupBox:AddToggle('MyToggle', {
 			doFullbright()
 
 			local coneee = game:GetService("Lighting").LightingChanged:Connect(doFullbright)
-			repeat task.wait() until Hunter Library LOADED == false or not flags.fullbright
+			repeat task.wait() until BOBHUBLOADED == false or not flags.fullbright
 
 			coneee:Disconnect()
 			game:GetService("Lighting").Ambient = oldAmbient
@@ -1459,7 +1459,7 @@ Tab1:AddToggle('MyToggle', {
 				end
 			end)
 
-			repeat task.wait() until Hunter Library LOADED == false or not flags.getcode
+			repeat task.wait() until BOBHUBLOADED == false or not flags.getcode
 			addconnect:Disconnect()
 		end
 	end
@@ -1467,7 +1467,7 @@ Tab1:AddToggle('MyToggle', {
 
 local elevatorbreakerbox = false
 Tab1:AddToggle('MyToggle', {
-Text = 'Auto Complete Breaker Box (doesnt work for some reason',
+Text = 'Auto Complete Breaker Box (doesnt work for some reason)',
     Default = false,
     Tooltip = 'Automatically Completes The Breaker Puzzle',
 
@@ -1881,7 +1881,7 @@ RightGroupbox:AddToggle('MyToggle', {
 					end
 
 					task.spawn(function()
-						repeat task.wait() until Hunter Library LOADED == false or not flags.draweraura
+						repeat task.wait() until BOBHUBLOADED == false or not flags.draweraura
 						subaddcon:Disconnect() 
 					end)
 				end
@@ -1898,13 +1898,13 @@ RightGroupbox:AddToggle('MyToggle', {
 				end
 				setup(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)])
 
-				repeat task.wait() until Hunter Library LOADED == false or not flags.draweraura
+				repeat task.wait() until BOBHUBLOADED == false or not flags.draweraura
 				addconnect:Disconnect()
 			end
 		end
 })
 else
-oldwarnmessage("Hunter Library"..currentver, "You need to have fireproximityprompt function for 'loot aura' to work.", 7)
+oldwarnmessage("Hunter Library v"..currentver, "You need to have fireproximityprompt function for 'loot aura' to work.", 7)
 end
 
 RightGroupbox:AddToggle('MyToggle', {
@@ -2132,7 +2132,7 @@ RightGroupbox:AddToggle('MyToggle', {
 				end
 				setup(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)])
 
-				repeat task.wait() until Hunter Library LOADED == false or not flags.itemsaura
+				repeat task.wait() until BOBHUBLOADED == false or not flags.itemsaura
 				addconnect:Disconnect()
 			end
 		end
@@ -2217,7 +2217,7 @@ RightGroupbox:AddToggle('MyToggle', {
 					setup(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)])
 					--	end
 
-					repeat task.wait() until Hunter Library LOADED == false or not flags.autopulllever
+					repeat task.wait() until BOBHUBLOADED == false or not flags.autopulllever
 					addconnect:Disconnect()
 				end
 			end
@@ -2304,7 +2304,7 @@ RightGroupbox:AddToggle('MyToggle', {
 					setup(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)])
 					--	end
 
-					repeat task.wait() until Hunter Library LOADED == false or not flags.bookcollecter
+					repeat task.wait() until BOBHUBLOADED == false or not flags.bookcollecter
 					addconnect:Disconnect()
 				end
 			end
@@ -2391,7 +2391,7 @@ RightGroupbox:AddToggle('MyToggle', {
 					setup(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)])
 					--	end
 
-					repeat task.wait() until Hunter Library LOADED == false or not flags.breakercollecter
+					repeat task.wait() until BOBHUBLOADED == false or not flags.breakercollecter
 					addconnect:Disconnect()
 				end
 			end
@@ -2400,12 +2400,12 @@ RightGroupbox:AddToggle('MyToggle', {
 
 local RightGroupbox1 = Tabs.Main:AddRightGroupbox('Avoid');
 
-local RightGroupbox2 = Tabs.Main:AddRightGroupbox('Bypass');
+local RightGroupbox2 = Tabs.Main:AddRightGroupbox('Entity Remover');
 
 local RightGroupbox3 = Tabs.Main:AddRightGroupbox('Remove');
 
 local MyButton = RightGroupbox1:AddButton({
-    Text = 'EnableGodMode/Bypass',
+    Text = 'Enable GodMode/Bypass',
     Func = function()
 task.wait(0.3)
     if _G.God == nil then
@@ -2423,7 +2423,7 @@ end,
 })
 
 local MyButton = RightGroupbox1:AddButton({
-    Text = 'DisableGodMode/Bypass',
+    Text = 'Disable GodMode/Bypass',
     Func = function()
 task.wait(0.3)
     if _G.God == nil then
@@ -2478,9 +2478,9 @@ LeftGroupBox2:AddToggle('MyToggle', {
 })
 
 RightGroupbox2:AddToggle('MyToggle', {
-    Text = 'Bypass Anti Cheat',
+    Text = 'Disable Anti Cheat',
     Default = false,
-    Tooltip = 'Bypass The Teleport Back When To Fast Anti-Cheat',
+    Tooltip = 'Bypass The Teleport Back When Too Fast Anti-Cheat',
 
     Callback = function(BypassSpeedss)
 _G.BypassSpeeds = BypassSpeedss
@@ -2495,7 +2495,7 @@ end
 })
 
 RightGroupbox2:AddToggle('MyToggle', {
-    Text = 'Bypass Seek Chase',
+    Text = 'Remove Seek Chase',
     Default = false,
     Tooltip = 'Removes Seek',
 
@@ -2519,7 +2519,7 @@ RightGroupbox2:AddToggle('MyToggle', {
 })
 
 RightGroupbox2:AddToggle('MyToggle', {
-    Text = 'Bypass Seek Arms & Fire',
+    Text = 'Disable Seek Arms & Fire',
     Default = false,
     Tooltip = 'Remove The Arms And Fire In the Final Room Of Seeks Chase',
 
@@ -2540,9 +2540,9 @@ end)
 
 local ScreechModule = plr.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Modules:FindFirstChild("Screech")
 RightGroupbox2:AddToggle('MyToggle', {
-    Text = 'Bypass Screech',
+    Text = 'Remove Screech',
     Default = false,
-    Tooltip = 'Bypass That Annoying B****',
+    Tooltip = 'Removes That Annoying B****',
 
     Callback = function(val)
 flags.noscreech = val
@@ -2559,7 +2559,7 @@ game:GetService("RunService").RenderStepped:Connect(function()
 
 
 RightGroupbox2:AddToggle('MyToggle', {
-    Text = 'Bypass Timothy [NoJumpScare]',
+    Text = 'Remove Timothy [NoJumpScare]',
     Default = false,
     Tooltip = 'Removes The Visual Jumpscare Of Timothy',
 
@@ -2952,7 +2952,7 @@ EntityInfo.SpiderJumpscare.OnClientEvent:Connect(function(...)
 end)
 
 RightGroupbox2:AddToggle('MyToggle', {
-    Text = 'Bypass Dupe',
+    Text = 'Anti-Dupe',
     Default = false,
     Tooltip = 'Doesnt Allow Dupe To Dupe you',
 
@@ -2972,7 +2972,7 @@ RightGroupbox2:AddToggle('MyToggle', {
 })
 								
 RightGroupbox2:AddToggle('MyToggle', {
-    Text = 'Bypass Glitch',
+    Text = 'Anti-Glitch',
     Default = false,
     Tooltip = 'Remove The GLitch Jumpscare',
 
@@ -2982,7 +2982,7 @@ end
 })
 
 RightGroupbox2:AddToggle('MyToggle', {
-    Text = 'Bypass Halt',
+    Text = 'Remove Halt',
     Default = false,
     Tooltip = 'Removes Halt (best remove halt as no blue light and sound!)',
 
@@ -3045,7 +3045,7 @@ RightGroupbox3:AddToggle('MyToggle', {
 				end
 			end)
 
-			repeat task.wait() until Hunter Library LOADED == false or not flags.nogates
+			repeat task.wait() until BOBHUBLOADED == false or not flags.nogates
 			addconnect:Disconnect()
 		end
 	end
@@ -3113,14 +3113,14 @@ RightGroupbox3:AddToggle('MyToggle', {
 				end 
 			end)
 
-			repeat task.wait() until Hunter Library LOADED == false or not flags.noskeledoors
+			repeat task.wait() until BOBHUBLOADED == false or not flags.noskeledoors
 			addconnect:Disconnect()
 		end
 	end
 })
 
 RightGroupbox3:AddToggle('Enable', {
-    Text = 'Remove Snare',
+    Text = 'Anti-Snare',
     Default = false,
     Tooltip = 'Removes The Damage And Jumpscare From Snare',
           
