@@ -179,7 +179,7 @@ function PathModule.new(char, goal, agentParameters, jumpingAllowed, offset)
 		PathModule.visualize(waypoints)
 
 		for i, v in pairs(waypoints) do
-			if BOBHUBLOADED == false or not v then return end
+			if Hunter LibraryLOADED == false or not v then return end
 
 			if char.HumanoidRootPart.Anchored == false then
 				if jumpingAllowed == true then if v.Action == Enum.PathWaypointAction.Jump then Humanoid:ChangeState(Enum.HumanoidStateType.Jumping) end end
@@ -230,7 +230,7 @@ if gui_data ~= nil then
 		currentver = tostring(gui_data.ver)
 	end
 end
-pcall(function() getgenv().BOBHUBLOADED = true end)
+pcall(function() getgenv().Hunter LibraryLOADED = true end)
 normalmessage("Hunter Library v"..currentver, "Loading script...", "", 2)
 if gui_data ~= nil then
 	oldnormalmessage("INFO", gui_data.changelog, 20)
@@ -277,8 +277,8 @@ local flags = {
 	autoplayagain = false,
 	anticheatbypass = false,
 	noclip = true,
-	camfov = 120,
-	speed = 58,
+	camfov = 70,
+	speed = 16,
 	walkspeedtoggle = false,
 	camfovtoggle = false,
 	customnotifid = "10469938989",
@@ -633,7 +633,7 @@ LeftGroupBox:AddToggle('MyToggle', {
 				setup(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)])
 			end
 
-			repeat task.wait() until BOBHUBLOADED == false or not flags.espdoors
+			repeat task.wait() until Hunter LibraryLOADED == false or not flags.espdoors
 			addconnect:Disconnect()
 
 			for i,v in pairs(esptable.doors) do
@@ -724,7 +724,7 @@ LeftGroupBox:AddToggle('MyToggle', {
 
 			setup(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)])
 
-			repeat task.wait() until BOBHUBLOADED == false or not flags.espkeys
+			repeat task.wait() until Hunter LibraryLOADED == false or not flags.espkeys
 			addconnect:Disconnect()
 
 			for i,v in pairs(esptable.keys) do
@@ -773,7 +773,7 @@ LeftGroupBox:AddToggle('MyToggle', {
 					end
 
 					task.spawn(function()
-						repeat task.wait() until Hunter Library LOADED == false or not flags.espitems
+						repeat task.wait() until Hunter LibraryLOADED == false or not flags.espitems
 						subaddcon:Disconnect()  
 					end) 
 				end 
@@ -795,7 +795,7 @@ LeftGroupBox:AddToggle('MyToggle', {
 				setup(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)])
 			end
 
-			repeat task.wait() until BOBHUBLOADED == false or not flags.espitems
+			repeat task.wait() until Hunter LibraryLOADED == false or not flags.espitems
 			addconnect:Disconnect()
 
 			for i,v in pairs(esptable.items) do
@@ -866,7 +866,7 @@ LeftGroupBox:AddToggle('MyToggle', {
 				setup(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)])
 			end
 
-			repeat task.wait() until BOBHUBLOADED == false or not flags.espbooks
+			repeat task.wait() until Hunter LibraryLOADED == false or not flags.espbooks
 			addconnect:Disconnect()
 
 			for i,v in pairs(esptable.books) do
@@ -947,7 +947,7 @@ LeftGroupBox:AddToggle('MyToggle', {
 
 			setup(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)])
 
-			repeat task.wait() until BOBHUBLOADED == false or not flags.esprush
+			repeat task.wait() until Hunter LibraryLOADED == false or not flags.esprush
 			addconnect:Disconnect()
 			roomconnect:Disconnect()
 
@@ -1012,7 +1012,7 @@ LeftGroupBox:AddToggle('MyToggle', {
 				end
 
 				task.spawn(function()
-					repeat task.wait() until BOBHUBLOADED == false or not flags.espchest
+					repeat task.wait() until Hunter LibraryLOADED == false or not flags.espchest
 					subaddcon:Disconnect()  
 				end)  
 			end
@@ -1033,7 +1033,7 @@ LeftGroupBox:AddToggle('MyToggle', {
 				setup(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)])
 			end
 
-			repeat task.wait() until BOBHUBLOADED == false or not flags.espchest
+			repeat task.wait() until Hunter LibraryLOADED == false or not flags.espchest
 			addconnect:Disconnect()
 
 			for i,v in pairs(esptable.chests) do
@@ -1093,7 +1093,7 @@ LeftGroupBox:AddToggle('MyToggle', {
 				personesp(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)])
 			end
 
-			repeat task.wait() until BOBHUBLOADED == false or not flags.esphumans
+			repeat task.wait() until Hunter LibraryLOADED == false or not flags.esphumans
 			addconnect:Disconnect()
 
 			for i,v in pairs(esptable.people) do
@@ -1145,7 +1145,7 @@ LeftGroupBox:AddToggle('MyToggle', {
 				end
 
 				task.spawn(function()
-					repeat task.wait() until Hunter Library LOADED == false or not flags.espchest
+					repeat task.wait() until Hunter LibraryLOADED == false or not flags.espchest
 					subaddcon:Disconnect()  
 				end)  
 			end
@@ -1166,7 +1166,7 @@ LeftGroupBox:AddToggle('MyToggle', {
 				setup(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)])
 			end
 
-			repeat task.wait() until BOBHUBLOADED == false or not flags.espgold
+			repeat task.wait() until Hunter LibraryLOADED == false or not flags.espgold
 			addconnect:Disconnect()
 
 			for i,v in pairs(esptable.gold) do
@@ -1193,7 +1193,7 @@ LeftGroupBox:AddToggle('MyToggle', {
 				fireproximityprompt(p)
 			end)
 
-			repeat task.wait() until BOBHUBLOADED == false or not flags.instapp
+			repeat task.wait() until Hunter LibraryLOADED == false or not flags.instapp
 			holdconnect:Disconnect()
 		end
 	})
@@ -1228,7 +1228,7 @@ LeftGroupBox:AddToggle('MyToggle', {
 			doFullbright()
 
 			local coneee = game:GetService("Lighting").LightingChanged:Connect(doFullbright)
-			repeat task.wait() until BOBHUBLOADED == false or not flags.fullbright
+			repeat task.wait() until Hunter LibraryLOADED == false or not flags.fullbright
 
 			coneee:Disconnect()
 			game:GetService("Lighting").Ambient = oldAmbient
@@ -1459,7 +1459,7 @@ Tab1:AddToggle('MyToggle', {
 				end
 			end)
 
-			repeat task.wait() until BOBHUBLOADED == false or not flags.getcode
+			repeat task.wait() until Hunter LibraryLOADED == false or not flags.getcode
 			addconnect:Disconnect()
 		end
 	end
@@ -1556,7 +1556,7 @@ workspace.ChildAdded:Connect(function(inst)
 		end
 	end)
 	
-    if flags.avoidrushambush == true then
+     if flags.avoidrushambush == true then
 		if inst.Name == "RushMoving" or inst.Name == "AmbushMoving" then
 			repeat task.wait() until plr:DistanceFromCharacter(inst:GetPivot().Position) < 400 or not inst:IsDescendantOf(workspace)
 
@@ -1663,11 +1663,11 @@ game:GetService("TextChatService").TextChannels.RBXGeneral:SendAsync("A120! " ..
 
 elseif v.Name == "JeffTheKiller" then
 
-game:GetService("TextChatService").TextChannels.RBXGeneral:SendAsync("JTK!")
+game:GetService("TextChatService").TextChannels.RBXGeneral:SendAsync("JTK! ".. "pop vitamins!")
 
 elseif v.Name == "Eyes" then
 
-game:GetService("TextChatService").TextChannels.RBXGeneral:SendAsync("Eyes!")
+game:GetService("TextChatService").TextChannels.RBXGeneral:SendAsync("Eyes! ".."dont look")
 
 end
 
@@ -1881,7 +1881,7 @@ RightGroupbox:AddToggle('MyToggle', {
 					end
 
 					task.spawn(function()
-						repeat task.wait() until BOBHUBLOADED == false or not flags.draweraura
+						repeat task.wait() until Hunter LibraryLOADED == false or not flags.draweraura
 						subaddcon:Disconnect() 
 					end)
 				end
@@ -1898,7 +1898,7 @@ RightGroupbox:AddToggle('MyToggle', {
 				end
 				setup(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)])
 
-				repeat task.wait() until BOBHUBLOADED == false or not flags.draweraura
+				repeat task.wait() until Hunter LibraryLOADED == false or not flags.draweraura
 				addconnect:Disconnect()
 			end
 		end
@@ -2115,7 +2115,7 @@ RightGroupbox:AddToggle('MyToggle', {
 					end
 
 					task.spawn(function()
-						repeat task.wait() until BOBHUBLOADED == false or not flags.itemsaura
+						repeat task.wait() until Hunter LibraryLOADED == false or not flags.itemsaura
 						subaddcon:Disconnect() 
 					end)
 				end
@@ -2132,7 +2132,7 @@ RightGroupbox:AddToggle('MyToggle', {
 				end
 				setup(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)])
 
-				repeat task.wait() until BOBHUBLOADED == false or not flags.itemsaura
+				repeat task.wait() until Hunter LibraryLOADED == false or not flags.itemsaura
 				addconnect:Disconnect()
 			end
 		end
@@ -2197,7 +2197,7 @@ RightGroupbox:AddToggle('MyToggle', {
 					end
 
 					task.spawn(function()
-						repeat task.wait() until Hunter Library LOADED == false or not flags.autopulllever
+						repeat task.wait() until Hunter LibraryLOADED == false or not flags.autopulllever
 						subaddcon:Disconnect() 
 					end)
 				end
@@ -2217,7 +2217,7 @@ RightGroupbox:AddToggle('MyToggle', {
 					setup(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)])
 					--	end
 
-					repeat task.wait() until BOBHUBLOADED == false or not flags.autopulllever
+					repeat task.wait() until Hunter LibraryLOADED == false or not flags.autopulllever
 					addconnect:Disconnect()
 				end
 			end
@@ -2282,7 +2282,7 @@ RightGroupbox:AddToggle('MyToggle', {
 					end
 
 					task.spawn(function()
-						repeat task.wait() until Hunter Library LOADED == false or not flags.bookcollecter
+						repeat task.wait() until Hunter LibraryLOADED == false or not flags.bookcollecter
 						subaddcon:Disconnect() 
 					end)
 				end
@@ -2304,7 +2304,7 @@ RightGroupbox:AddToggle('MyToggle', {
 					setup(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)])
 					--	end
 
-					repeat task.wait() until BOBHUBLOADED == false or not flags.bookcollecter
+					repeat task.wait() until Hunter LibraryLOADED == false or not flags.bookcollecter
 					addconnect:Disconnect()
 				end
 			end
@@ -2391,7 +2391,7 @@ RightGroupbox:AddToggle('MyToggle', {
 					setup(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)])
 					--	end
 
-					repeat task.wait() until BOBHUBLOADED == false or not flags.breakercollecter
+					repeat task.wait() until Hunter LibraryLOADED == false or not flags.breakercollecter
 					addconnect:Disconnect()
 				end
 			end
@@ -2512,7 +2512,7 @@ RightGroupbox2:AddToggle('MyToggle', {
 				end
 			end)
 
-			repeat task.wait() until Hunter Library LOADED == false or not flags.noseek
+			repeat task.wait() until Hunter LibraryLOADED == false or not flags.noseek
 			addconnect:Disconnect()
 		end
 	end
@@ -3045,7 +3045,7 @@ RightGroupbox3:AddToggle('MyToggle', {
 				end
 			end)
 
-			repeat task.wait() until BOBHUBLOADED == false or not flags.nogates
+			repeat task.wait() until Hunter LibraryLOADED == false or not flags.nogates
 			addconnect:Disconnect()
 		end
 	end
@@ -3082,7 +3082,7 @@ RightGroupbox3:AddToggle('MyToggle', {
 				check(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)])
 			end)
 
-			repeat task.wait() until BOBHUBLOADED == false or not flags.roomsnolock
+			repeat task.wait() until Hunter LibraryLOADED == false or not flags.roomsnolock
 			addconnect:Disconnect()
 		end
 	end
@@ -3113,7 +3113,7 @@ RightGroupbox3:AddToggle('MyToggle', {
 				end 
 			end)
 
-			repeat task.wait() until BOBHUBLOADED == false or not flags.noskeledoors
+			repeat task.wait() until Hunter LibraryLOADED == false or not flags.noskeledoors
 			addconnect:Disconnect()
 		end
 	end
