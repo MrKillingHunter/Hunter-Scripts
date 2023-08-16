@@ -3357,11 +3357,11 @@ end);
 
 local MenuGroup = Tabs['UI Settings']:AddLeftGroupbox('UI Settings')
 
-local MyButton = LeftGroupBox4:AddButton({
-    Text = 'Hunter',
+local MyButton = LeftGroupBox:AddButton({
+    Text = 'Join The Discord (Moving Soon)',
     Func = function()
         if setclipboard then 
-            setclipboard("mrkillinghunter_")   
+            setclipboard("https://discord.gg/RSzEmBC9rZ")   
         end
     end,
     DoubleClick = false,
