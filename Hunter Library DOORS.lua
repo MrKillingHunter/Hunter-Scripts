@@ -207,7 +207,7 @@ end
 
 if BOBHUBLOADED == true then warnmessage("Hunter Library v"..currentver, "GUI already loaded!", "", 10) return end
 if game.PlaceId ~= 6839171747 and game.PlaceId == 6516141723 then 
-	warnmessage("BOBHUB v"..currentver, "You need to join a game to run this script.", 10) 
+	warnmessage("Hunter Library v"..currentver, "You need to join a game to run this script.", 10) 
 	confirmnotification("Hunter Library v"..currentver, "Do you want to join a game?", 15, function(state)
 		if state == true then
 			task.spawn(function()
@@ -218,7 +218,7 @@ if game.PlaceId ~= 6839171747 and game.PlaceId == 6516141723 then
 	return
 end
 if game.PlaceId ~= 6839171747 and game.PlaceId ~= 6516141723 then 
-	oldwarnmessage("Hunter Library v"..currentver, "You need to join A Elevator to run this script.", 10) 
+	oldwarnmessage("Hunter Library v"..currentver, "You need to join DOORS to run this script.", 10) 
 	return
 end
 if gui_data ~= nil then
@@ -436,7 +436,7 @@ function esp(what,color,core,name)
 								box.Visible = false
 								box:Destroy()
 							end)
-							while box do
+							--while box do
 							--	if box.Adornee == nil or not box.Adornee:IsDescendantOf(workspace) then
 							--		box.Adornee = nil
 							--		box.Visible = false
@@ -589,7 +589,7 @@ local LeftGroupBox = Tabs.Main:AddLeftGroupbox('ESP')
 LeftGroupBox:AddToggle('MyToggle', {
     Text = 'Door ESP',
     Default = false,
-    Tooltip = 'ESP For Doors',
+    Tooltip = '',
 
     Callback = function(val)
     flags.espdoors = val
@@ -737,7 +737,7 @@ LeftGroupBox:AddToggle('MyToggle', {
 LeftGroupBox:AddToggle('MyToggle', {
     Text = 'Item ESP',
     Default = false,
-    Tooltip = 'ESP for Items',
+    Tooltip = '',
 
     Callback = function(val)
     flags.espitems = val
@@ -808,7 +808,7 @@ LeftGroupBox:AddToggle('MyToggle', {
 LeftGroupBox:AddToggle('MyToggle', {
     Text = 'Book/Breaker ESP',
     Default = false,
-    Tooltip = 'ESP For The Books And Breakers',
+    Tooltip = '',
 
     Callback = function(val)
     flags.espbooks = val
@@ -879,7 +879,7 @@ LeftGroupBox:AddToggle('MyToggle', {
     LeftGroupBox:AddToggle('MyToggle', {
     Text = 'Entity ESP',
     Default = false,
-    Tooltip = 'ESP For Entities',
+    Tooltip = '',
 
     Callback = function(val)
     flags.esprush = val
@@ -959,9 +959,9 @@ LeftGroupBox:AddToggle('MyToggle', {
 })
     
     LeftGroupBox:AddToggle('MyToggle', {
-    Text = 'Locker ESP',
+    Text = 'Hide Spot ESP',
     Default = false,
-    Tooltip = 'ESP For Lockers In rooms',
+    Tooltip = '',
 
     Callback = function(val)
     flags.esplocker = val
@@ -1043,7 +1043,7 @@ LeftGroupBox:AddToggle('MyToggle', {
     LeftGroupBox:AddToggle('MyToggle', {
     Text = 'Chest ESP',
     Default = false,
-    Tooltip = 'ESP For both types of loot chests',
+    Tooltip = '',
 
     Callback = function(val)
     flags.espchest = val
@@ -1128,7 +1128,7 @@ LeftGroupBox:AddToggle('MyToggle', {
     LeftGroupBox:AddToggle('MyToggle', {
     Text = 'Player ESP',
     Default = false,
-    Tooltip = 'ESP For other Players',
+    Tooltip = '',
 
     Callback = function(val)
     flags.esphumans = val
@@ -1188,7 +1188,7 @@ LeftGroupBox:AddToggle('MyToggle', {
     LeftGroupBox:AddToggle('MyToggle', {
     Text = 'Gold ESP',
     Default = false,
-    Tooltip = 'ESP For Gold In The Open',
+    Tooltip = '',
 
     Callback = function(val)
     flags.espgold = val
@@ -1265,7 +1265,7 @@ if fireproximityprompt then
 LeftGroupBox:AddToggle('MyToggle', {
     Text = 'Instant Use',
     Default = false,
-    Tooltip = 'Removes The E Cooldown When Interacting',
+    Tooltip = 'Removes The E Cooldown With Interacting',
 
     Callback = function(val)
     flags.instapp = val
@@ -1286,7 +1286,7 @@ end
 LeftGroupBox:AddToggle('MyToggle', {
     Text = 'FullBright',
     Default = false,
-    Tooltip = 'Allows You to See In Dark Rooms',
+    Tooltip = 'Allows You To See In Dark Rooms',
 
     Callback = function(val)
      flags.fullbright = val
@@ -1402,7 +1402,7 @@ end)
 LeftGroupBox:AddToggle('MyToggle', {
     Text = 'Noclip [NoBypass]',
     Default = false,
-    Tooltip = 'Allows You To Clip Through Walls And Ceiling',
+    Tooltip = '',
 
     Callback = function(val)
     flags.noclip = val
@@ -1487,7 +1487,7 @@ local Tab1 = TabBox:AddTab('Auto')
 Tab1:AddToggle('MyToggle', {
     Text = 'Auto Library Code',
     Default = false,
-    Tooltip = 'Automatically Figures Out The Library Code',
+    Tooltip = 'Automatically Figures Out the Library Code',
 
     Callback = function(val)
     flags.getcode = val
@@ -1549,12 +1549,12 @@ Tab1:AddToggle('MyToggle', {
 
 local elevatorbreakerbox = false
 Tab1:AddToggle('MyToggle', {
-Text = 'Auto Complete Breaker Box (BROKEN)',
+Text = 'Auto Complete Breaker Box',
     Default = false,
     Tooltip = '',
 
     Callback = function(val)
-    warnmessage("ROOM 100", "Trying to comeplete breaker box...", "This Will Take Abit...", 7)
+    warnmessage("ROOM 100", "Trying to comeplete breaker box...", "Then go elevator now...", 5)
     NoBreaker = val
     while task.wait(1) do
         if not NoBreaker then
@@ -1633,24 +1633,22 @@ workspace.ChildAdded:Connect(function(inst)
 						warnmessage("ENTITIES", inst.Name:gsub("Moving","").." is coming.", "Hide!", 0, "0", inst)
 					end
 					inst.Destroying:Wait()
-					warnmessage("ENTITIES", "It's now completely safe to leave the hiding spot.", 7)
+					--warnmessage("ENTITIES", "It's now completely safe to leave the hiding spot.", 7)
 						end
 				end
 			end
 		end
 	end)
 	
-	if flags.avoidrushambush == true then
+	    if flags.avoidrushambush == true then
 		if inst.Name == "RushMoving" or inst.Name == "AmbushMoving" then
 			repeat task.wait() until plr:DistanceFromCharacter(inst:GetPivot().Position) < 400 or not inst:IsDescendantOf(workspace)
 
 			if inst:IsDescendantOf(workspace) then
 				if inst.Name:gsub("Moving","") == "Rush" then
-					warnmessage("ENTITIES", "Avoiding "..inst.Name:gsub("Moving",""), "Please wait...", 0, "11102256553", inst)
+					warnmessage("ENTITIES", "Rush Is Coming! ", "Don't Worry! You Have Godmode Enabled!", 0, "11102256553", inst)
 				elseif inst.Name:gsub("Moving","") == "Ambush" then
-					warnmessage("ENTITIES", "Avoiding "..inst.Name:gsub("Moving",""), "Please wait...", 0, "10938726652", inst)
-				else
-					warnmessage("ENTITIES", "Avoiding "..inst.Name:gsub("Moving",""), "Please wait...", 0, "0", inst)
+					warnmessage("ENTITIES", "Ambush Is Coming! ", "Don't Worry! You Have Godmode Enabled!", 0, "10938726652", inst)
 				end
 
 				local OldPos = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
@@ -1719,7 +1717,7 @@ local casjfg = ""
 Tab2:AddToggle('MyToggle', {
     Text = 'Chat Notify',
     Default = false,
-    Tooltip = 'Notifies Entity In Chat',
+    Tooltip = '',
     Callback = function(Chats)
 _G.Chat = Chats
 
@@ -1749,7 +1747,7 @@ game:GetService("TextChatService").TextChannels.RBXGeneral:SendAsync("A120!" .. 
 
 elseif v.Name == "JeffTheKiller" then
 
-game:GetService("TextChatService").TextChannels.RBXGeneral:SendAsync("Jeff The Killer!")
+game:GetService("TextChatService").TextChannels.RBXGeneral:SendAsync("JTK")
 
 elseif v.Name == "Eyes" then
 
@@ -1772,7 +1770,7 @@ if fireproximityprompt then
 RightGroupbox:AddToggle('MyToggle', {
     Text = 'Loot Aura',
     Default = false,
-    Tooltip = 'Automatically Loots',
+    Tooltip = '',
 
     Callback = function(val)
     flags.draweraura = val
@@ -1996,7 +1994,7 @@ end
 RightGroupbox:AddToggle('MyToggle', {
     Text = 'Item Aura',
     Default = false,
-    Tooltip = 'Automatically Picks Up Items',
+    Tooltip = '',
 
     Callback = function(val)
     flags.itemsaura = val
@@ -2227,7 +2225,7 @@ RightGroupbox:AddToggle('MyToggle', {
 RightGroupbox:AddToggle('MyToggle', {
     Text = 'Lever Aura',
     Default = false,
-    Tooltip = 'Automatically Flicks Levers',
+    Tooltip = '',
 
     Callback = function(val)
     flags.autopulllever = val
@@ -2313,7 +2311,7 @@ RightGroupbox:AddToggle('MyToggle', {
 RightGroupbox:AddToggle('MyToggle', {
     Text = 'Book Aura',
     Default = false,
-    Tooltip = 'Automatically Picks Up Books In The Library',
+    Tooltip = '',
 
     Callback = function(val)
     flags.bookcollecter = val
@@ -2400,7 +2398,7 @@ RightGroupbox:AddToggle('MyToggle', {
 	RightGroupbox:AddToggle('MyToggle', {
     Text = 'Breaker Aura',
     Default = false,
-    Tooltip = 'Automatically Picks Up Breakers In Door 100',
+    Tooltip = '',
 
     Callback = function(val)
     flags.breakercollecter = val
@@ -2484,14 +2482,14 @@ RightGroupbox:AddToggle('MyToggle', {
 		end
 	})
 
-local RightGroupbox1 = Tabs.Main:AddRightGroupbox('Avoid');
+local RightGroupbox1 = Tabs.Main:AddRightGroupbox('Avoiding');
 
-local RightGroupbox2 = Tabs.Main:AddRightGroupbox('Bypass');
+local RightGroupbox2 = Tabs.Main:AddRightGroupbox('Entity Remover');
 
-local RightGroupbox3 = Tabs.Main:AddRightGroupbox('Remove');
+local RightGroupbox3 = Tabs.Main:AddRightGroupbox('Miscellaneous');
 
 local MyButton = RightGroupbox1:AddButton({
-    Text = 'Enable GodMode/Bypass',
+    Text = 'Enable GodMode',
     Func = function()
 task.wait(0.3)
     if _G.God == nil then
@@ -2509,7 +2507,7 @@ end,
 })
 
 local MyButton = RightGroupbox1:AddButton({
-    Text = 'Disable GodMode/Bypass',
+    Text = 'Disable GodMode',
     Func = function()
 task.wait(0.3)
     if _G.God == nil then
@@ -2564,9 +2562,9 @@ LeftGroupBox2:AddToggle('MyToggle', {
 })
 
 RightGroupbox2:AddToggle('MyToggle', {
-    Text = 'Disable Anti Cheat',
-    Default = false,
-    Tooltip = '',
+    Text = 'No Anti Cheat',
+    Default = true,
+    Tooltip = 'RECCOMMENDED',
 
     Callback = function(BypassSpeedss)
 _G.BypassSpeeds = BypassSpeedss
@@ -2601,16 +2599,6 @@ RightGroupbox2:AddToggle('MyToggle', {
 			repeat task.wait() until BOBHUBLOADED == false or not flags.noseek
 			addconnect:Disconnect()
 		end
-	end
-})
-
-RightGroupbox2:AddToggle('MyToggle', {
-    Text = 'Remove Seek Arms & Fire',
-    Default = false,
-    Tooltip = '',
-
-    Callback = function(val)
-    flags.noseekarmsfire = val
 	end
 })
 
@@ -2652,16 +2640,6 @@ RightGroupbox2:AddToggle('MyToggle', {
     Callback = function(val)
     DisableTimothy = val
     end
-})
-        
-RightGroupbox2:AddToggle('MyToggle', {
-    Text = 'Always Win heartbeat Minigame',
-    Default = false,
-    Tooltip = '',
-
-    Callback = function(val)
-    flags.heartbeatwin = val
-		end
 })
 
 local old
@@ -3036,15 +3014,36 @@ EntityInfo.SpiderJumpscare.OnClientEvent:Connect(function(...)
         end)
     end
 end)
+	
 
 RightGroupbox2:AddToggle('MyToggle', {
-    Text = 'No Halt',
+    Text = 'Bypass Halt',
     Default = false,
     Tooltip = '',
 
     Callback = function(val)
     _G.NoHalt = val
     end
+})
+	
+RightGroupbox2:AddToggle('MyToggle', {
+    Text = 'Disable Seek Arms & Fire',
+    Default = false,
+    Tooltip = '',
+
+    Callback = function(val)
+    flags.noseekarmsfire = val
+	end
+})
+        
+RightGroupbox2:AddToggle('MyToggle', {
+    Text = 'Always Win Heartbeat Minigame',
+    Default = false,
+    Tooltip = '',
+
+    Callback = function(val)
+    flags.heartbeatwin = val
+		end
 })
 
 RightGroupbox2:AddToggle('MyToggle', {
@@ -3077,6 +3076,25 @@ RightGroupbox2:AddToggle('MyToggle', {
 end
 })
 
+RightGroupbox3:AddToggle('Enable', {
+    Text = 'Remove Snare',
+    Default = false,
+
+    Callback = function(Value)
+        _G.Snare_Hitbox = Value
+
+        while wait() and _G.Snare_Hitbox == true do
+            for i, v in ipairs(workspace:GetDescendants()) do
+                if v.Name == "Snare" then
+                    local Hitbox = v:FindFirstChild("Hitbox")
+            
+                    Hitbox.CanTouch = false
+                end
+            end
+        end
+    end
+})
+	
 game:GetService("RunService").RenderStepped:Connect(function()
     pcall(function()
         if _G.NoHalt then
@@ -3086,7 +3104,7 @@ game:GetService("RunService").RenderStepped:Connect(function()
         end)
         
 RightGroupbox3:AddToggle('MyToggle', {
-    Text = 'Remove Gates',
+    Text = 'Remove Gate',
     Default = false,
     Tooltip = '',
 
@@ -3140,7 +3158,7 @@ RightGroupbox3:AddToggle('MyToggle', {
 RightGroupbox3:AddToggle('MyToggle', {
     Text = 'A-000 Door No Locks',
     Default = false,
-    Tooltip = 'Removes Locks At A-000',
+    Tooltip = '',
 
     Callback = function(val)
     flags.roomsnolock = val
@@ -3177,7 +3195,7 @@ RightGroupbox3:AddToggle('MyToggle', {
     RightGroupbox3:AddToggle('MyToggle', {
     Text = 'Remove Skeleton Door',
     Default = false,
-    Tooltip = 'Removes The Skeleton Door Guarding The Herb of Viridis',
+    Tooltip = '',
 
     Callback = function(val)
     flags.noskeledoors = val
@@ -3203,25 +3221,6 @@ RightGroupbox3:AddToggle('MyToggle', {
 			addconnect:Disconnect()
 		end
 	end
-})
-
-RightGroupbox3:AddToggle('Enable', {
-    Text = 'Remove Snare',
-    Default = false,
-
-    Callback = function(Value)
-        _G.Snare_Hitbox = Value
-
-        while wait() and _G.Snare_Hitbox == true do
-            for i, v in ipairs(workspace:GetDescendants()) do
-                if v.Name == "Snare" then
-                    local Hitbox = v:FindFirstChild("Hitbox")
-            
-                    Hitbox.CanTouch = false
-                end
-            end
-        end
-    end
 })
 
 RightGroupbox3:AddToggle('MyToggle', {
@@ -3282,12 +3281,23 @@ flags.nopuzzle = val
 local LeftGroupBox4 = Tabs.Credits:AddLeftGroupbox('Credits')
 
 LeftGroupBox4:AddLabel('Scripter :')
-LeftGroupBox4:AddLabel('Hunter')
+LeftGroupBox4:AddLabel('Hunter And Yieviro92 (BIG SHOUTOUT)')
 
 LeftGroupBox4:AddLabel('Youtube')
 
 local MyButton = LeftGroupBox4:AddButton({
-    Text = 'Sirotan And Ethans World',
+    Text = 'yieviro92',
+    Func = function()
+        if setclipboard then 
+            setclipboard("youtube.com/@yieviro92creepy")   
+        end
+    end,
+    DoubleClick = false,
+    Tooltip = ''
+})
+
+local MyButton = LeftGroupBox4:AddButton({
+    Text = 'Hunter',
     Func = function()
         if setclipboard then 
             setclipboard("https://youtube.com/@SirotanAndEthan")   
@@ -3300,7 +3310,18 @@ local MyButton = LeftGroupBox4:AddButton({
 LeftGroupBox4:AddLabel('Discord')
 
 local MyButton = LeftGroupBox4:AddButton({
-    Text = 'mrkillinghunter_',
+    Text = 'yieviro92',
+    Func = function()
+        if setclipboard then 
+            setclipboard("yieviro92")   
+        end
+    end,
+    DoubleClick = false,
+    Tooltip = ''
+})
+
+local MyButton = LeftGroupBox4:AddButton({
+    Text = 'Hunter',
     Func = function()
         if setclipboard then 
             setclipboard("mrkillinghunter_")   
@@ -3336,19 +3357,19 @@ end);
 
 local MenuGroup = Tabs['UI Settings']:AddLeftGroupbox('UI Settings')
 
-MenuGroup:AddLabel('UI toggle Keybind'):AddKeyPicker('MenuKeybind', { Default = 'Ins', NoUI = true, Text = 'UI Toggle Keybind' })
-
 local MyButton = LeftGroupBox4:AddButton({
-    Text = 'Close GUI',
+    Text = 'Join The Discord (RN Is Hunter Club But Planning To Move)',
     Func = function()
-        if closescript then 
-            closesript   
+        if setclipboard then 
+            setclipboard("https://discord.gg/RSzEmBC9rZ")   
         end
     end,
     DoubleClick = false,
     Tooltip = ''
 })
 
+MenuGroup:AddLabel('UI Toggle Keybind'):AddKeyPicker('MenuKeybind', { Default = 'Ins', NoUI = true, Text = 'UI Toggle Keybind' })
+	
 Library.ToggleKeybind = Options.MenuKeybind
 
 -- SaveManager (Allows you to have a configuration system)
@@ -3359,8 +3380,10 @@ SaveManager:SetLibrary(Library)
 
 SaveManager:IgnoreThemeSettings()
 
-ThemeManager:SetFolder('Hunter-Library')
-SaveManager:SetFolder('Hunter-Library/DOORS')
+SaveManager:SetIgnoreIndexes({ 'MenuKeybind' })
+
+ThemeManager:SetFolder('Hunter Library')
+SaveManager:SetFolder('Hunter Library/specific-game')
 
 SaveManager:BuildConfigSection(Tabs['UI Settings'])
 
