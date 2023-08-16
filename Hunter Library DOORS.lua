@@ -1,4 +1,4 @@
-local HunterLibrary_START_TIME = os.time()
+local BOBHUB_START_TIME = os.time()
 local customnotifid = "10469938989"
 local oldcustomnotifid = "4590657391"
 function waitframes(ii) for i = 1, ii do task.wait() end end
@@ -179,7 +179,7 @@ function PathModule.new(char, goal, agentParameters, jumpingAllowed, offset)
 		PathModule.visualize(waypoints)
 
 		for i, v in pairs(waypoints) do
-			if HunterLibraryLOADED == false or not v then return end
+			if BOBHUBLOADED == false or not v then return end
 
 			if char.HumanoidRootPart.Anchored == false then
 				if jumpingAllowed == true then if v.Action == Enum.PathWaypointAction.Jump then Humanoid:ChangeState(Enum.HumanoidStateType.Jumping) end end
@@ -207,8 +207,8 @@ end
 
 if BOBHUBLOADED == true then warnmessage("Hunter Library v"..currentver, "GUI already loaded!", "", 10) return end
 if game.PlaceId ~= 6839171747 and game.PlaceId == 6516141723 then 
-	warnmessage("Hunter Library"..currentver, "You need to be in a elevator to run this script.", 10) 
-	confirmnotification("Hunter Library"..currentver, "Do you want to join a game?", 15, function(state)
+	warnmessage("BOBHUB v"..currentver, "You need to join a game to run this script.", 10) 
+	confirmnotification("Hunter Library v"..currentver, "Do you want to join a game?", 15, function(state)
 		if state == true then
 			task.spawn(function()
 				loadstring(game:HttpGet(("https://raw.githubusercontent.com/DarkSuffer/BasicallyAnDoors-EDITED/main/joinsolo.lua?" .. tostring(math.random(0, 9999999))), true))()
@@ -218,7 +218,7 @@ if game.PlaceId ~= 6839171747 and game.PlaceId == 6516141723 then
 	return
 end
 if game.PlaceId ~= 6839171747 and game.PlaceId ~= 6516141723 then 
-	oldwarnmessage("Hunter Library v"..currentver, "You need to join DOORS to run this script.", 10) 
+	oldwarnmessage("Hunter Library v"..currentver, "You need to join A Elevator to run this script.", 10) 
 	return
 end
 if gui_data ~= nil then
@@ -230,13 +230,13 @@ if gui_data ~= nil then
 		currentver = tostring(gui_data.ver)
 	end
 end
-pcall(function() getgenv().HunterLibraryLOADED = true end)
+pcall(function() getgenv().BOBHUBLOADED = true end)
 normalmessage("Hunter Library v"..currentver, "Loading script...", "", 2)
 if gui_data ~= nil then
 	oldnormalmessage("INFO", gui_data.changelog, 20)
 end
 
--- credits alan1508 on v3rm
+-- credits alan1508 on v3erm
 do task.spawn(function()if hookfunction then local a;a=hookfunction(game:GetService("ContentProvider").PreloadAsync,function(b,c,d)if table.find(c,game:GetService("CoreGui"))then local e=function(e,f)if e:match("^rbxasset://")or e:match("^rbxthumb://")then return d(e,f)end end;warn("Anticheat Check Detected")return a(b,c,e)end;return a(b,c,d)end)end end)end
 
 local plr = game.Players.LocalPlayer
@@ -276,9 +276,9 @@ local flags = {
 	avoidrushambush = false,
 	autoplayagain = false,
 	anticheatbypass = false,
-	noclip = true,
+	noclip = false,
 	camfov = 70,
-	speed = 16,
+	speed = 0,
 	walkspeedtoggle = false,
 	camfovtoggle = false,
 	customnotifid = "10469938989",
@@ -436,7 +436,7 @@ function esp(what,color,core,name)
 								box.Visible = false
 								box:Destroy()
 							end)
-							--while box do
+							while box do
 							--	if box.Adornee == nil or not box.Adornee:IsDescendantOf(workspace) then
 							--		box.Adornee = nil
 							--		box.Visible = false
@@ -570,7 +570,7 @@ local SaveManager = loadstring(game:HttpGet(repo .. 'addons/SaveManager.lua'))()
 
 local Window = Library:CreateWindow({
 
-    Title = 'Hunter Library v'..currentver..' (DOORS 👁️)',
+    Title = 'Hunter Library v'..currentver..' | DOORS 👁️',
     Center = true,
     AutoShow = true,
     Resizable = true,
@@ -580,16 +580,16 @@ local Window = Library:CreateWindow({
 })
 
 local Tabs = {
-    Main = Window:AddTab('Main'),
-    Credits = Window:AddTab('Credits')
-    ['UI Settings'] = Window:AddTab('Config'),
+    Main = Window:AddTab('Script Features'),
+    Credits = Window:AddTab('Credits'),
+    ['UI Settings'] = Window:AddTab('Configs'),
 }
     
-local LeftGroupBox = Tabs.Main:AddLeftGroupbox('Main')
+local LeftGroupBox = Tabs.Main:AddLeftGroupbox('ESP')
 LeftGroupBox:AddToggle('MyToggle', {
     Text = 'Door ESP',
-    Default = true,
-    Tooltip = 'Shows ESP For Doors',
+    Default = false,
+    Tooltip = 'ESP For Doors',
 
     Callback = function(val)
     flags.espdoors = val
@@ -633,20 +633,20 @@ LeftGroupBox:AddToggle('MyToggle', {
 				setup(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)])
 			end
 
-			repeat task.wait() until HunterLibraryLOADED == false or not flags.espdoors
+			repeat task.wait() until BOBHUBLOADED == false or not flags.espdoors
 			addconnect:Disconnect()
 
 			for i,v in pairs(esptable.doors) do
 				v.delete()
 end 
 		end
-	end   
+	end
 })
 
 LeftGroupBox:AddToggle('MyToggle', {
     Text = 'Key/Lever ESP',
-    Default = true,
-    Tooltip = 'Shows ESP For Keys',
+    Default = false,
+    Tooltip = '',
 
     Callback = function(val)
     flags.espkeys = val
@@ -724,7 +724,7 @@ LeftGroupBox:AddToggle('MyToggle', {
 
 			setup(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)])
 
-			repeat task.wait() until HunterLibraryLOADED == false or not flags.espkeys
+			repeat task.wait() until BOBHUBLOADED == false or not flags.espkeys
 			addconnect:Disconnect()
 
 			for i,v in pairs(esptable.keys) do
@@ -736,8 +736,8 @@ LeftGroupBox:AddToggle('MyToggle', {
 
 LeftGroupBox:AddToggle('MyToggle', {
     Text = 'Item ESP',
-    Default = true,
-    Tooltip = 'ESP for items',
+    Default = false,
+    Tooltip = 'ESP for Items',
 
     Callback = function(val)
     flags.espitems = val
@@ -773,7 +773,7 @@ LeftGroupBox:AddToggle('MyToggle', {
 					end
 
 					task.spawn(function()
-						repeat task.wait() until HunterLibraryLOADED == false or not flags.espitems
+						repeat task.wait() until BOBHUBLOADED == false or not flags.espitems
 						subaddcon:Disconnect()  
 					end) 
 				end 
@@ -795,7 +795,7 @@ LeftGroupBox:AddToggle('MyToggle', {
 				setup(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)])
 			end
 
-			repeat task.wait() until HunterLibraryLOADED == false or not flags.espitems
+			repeat task.wait() until BOBHUBLOADED == false or not flags.espitems
 			addconnect:Disconnect()
 
 			for i,v in pairs(esptable.items) do
@@ -807,8 +807,8 @@ LeftGroupBox:AddToggle('MyToggle', {
 
 LeftGroupBox:AddToggle('MyToggle', {
     Text = 'Book/Breaker ESP',
-    Default = true,
-    Tooltip = 'ESP for books and breakers',
+    Default = false,
+    Tooltip = 'ESP For The Books And Breakers',
 
     Callback = function(val)
     flags.espbooks = val
@@ -866,7 +866,7 @@ LeftGroupBox:AddToggle('MyToggle', {
 				setup(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)])
 			end
 
-			repeat task.wait() until HunterLibraryLOADED == false or not flags.espbooks
+			repeat task.wait() until BOBHUBLOADED == false or not flags.espbooks
 			addconnect:Disconnect()
 
 			for i,v in pairs(esptable.books) do
@@ -878,8 +878,8 @@ LeftGroupBox:AddToggle('MyToggle', {
     
     LeftGroupBox:AddToggle('MyToggle', {
     Text = 'Entity ESP',
-    Default = true,
-    Tooltip = 'Esp for Entities like rush and figure',
+    Default = false,
+    Tooltip = 'ESP For Entities',
 
     Callback = function(val)
     flags.esprush = val
@@ -947,7 +947,7 @@ LeftGroupBox:AddToggle('MyToggle', {
 
 			setup(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)])
 
-			repeat task.wait() until HunterLibraryLOADED == false or not flags.esprush
+			repeat task.wait() until BOBHUBLOADED == false or not flags.esprush
 			addconnect:Disconnect()
 			roomconnect:Disconnect()
 
@@ -959,9 +959,91 @@ LeftGroupBox:AddToggle('MyToggle', {
 })
     
     LeftGroupBox:AddToggle('MyToggle', {
+    Text = 'Locker ESP',
+    Default = false,
+    Tooltip = 'ESP For Lockers In rooms',
+
+    Callback = function(val)
+    flags.esplocker = val
+
+		if val then
+			local function check(v, room)
+				task.wait()
+				local valuechange = nil
+				if v.Name == "Wardrobe" then
+					local h = esp(v.PrimaryPart,Color3.fromRGB(145,100,25),v.PrimaryPart,"Hide Spot")
+					table.insert(esptable.lockers,h) 
+					table.insert(esptableinstances, v)
+					valuechange = game:GetService("ReplicatedStorage").GameData.LatestRoom:GetPropertyChangedSignal("Value"):Connect(function()
+						if tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value) ~= room.Name then
+							h.delete()
+							valuechange:Disconnect()
+						end
+					end)
+				end
+			end
+
+			local function setup(room)
+				local assets = room:WaitForChild("Assets")
+
+				if assets then
+					local subaddcon
+					subaddcon = assets.DescendantAdded:Connect(function(v)
+						check(v, room) 
+					end)
+
+					for i,v in pairs(assets:GetDescendants()) do
+						check(v, room)
+					end
+
+					task.spawn(function()
+						repeat task.wait() until BOBHUBLOADED == false or not flags.esplocker
+						subaddcon:Disconnect()  
+					end)
+				else
+					local subaddcon
+					subaddcon = room.DescendantAdded:Connect(function(v)
+						check(v, room) 
+					end)
+
+					for i,v in pairs(room:GetDescendants()) do
+						check(v, room)
+					end
+
+					task.spawn(function()
+						repeat task.wait() until BOBHUBLOADED == false or not flags.esplocker
+						subaddcon:Disconnect()  
+					end) 
+				end
+			end
+
+			local addconnect
+			addconnect = workspace.CurrentRooms.ChildAdded:Connect(function(room)
+				setup(room)
+			end)
+
+			if workspace.CurrentRooms:FindFirstChild(tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value-1)) then
+				setup(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value-1)])
+			end
+			setup(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)])
+			if workspace.CurrentRooms:FindFirstChild(tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value+1)) then
+				setup(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value+1)])
+			end
+
+			repeat task.wait() until BOBHUBLOADED == false or not flags.esplocker
+			addconnect:Disconnect()
+
+			for i,v in pairs(esptable.lockers) do
+				v.delete()
+			end 
+		end
+	end
+})
+    
+    LeftGroupBox:AddToggle('MyToggle', {
     Text = 'Chest ESP',
-    Default = true,
-    Tooltip = 'esp for loot chests',
+    Default = false,
+    Tooltip = 'ESP For both types of loot chests',
 
     Callback = function(val)
     flags.espchest = val
@@ -1012,7 +1094,7 @@ LeftGroupBox:AddToggle('MyToggle', {
 				end
 
 				task.spawn(function()
-					repeat task.wait() until HunterLibraryLOADED == false or not flags.espchest
+					repeat task.wait() until BOBHUBLOADED == false or not flags.espchest
 					subaddcon:Disconnect()  
 				end)  
 			end
@@ -1033,7 +1115,7 @@ LeftGroupBox:AddToggle('MyToggle', {
 				setup(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)])
 			end
 
-			repeat task.wait() until HunterLibraryLOADED == false or not flags.espchest
+			repeat task.wait() until BOBHUBLOADED == false or not flags.espchest
 			addconnect:Disconnect()
 
 			for i,v in pairs(esptable.chests) do
@@ -1045,8 +1127,8 @@ LeftGroupBox:AddToggle('MyToggle', {
     
     LeftGroupBox:AddToggle('MyToggle', {
     Text = 'Player ESP',
-    Default = true,
-    Tooltip = 'ESP for other players',
+    Default = false,
+    Tooltip = 'ESP For other Players',
 
     Callback = function(val)
     flags.esphumans = val
@@ -1093,7 +1175,7 @@ LeftGroupBox:AddToggle('MyToggle', {
 				personesp(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)])
 			end
 
-			repeat task.wait() until HunterLibraryLOADED == false or not flags.esphumans
+			repeat task.wait() until BOBHUBLOADED == false or not flags.esphumans
 			addconnect:Disconnect()
 
 			for i,v in pairs(esptable.people) do
@@ -1105,8 +1187,8 @@ LeftGroupBox:AddToggle('MyToggle', {
     
     LeftGroupBox:AddToggle('MyToggle', {
     Text = 'Gold ESP',
-    Default = true,
-    Tooltip = 'Esp for gold',
+    Default = false,
+    Tooltip = 'ESP For Gold In The Open',
 
     Callback = function(val)
     flags.espgold = val
@@ -1145,7 +1227,7 @@ LeftGroupBox:AddToggle('MyToggle', {
 				end
 
 				task.spawn(function()
-					repeat task.wait() until HunterLibraryLOADED == false or not flags.espchest
+					repeat task.wait() until BOBHUBLOADED == false or not flags.espchest
 					subaddcon:Disconnect()  
 				end)  
 			end
@@ -1166,7 +1248,7 @@ LeftGroupBox:AddToggle('MyToggle', {
 				setup(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)])
 			end
 
-			repeat task.wait() until HunterLibraryLOADED == false or not flags.espgold
+			repeat task.wait() until BOBHUBLOADED == false or not flags.espgold
 			addconnect:Disconnect()
 
 			for i,v in pairs(esptable.gold) do
@@ -1182,8 +1264,8 @@ local LeftGroupBox2 = Tabs.Main:AddLeftGroupbox('Trolling')
 if fireproximityprompt then
 LeftGroupBox:AddToggle('MyToggle', {
     Text = 'Instant Use',
-    Default = true,
-    Tooltip = 'No E Cooldown When Interacting',
+    Default = false,
+    Tooltip = 'Removes The E Cooldown When Interacting',
 
     Callback = function(val)
     flags.instapp = val
@@ -1193,18 +1275,18 @@ LeftGroupBox:AddToggle('MyToggle', {
 				fireproximityprompt(p)
 			end)
 
-			repeat task.wait() until HunterLibraryLOADED == false or not flags.instapp
+			repeat task.wait() until BOBHUBLOADED == false or not flags.instapp
 			holdconnect:Disconnect()
 		end
 	})
 else
-	warnmessage("Hunter Library", "You need to have fireproximityprompt function for 'instant use'.", 7)
+	warnmessage("Hunter Library v"..currentver, "You need to have fireproximityprompt function for 'instant use'.", 7)
 end
     
 LeftGroupBox:AddToggle('MyToggle', {
     Text = 'FullBright',
     Default = false,
-    Tooltip = 'Maximum Brightness|Clientsided',
+    Tooltip = 'Allows You to See In Dark Rooms',
 
     Callback = function(val)
      flags.fullbright = val
@@ -1228,7 +1310,7 @@ LeftGroupBox:AddToggle('MyToggle', {
 			doFullbright()
 
 			local coneee = game:GetService("Lighting").LightingChanged:Connect(doFullbright)
-			repeat task.wait() until HunterLibraryLOADED == false or not flags.fullbright
+			repeat task.wait() until BOBHUBLOADED == false or not flags.fullbright
 
 			coneee:Disconnect()
 			game:GetService("Lighting").Ambient = oldAmbient
@@ -1242,8 +1324,8 @@ LeftGroupBox:AddSlider('MySlider', {
     Text = 'Speed Boost',
     Default = 0,
     Min = 0,
-    Max = 30,
-    Rounding = 0.1,
+    Max = 25,
+    Rounding = 1,
     Compact = false,
 
     Callback = function(val)
@@ -1257,7 +1339,7 @@ LeftGroupBox:AddSlider('MySlider', {
 LeftGroupBox:AddToggle('MyToggle', {
     Text = 'Enable Speed Boost',
     Default = false,
-    Tooltip = 'Enables Speed Boost',
+    Tooltip = '',
 
     Callback = function(val)
     flags.walkspeedtoggle = val
@@ -1283,7 +1365,7 @@ LeftGroupBox:AddSlider('MySlider', {
 LeftGroupBox:AddToggle('MyToggle', {
     Text = 'Enable FieldOfView',
     Default = false,
-    Tooltip = 'Enables Field Of View',
+    Tooltip = '',
 
     Callback = function(val)
     flags.camfovtoggle = val
@@ -1320,7 +1402,7 @@ end)
 LeftGroupBox:AddToggle('MyToggle', {
     Text = 'Noclip [NoBypass]',
     Default = false,
-    Tooltip = 'Allows You To Noclip Through Walls',
+    Tooltip = 'Allows You To Clip Through Walls And Ceiling',
 
     Callback = function(val)
     flags.noclip = val
@@ -1405,7 +1487,7 @@ local Tab1 = TabBox:AddTab('Auto')
 Tab1:AddToggle('MyToggle', {
     Text = 'Auto Library Code',
     Default = false,
-    Tooltip = 'Automatically Figures Out The Code In Library',
+    Tooltip = 'Automatically Figures Out The Library Code',
 
     Callback = function(val)
     flags.getcode = val
@@ -1459,7 +1541,7 @@ Tab1:AddToggle('MyToggle', {
 				end
 			end)
 
-			repeat task.wait() until HunterLibraryLOADED == false or not flags.getcode
+			repeat task.wait() until BOBHUBLOADED == false or not flags.getcode
 			addconnect:Disconnect()
 		end
 	end
@@ -1467,12 +1549,12 @@ Tab1:AddToggle('MyToggle', {
 
 local elevatorbreakerbox = false
 Tab1:AddToggle('MyToggle', {
-Text = 'Auto Complete Breaker Box (doesnt work for some reason)',
+Text = 'Auto Complete Breaker Box (BROKEN)',
     Default = false,
-    Tooltip = 'Automatically Completes The Breaker Puzzle',
+    Tooltip = '',
 
     Callback = function(val)
-    normalmessage("ROOM 100", "Trying to comeplete breaker box...", "You May head To The Elevator Once This is Done", 5)
+    warnmessage("ROOM 100", "Trying to comeplete breaker box...", "This Will Take Abit...", 7)
     NoBreaker = val
     while task.wait(1) do
         if not NoBreaker then
@@ -1500,7 +1582,7 @@ casjfg = caht
 Tab2:AddToggle('MyToggle', {
     Text = 'Notify Entities',
     Default = false,
-    Tooltip = 'Notifies When Entities Like Rush And Ambush Are Coming',
+    Tooltip = 'Notifies When Entities Are Coming',
     Callback = function(val)
     flags.hintrush = val
 	end
@@ -1547,22 +1629,28 @@ workspace.ChildAdded:Connect(function(inst)
 							end
 						end)
 						warnmessage("ENTITIES", inst.Name:gsub("Moving","").." spawned.", "Don't look at it!", 10, "10865377903")
+					else
+						warnmessage("ENTITIES", inst.Name:gsub("Moving","").." is coming.", "Hide!", 0, "0", inst)
 					end
 					inst.Destroying:Wait()
-					  warnmessage("ENTITIES", "It's now completely safe to leave the hiding spot.", 7)
+					warnmessage("ENTITIES", "It's now completely safe to leave the hiding spot.", 7)
 						end
 				end
-					else
+			end
+		end
+	end)
 	
-     if flags.avoidrushambush == true then
+	if flags.avoidrushambush == true then
 		if inst.Name == "RushMoving" or inst.Name == "AmbushMoving" then
 			repeat task.wait() until plr:DistanceFromCharacter(inst:GetPivot().Position) < 400 or not inst:IsDescendantOf(workspace)
 
 			if inst:IsDescendantOf(workspace) then
 				if inst.Name:gsub("Moving","") == "Rush" then
-					warnmessage("ENTITIES", "inst.Name:gsub("Moving","").." is coming!", "Dont Worry! You Have Godmode Enabled!", 0, "11102256553", inst)
+					warnmessage("ENTITIES", "Avoiding "..inst.Name:gsub("Moving",""), "Please wait...", 0, "11102256553", inst)
 				elseif inst.Name:gsub("Moving","") == "Ambush" then
-					warnmessage("ENTITIES", "inst.Name:gsub("Moving","").." is coming!", "Dont Worry! You Have Godmode Enabled!", 0, "10938726652", inst)
+					warnmessage("ENTITIES", "Avoiding "..inst.Name:gsub("Moving",""), "Please wait...", 0, "10938726652", inst)
+				else
+					warnmessage("ENTITIES", "Avoiding "..inst.Name:gsub("Moving",""), "Please wait...", 0, "0", inst)
 				end
 
 				local OldPos = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
@@ -1574,7 +1662,7 @@ workspace.ChildAdded:Connect(function(inst)
 						avoidingYvalue,
 						0
 					) 
-											end)
+				)
 				
 				local function getrecentroom(index)
 					local rooms = workspace.CurrentRooms:GetChildren() 
@@ -1590,7 +1678,7 @@ workspace.ChildAdded:Connect(function(inst)
 				local CFrameValue = Instance.new("CFrameValue")
 				CFrameValue.Value = game.Players.LocalPlayer.Character:GetPivot()
 				CFrameValue:GetPropertyChangedSignal("Value"):connect(function()
-				        --game.Players.LocalPlayer.Character:PivotTo(CFrameValue.Value)
+					--game.Players.LocalPlayer.Character:PivotTo(CFrameValue.Value)
 					game.Players.LocalPlayer.Character.Collision.CFrame = CFrameValue.Value
 				end)
 				local tween = game:GetService("TweenService"):Create(CFrameValue, TweenInfo.new(1.5), {
@@ -1629,9 +1717,9 @@ end)
 local casjfg = ""
 
 Tab2:AddToggle('MyToggle', {
-    Text = 'Chat Notify (BETA)',
+    Text = 'Chat Notify',
     Default = false,
-    Tooltip = 'Notifies Entites In Chat',
+    Tooltip = 'Notifies Entity In Chat',
     Callback = function(Chats)
 _G.Chat = Chats
 
@@ -1645,27 +1733,27 @@ _G.Chat = Chats
 
 if v.Name == "RushMoving" then
 
-game:GetService("TextChatService").TextChannels.RBXGeneral:SendAsync("Rush! " .. casjfg)
+game:GetService("TextChatService").TextChannels.RBXGeneral:SendAsync("Rush!" .. casjfg)
 
 elseif v.Name == "AmbushMoving" then
 
-game:GetService("TextChatService").TextChannels.RBXGeneral:SendAsync("Ambush! " .. casjfg)
+game:GetService("TextChatService").TextChannels.RBXGeneral:SendAsync("Ambush!" .. casjfg)
 
 elseif v.Name == "A60" then
 
-game:GetService("TextChatService").TextChannels.RBXGeneral:SendAsync("A60! " .. casjfg)
+game:GetService("TextChatService").TextChannels.RBXGeneral:SendAsync("A60!" .. casjfg)
 
 elseif v.Name == "A120" then
 
-game:GetService("TextChatService").TextChannels.RBXGeneral:SendAsync("A120! " .. casjfg)
+game:GetService("TextChatService").TextChannels.RBXGeneral:SendAsync("A120!" .. casjfg)
 
 elseif v.Name == "JeffTheKiller" then
 
-game:GetService("TextChatService").TextChannels.RBXGeneral:SendAsync("JTK! ".. "pop vitamins!")
+game:GetService("TextChatService").TextChannels.RBXGeneral:SendAsync("Jeff The Killer!")
 
 elseif v.Name == "Eyes" then
 
-game:GetService("TextChatService").TextChannels.RBXGeneral:SendAsync("Eyes! ".."dont look")
+game:GetService("TextChatService").TextChannels.RBXGeneral:SendAsync("Eyes!")
 
 end
 
@@ -1879,7 +1967,7 @@ RightGroupbox:AddToggle('MyToggle', {
 					end
 
 					task.spawn(function()
-						repeat task.wait() until HunterLibraryLOADED == false or not flags.draweraura
+						repeat task.wait() until BOBHUBLOADED == false or not flags.draweraura
 						subaddcon:Disconnect() 
 					end)
 				end
@@ -1896,19 +1984,19 @@ RightGroupbox:AddToggle('MyToggle', {
 				end
 				setup(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)])
 
-				repeat task.wait() until HunterLibraryLOADED == false or not flags.draweraura
+				repeat task.wait() until BOBHUBLOADED == false or not flags.draweraura
 				addconnect:Disconnect()
 			end
 		end
 })
 else
-oldwarnmessage("Hunter Library v"..currentver, "You need to have fireproximityprompt function for 'loot aura' to work.", 7)
+oldwarnmessage("Hunter Library v"..currentver, "You need to have fireproximityprompt function for 'loot aura'.", 7)
 end
 
 RightGroupbox:AddToggle('MyToggle', {
     Text = 'Item Aura',
     Default = false,
-    Tooltip = 'Automatically Grabs Items',
+    Tooltip = 'Automatically Picks Up Items',
 
     Callback = function(val)
     flags.itemsaura = val
@@ -2113,7 +2201,7 @@ RightGroupbox:AddToggle('MyToggle', {
 					end
 
 					task.spawn(function()
-						repeat task.wait() until HunterLibraryLOADED == false or not flags.itemsaura
+						repeat task.wait() until BOBHUBLOADED == false or not flags.itemsaura
 						subaddcon:Disconnect() 
 					end)
 				end
@@ -2130,7 +2218,7 @@ RightGroupbox:AddToggle('MyToggle', {
 				end
 				setup(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)])
 
-				repeat task.wait() until HunterLibraryLOADED == false or not flags.itemsaura
+				repeat task.wait() until BOBHUBLOADED == false or not flags.itemsaura
 				addconnect:Disconnect()
 			end
 		end
@@ -2139,7 +2227,7 @@ RightGroupbox:AddToggle('MyToggle', {
 RightGroupbox:AddToggle('MyToggle', {
     Text = 'Lever Aura',
     Default = false,
-    Tooltip = 'Automatically Flips The Lever In Basements',
+    Tooltip = 'Automatically Flicks Levers',
 
     Callback = function(val)
     flags.autopulllever = val
@@ -2195,7 +2283,7 @@ RightGroupbox:AddToggle('MyToggle', {
 					end
 
 					task.spawn(function()
-						repeat task.wait() until HunterLibraryLOADED == false or not flags.autopulllever
+						repeat task.wait() until BOBHUBLOADED == false or not flags.autopulllever
 						subaddcon:Disconnect() 
 					end)
 				end
@@ -2215,7 +2303,7 @@ RightGroupbox:AddToggle('MyToggle', {
 					setup(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)])
 					--	end
 
-					repeat task.wait() until HunterLibraryLOADED == false or not flags.autopulllever
+					repeat task.wait() until BOBHUBLOADED == false or not flags.autopulllever
 					addconnect:Disconnect()
 				end
 			end
@@ -2225,7 +2313,7 @@ RightGroupbox:AddToggle('MyToggle', {
 RightGroupbox:AddToggle('MyToggle', {
     Text = 'Book Aura',
     Default = false,
-    Tooltip = 'Automatically Collects The Library Books When Youre Near',
+    Tooltip = 'Automatically Picks Up Books In The Library',
 
     Callback = function(val)
     flags.bookcollecter = val
@@ -2280,7 +2368,7 @@ RightGroupbox:AddToggle('MyToggle', {
 					end
 
 					task.spawn(function()
-						repeat task.wait() until HunterLibraryLOADED == false or not flags.bookcollecter
+						repeat task.wait() until BOBHUBLOADED == false or not flags.bookcollecter
 						subaddcon:Disconnect() 
 					end)
 				end
@@ -2302,7 +2390,7 @@ RightGroupbox:AddToggle('MyToggle', {
 					setup(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)])
 					--	end
 
-					repeat task.wait() until HunterLibraryLOADED == false or not flags.bookcollecter
+					repeat task.wait() until BOBHUBLOADED == false or not flags.bookcollecter
 					addconnect:Disconnect()
 				end
 			end
@@ -2312,7 +2400,7 @@ RightGroupbox:AddToggle('MyToggle', {
 	RightGroupbox:AddToggle('MyToggle', {
     Text = 'Breaker Aura',
     Default = false,
-    Tooltip = 'Automatically Collects The Breakers In Door 100 When Youre Near',
+    Tooltip = 'Automatically Picks Up Breakers In Door 100',
 
     Callback = function(val)
     flags.breakercollecter = val
@@ -2367,7 +2455,7 @@ RightGroupbox:AddToggle('MyToggle', {
 					end
 
 					task.spawn(function()
-						repeat task.wait() until HunterLibraryLOADED == false or not flags.breakercollecter
+						repeat task.wait() until BOBHUBLOADED == false or not flags.breakercollecter
 						subaddcon:Disconnect() 
 					end)
 				end
@@ -2389,7 +2477,7 @@ RightGroupbox:AddToggle('MyToggle', {
 					setup(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)])
 					--	end
 
-					repeat task.wait() until HunterLibraryLOADED == false or not flags.breakercollecter
+					repeat task.wait() until BOBHUBLOADED == false or not flags.breakercollecter
 					addconnect:Disconnect()
 				end
 			end
@@ -2398,7 +2486,7 @@ RightGroupbox:AddToggle('MyToggle', {
 
 local RightGroupbox1 = Tabs.Main:AddRightGroupbox('Avoid');
 
-local RightGroupbox2 = Tabs.Main:AddRightGroupbox('Entity Remover');
+local RightGroupbox2 = Tabs.Main:AddRightGroupbox('Bypass');
 
 local RightGroupbox3 = Tabs.Main:AddRightGroupbox('Remove');
 
@@ -2417,7 +2505,7 @@ task.spawn(function()
 end
 end,
     DoubleClick = false,
-    Tooltip = 'Enables Godmode (Invincibility)'
+    Tooltip = ''
 })
 
 local MyButton = RightGroupbox1:AddButton({
@@ -2435,7 +2523,7 @@ task.spawn(function()
 end
 end,
     DoubleClick = false,
-    Tooltip = 'Disables Godmode'
+    Tooltip = ''
 })
 local MyButton = LeftGroupBox2:AddButton({
     Text = 'Waste Others Items',
@@ -2457,12 +2545,12 @@ local MyButton = LeftGroupBox2:AddButton({
         end
 end,
     DoubleClick = false,
-    Tooltip = 'Troll Other Ppl?'
+    Tooltip = ''
 })
 LeftGroupBox2:AddToggle('MyToggle', {
     Text = 'Spam Motor Replication',
     Default = false,
-    Tooltip = 'i have no idea what is this, its a00pkidds',
+    Tooltip = '',
 
     Callback = function(val)
     if val then
@@ -2478,7 +2566,7 @@ LeftGroupBox2:AddToggle('MyToggle', {
 RightGroupbox2:AddToggle('MyToggle', {
     Text = 'Disable Anti Cheat',
     Default = false,
-    Tooltip = 'Bypass The Teleport Back When Too Fast Anti-Cheat',
+    Tooltip = '',
 
     Callback = function(BypassSpeedss)
 _G.BypassSpeeds = BypassSpeedss
@@ -2493,9 +2581,9 @@ end
 })
 
 RightGroupbox2:AddToggle('MyToggle', {
-    Text = 'Remove Seek Chase',
+    Text = 'No Seek Chase',
     Default = false,
-    Tooltip = 'Removes Seek',
+    Tooltip = '',
 
     Callback = function(val)
     flags.noseek = val
@@ -2510,16 +2598,16 @@ RightGroupbox2:AddToggle('MyToggle', {
 				end
 			end)
 
-			repeat task.wait() until HunterLibraryLOADED == false or not flags.noseek
+			repeat task.wait() until BOBHUBLOADED == false or not flags.noseek
 			addconnect:Disconnect()
 		end
 	end
 })
 
 RightGroupbox2:AddToggle('MyToggle', {
-    Text = 'Disable Seek Arms & Fire',
+    Text = 'Remove Seek Arms & Fire',
     Default = false,
-    Tooltip = 'Remove The Arms And Fire In the Final Room Of Seeks Chase',
+    Tooltip = '',
 
     Callback = function(val)
     flags.noseekarmsfire = val
@@ -2538,9 +2626,9 @@ end)
 
 local ScreechModule = plr.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Modules:FindFirstChild("Screech")
 RightGroupbox2:AddToggle('MyToggle', {
-    Text = 'Remove Screech',
+    Text = 'No Screech',
     Default = false,
-    Tooltip = 'Removes That Annoying B****',
+    Tooltip = '',
 
     Callback = function(val)
 flags.noscreech = val
@@ -2557,9 +2645,9 @@ game:GetService("RunService").RenderStepped:Connect(function()
 
 
 RightGroupbox2:AddToggle('MyToggle', {
-    Text = 'Remove Timothy [NoJumpScare]',
+    Text = 'No Timothy [NoJumpScare]',
     Default = false,
-    Tooltip = 'Removes The Visual Jumpscare Of Timothy',
+    Tooltip = '',
 
     Callback = function(val)
     DisableTimothy = val
@@ -2567,9 +2655,9 @@ RightGroupbox2:AddToggle('MyToggle', {
 })
         
 RightGroupbox2:AddToggle('MyToggle', {
-    Text = 'Autowin Heartbeat Minigame',
+    Text = 'Always Win heartbeat Minigame',
     Default = false,
-    Tooltip = 'Autowins The Heartbeat Minigame',
+    Tooltip = '',
 
     Callback = function(val)
     flags.heartbeatwin = val
@@ -2592,7 +2680,7 @@ local old
 RightGroupbox2:AddToggle('MyToggle', {
     Text = 'No Eyes Damage',
     Default = false,
-    Tooltip = 'Removes Eyes Damage (Stacks With Godmode)',
+    Tooltip = '',
 
     Callback = function(val)
     flags.noeyesdamage = val
@@ -2950,9 +3038,19 @@ EntityInfo.SpiderJumpscare.OnClientEvent:Connect(function(...)
 end)
 
 RightGroupbox2:AddToggle('MyToggle', {
+    Text = 'No Halt',
+    Default = false,
+    Tooltip = '',
+
+    Callback = function(val)
+    _G.NoHalt = val
+    end
+})
+
+RightGroupbox2:AddToggle('MyToggle', {
     Text = 'Anti-Dupe',
     Default = false,
-    Tooltip = 'Doesnt Allow Dupe To Dupe you',
+    Tooltip = '',
 
     Callback = function(val)
     _G.Fake_Hitbox = val
@@ -2972,21 +3070,11 @@ RightGroupbox2:AddToggle('MyToggle', {
 RightGroupbox2:AddToggle('MyToggle', {
     Text = 'Anti-Glitch',
     Default = false,
-    Tooltip = 'Remove The Glitch Jumpscare',
+    Tooltip = '',
 
     Callback = function(val)
     DisableGlitch = val
 end
-})
-
-RightGroupbox2:AddToggle('MyToggle', {
-    Text = 'Remove Halt',
-    Default = false,
-    Tooltip = 'Removes Halt (best remove halt as no blue light and sound!)',
-
-    Callback = function(val)
-    _G.NoHalt = val
-    end
 })
 
 game:GetService("RunService").RenderStepped:Connect(function()
@@ -2998,9 +3086,9 @@ game:GetService("RunService").RenderStepped:Connect(function()
         end)
         
 RightGroupbox3:AddToggle('MyToggle', {
-    Text = 'Remove Gate',
+    Text = 'Remove Gates',
     Default = false,
-    Tooltip = 'Removes Metal Gates',
+    Tooltip = '',
 
     Callback = function(val)
     flags.nogates = val
@@ -3043,7 +3131,7 @@ RightGroupbox3:AddToggle('MyToggle', {
 				end
 			end)
 
-			repeat task.wait() until HunterLibraryLOADED == false or not flags.nogates
+			repeat task.wait() until BOBHUBLOADED == false or not flags.nogates
 			addconnect:Disconnect()
 		end
 	end
@@ -3052,7 +3140,7 @@ RightGroupbox3:AddToggle('MyToggle', {
 RightGroupbox3:AddToggle('MyToggle', {
     Text = 'A-000 Door No Locks',
     Default = false,
-    Tooltip = 'Removes The Functions Of The Locks At A-000 At Room 60',
+    Tooltip = 'Removes Locks At A-000',
 
     Callback = function(val)
     flags.roomsnolock = val
@@ -3080,7 +3168,7 @@ RightGroupbox3:AddToggle('MyToggle', {
 				check(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)])
 			end)
 
-			repeat task.wait() until HunterLibraryLOADED == false or not flags.roomsnolock
+			repeat task.wait() until BOBHUBLOADED == false or not flags.roomsnolock
 			addconnect:Disconnect()
 		end
 	end
@@ -3089,7 +3177,7 @@ RightGroupbox3:AddToggle('MyToggle', {
     RightGroupbox3:AddToggle('MyToggle', {
     Text = 'Remove Skeleton Door',
     Default = false,
-    Tooltip = 'Removes The Door At The Infirmary Guarding The Herb Of Viridis',
+    Tooltip = 'Removes The Skeleton Door Guarding The Herb of Viridis',
 
     Callback = function(val)
     flags.noskeledoors = val
@@ -3111,17 +3199,16 @@ RightGroupbox3:AddToggle('MyToggle', {
 				end 
 			end)
 
-			repeat task.wait() until HunterLibraryLOADED == false or not flags.noskeledoors
+			repeat task.wait() until BOBHUBLOADED == false or not flags.noskeledoors
 			addconnect:Disconnect()
 		end
 	end
 })
 
 RightGroupbox3:AddToggle('Enable', {
-    Text = 'Anti-Snare',
+    Text = 'Remove Snare',
     Default = false,
-    Tooltip = 'Removes The Damage And Jumpscare From Snare',
-          
+
     Callback = function(Value)
         _G.Snare_Hitbox = Value
 
@@ -3186,7 +3273,7 @@ flags.nopuzzle = val
 				end
 			end)
 
-			repeat task.wait() until Tooltip = '', == false or not flags.nopuzzle
+			repeat task.wait() until BOBHUBLOADED == false or not flags.nopuzzle
 			addconnect:Disconnect()
 		end
 	end
@@ -3195,44 +3282,22 @@ flags.nopuzzle = val
 local LeftGroupBox4 = Tabs.Credits:AddLeftGroupbox('Credits')
 
 LeftGroupBox4:AddLabel('Scripter :')
-LeftGroupBox4:AddLabel('a00pkidd(FIRED) And Hunter')
+LeftGroupBox4:AddLabel('Hunter')
 
 LeftGroupBox4:AddLabel('Youtube')
-
-local MyButton = LeftGroupBox4:AddButton({
-    Text = 'a00pkidd sucks so no link for him',
-    Func = function()
-        if setclipboard then 
-            setclipboard("")   
-        end
-    end,
-    DoubleClick = false,
-    Tooltip = ''
-})
 
 local MyButton = LeftGroupBox4:AddButton({
     Text = 'Sirotan And Ethans World',
     Func = function()
         if setclipboard then 
-            setclipboard("https://www.youtube.com/@SirotanAndEthan")   
-        end
-    end,
-    DoubleClick = false,
-    Tooltip = ''
-}) 
-
-LeftGroupBox4:AddLabel('Discord')
-
-local MyButton = LeftGroupBox4:AddButton({
-    Text = 'a00pkidd sucks so no link for him',
-    Func = function()
-        if setclipboard then 
-            setclipboard("a0ppkidd sucks")   
+            setclipboard("https://youtube.com/@SirotanAndEthan")   
         end
     end,
     DoubleClick = false,
     Tooltip = ''
 })
+
+LeftGroupBox4:AddLabel('Discord')
 
 local MyButton = LeftGroupBox4:AddButton({
     Text = 'mrkillinghunter_',
@@ -3269,31 +3334,20 @@ local WatermarkConnection = game:GetService('RunService').RenderStepped:Connect(
     ));
 end);
 
-local MenuGroup = Tabs['UI Settings']:AddLeftGroupbox('GUI')
+local MenuGroup = Tabs['UI Settings']:AddLeftGroupbox('UI Settings')
 
-MenuGroup:AddLabel('UI Settings'):AddKeyPicker('UI Toggle Keybind', { Default = 'Ins', NoUI = true, Text = 'UI Toggle Keybind' })
+MenuGroup:AddLabel('UI toggle Keybind'):AddKeyPicker('MenuKeybind', { Default = 'Ins', NoUI = true, Text = 'UI Toggle Keybind' })
 
-local MyButton = LeftGroupBox:AddButton({
-    Text = 'Join Discord Server',
-    Func = function()
-        if setclipboard then 
-            setclipboard("")   
-        end
-    end,
-    DoubleClick = false,
-    Tooltip = 'Copies The Invite Link To Your Clipboard'
-}) 
-
-local MyButton = LeftGroupBox:AddButton({
+local MyButton = LeftGroupBox4:AddButton({
     Text = 'Close GUI',
     Func = function()
-        if  then 
-            setclipboard("https://www.youtube.com/@SirotanAndEthan")   
+        if closescript then 
+            closesript   
         end
     end,
     DoubleClick = false,
     Tooltip = ''
-}) 
+})
 
 Library.ToggleKeybind = Options.MenuKeybind
 
@@ -3305,8 +3359,8 @@ SaveManager:SetLibrary(Library)
 
 SaveManager:IgnoreThemeSettings()
 
-ThemeManager:SetFolder('Hunter Library')
-SaveManager:SetFolder('Hunter Library/DOORS')
+ThemeManager:SetFolder('Hunter-Library')
+SaveManager:SetFolder('Hunter-Library/DOORS')
 
 SaveManager:BuildConfigSection(Tabs['UI Settings'])
 
