@@ -3017,7 +3017,7 @@ end)
 	
 
 RightGroupbox2:AddToggle('MyToggle', {
-    Text = 'Bypass Halt',
+    Text = 'No Halt',
     Default = false,
     Tooltip = '',
 
@@ -3331,9 +3331,22 @@ local MyButton = LeftGroupBox4:AddButton({
     Tooltip = ''
 })
 
+LeftGroupBox4:AddLabel('Discord Server And Other')
+
+local MyButton = LeftGroupBox4:AddButton({
+    Text = 'Join The Discord (Moving Soon)',
+    Func = function()
+        if setclipboard then 
+            setclipboard("https://discord.gg/RSzEmBC9rZ")   
+        end
+    end,
+    DoubleClick = false,
+    Tooltip = ''
+})
 
 
-Library:SetWatermarkVisibility(true)
+
+Library:SetWatermarkVisibility(false)
 
 -- Example of dynamically-updating watermark with common traits (fps and ping)
 local FrameTimer = tick()
@@ -3357,17 +3370,6 @@ end);
 
 local MenuGroup = Tabs['UI Settings']:AddLeftGroupbox('UI Settings')
 
-local MyButton = LeftGroupBox:AddButton({
-    Text = 'Join The Discord (Moving Soon)',
-    Func = function()
-        if setclipboard then 
-            setclipboard("https://discord.gg/RSzEmBC9rZ")   
-        end
-    end,
-    DoubleClick = false,
-    Tooltip = ''
-})
-
 MenuGroup:AddLabel('UI Toggle Keybind'):AddKeyPicker('MenuKeybind', { Default = 'End', NoUI = true, Text = 'UI Toggle Keybind' })
 	
 Library.ToggleKeybind = Options.MenuKeybind
@@ -3381,7 +3383,7 @@ SaveManager:SetLibrary(Library)
 SaveManager:IgnoreThemeSettings()
 
 ThemeManager:SetFolder('Hunter Library')
-SaveManager:SetFolder('Hunter Library/specific-game')
+SaveManager:SetFolder('Hunter Library/Doors')
 
 SaveManager:BuildConfigSection(Tabs['UI Settings'])
 
