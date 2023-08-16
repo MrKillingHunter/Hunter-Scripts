@@ -195,7 +195,7 @@ function PathModule.new(char, goal, agentParameters, jumpingAllowed, offset)
 	end
 end
 
-local currentver = "0.1 EARLY RELEASE"
+local currentver = "4"
 local gui_data = nil
 local s,e = pcall(function()
 	gui_data = game:HttpGet(("https://raw.githubusercontent.com/ZanoLeafVN/Hmmm/main/gui_data.json"), true)
