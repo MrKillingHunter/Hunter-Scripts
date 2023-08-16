@@ -3357,6 +3357,17 @@ end);
 
 local MenuGroup = Tabs['UI Settings']:AddLeftGroupbox('UI Settings')
 
+local MyButton = LeftGroupBox4:AddButton({
+    Text = 'Hunter',
+    Func = function()
+        if setclipboard then 
+            setclipboard("mrkillinghunter_")   
+        end
+    end,
+    DoubleClick = false,
+    Tooltip = ''
+})
+
 MenuGroup:AddLabel('UI Toggle Keybind'):AddKeyPicker('MenuKeybind', { Default = 'End', NoUI = true, Text = 'UI Toggle Keybind' })
 	
 Library.ToggleKeybind = Options.MenuKeybind
