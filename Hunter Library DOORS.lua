@@ -3357,7 +3357,7 @@ end);
 
 local MenuGroup = Tabs['UI Settings']:AddLeftGroupbox('UI Settings')
 
-local MyButton = LeftGroupBox4:AddButton({
+local MyButton = LeftGroupbox:AddButton({
     Text = 'Join The Discord (RN Is Hunter Club But Planning To Move)',
     Func = function()
         if setclipboard then 
@@ -3368,7 +3368,7 @@ local MyButton = LeftGroupBox4:AddButton({
     Tooltip = ''
 })
 
-MenuGroup:AddLabel('UI Toggle Keybind'):AddKeyPicker('MenuKeybind', { Default = 'Ins', NoUI = true, Text = 'UI Toggle Keybind' })
+MenuGroup:AddLabel('UI Toggle Keybind'):AddKeyPicker('MenuKeybind', { Default = 'Insert', NoUI = true, Text = 'UI Toggle Keybind' })
 	
 Library.ToggleKeybind = Options.MenuKeybind
 
