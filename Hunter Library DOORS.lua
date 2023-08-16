@@ -3076,8 +3076,8 @@ RightGroupbox2:AddToggle('MyToggle', {
 end
 })
 
-RightGroupbox3:AddToggle('Enable', {
-    Text = 'Remove Snare',
+RightGroupbox2:AddToggle('Enable', {
+    Text = 'Anti-Snare',
     Default = false,
 
     Callback = function(Value)
@@ -3368,7 +3368,7 @@ local MyButton = LeftGroupbox:AddButton({
     Tooltip = ''
 })
 
-MenuGroup:AddLabel('UI Toggle Keybind'):AddKeyPicker('MenuKeybind', { Default = 'Insert', NoUI = true, Text = 'UI Toggle Keybind' })
+MenuGroup:AddLabel('UI Toggle Keybind'):AddKeyPicker('MenuKeybind', { Default = 'End', NoUI = true, Text = 'UI Toggle Keybind' })
 	
 Library.ToggleKeybind = Options.MenuKeybind
 
@@ -3379,8 +3379,6 @@ ThemeManager:SetLibrary(Library)
 SaveManager:SetLibrary(Library)
 
 SaveManager:IgnoreThemeSettings()
-
-SaveManager:SetIgnoreIndexes({ 'MenuKeybind' })
 
 ThemeManager:SetFolder('Hunter Library')
 SaveManager:SetFolder('Hunter Library/specific-game')
