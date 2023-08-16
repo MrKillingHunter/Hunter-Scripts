@@ -195,7 +195,7 @@ function PathModule.new(char, goal, agentParameters, jumpingAllowed, offset)
 	end
 end
 
-local currentver = "4"
+local currentver = "0.1 EARLY RELEASE"
 local gui_data = nil
 local s,e = pcall(function()
 	gui_data = game:HttpGet(("https://raw.githubusercontent.com/ZanoLeafVN/Hmmm/main/gui_data.json"), true)
@@ -1363,7 +1363,7 @@ LeftGroupBox:AddSlider('MySlider', {
 })
 
 LeftGroupBox:AddToggle('MyToggle', {
-    Text = 'Enable FieldOfView',
+    Text = 'Enable Custom Field Of View',
     Default = false,
     Tooltip = '',
 
@@ -1400,9 +1400,9 @@ task.spawn(function()
 end)
 
 LeftGroupBox:AddToggle('MyToggle', {
-    Text = 'Noclip [NoBypass]',
+    Text = 'Noclip',
     Default = false,
-    Tooltip = '',
+    Tooltip = 'Allows You To Noclip Through Walls',
 
     Callback = function(val)
     flags.noclip = val
