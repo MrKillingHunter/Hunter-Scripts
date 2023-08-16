@@ -3333,7 +3333,7 @@ local MyButton = LeftGroupBox4:AddButton({
 
 
 
-Library:SetWatermarkVisibility(false)
+Library:SetWatermarkVisibility(true)
 
 -- Example of dynamically-updating watermark with common traits (fps and ping)
 local FrameTimer = tick()
@@ -3349,13 +3349,15 @@ local WatermarkConnection = game:GetService('RunService').RenderStepped:Connect(
         FrameCounter = 0;
     end;
 
-    Library:SetWatermark(('BOBHUB v4 | %s fps | %s ms'):format(
+    Library:SetWatermark((''):format(
         math.floor(FPS),
         math.floor(game:GetService('Stats').Network.ServerStatsItem['Data Ping']:GetValue())
     ));
 end);
 
 local MenuGroup = Tabs['UI Settings']:AddLeftGroupbox('UI Settings')
+
+MenuGroup:AddLabel('UI Toggle Keybind'):AddKeyPicker('MenuKeybind', { Default = 'End', NoUI = true, Text = 'UI Toggle Keybind' })
 
 local MyButton = LeftGroupbox:AddButton({
     Text = 'Join The Discord (RN Is Hunter Club But Planning To Move)',
@@ -3367,8 +3369,6 @@ local MyButton = LeftGroupbox:AddButton({
     DoubleClick = false,
     Tooltip = ''
 })
-
-MenuGroup:AddLabel('UI Toggle Keybind'):AddKeyPicker('MenuKeybind', { Default = 'End', NoUI = true, Text = 'UI Toggle Keybind' })
 	
 Library.ToggleKeybind = Options.MenuKeybind
 
