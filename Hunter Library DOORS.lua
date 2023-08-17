@@ -562,7 +562,7 @@ local txt = Instance.new("TextLabel",bill)
 	return ret 
 end
 
-local repo = 'https://raw.githubusercontent.com/notpoiu/LinoriaLib/main/'
+local repo = 'https://raw.githubusercontent.com/notpoiu/LinoriaLib/main/' 
 
 local Library = loadstring(game:HttpGet(repo .. 'Library.lua'))()
 local ThemeManager = loadstring(game:HttpGet(repo .. 'addons/ThemeManager.lua'))()
@@ -580,907 +580,15 @@ local Window = Library:CreateWindow({
 })
 
 local Tabs = {
-    Main = Window:AddTab('Script Features'),
+    Main = Window:AddTab('Main'),
+    Character = Window:AddTab('Character')
+    Visuals = Window:AddTab('Visuals And ESP')
+    Entity = Window:AddTab('Entity Matters')
     Credits = Window:AddTab('Credits'),
     ['UI Settings'] = Window:AddTab('Configs'),
 }
-    
-local LeftGroupBox = Tabs.Main:AddLeftGroupbox('ESP')
-LeftGroupBox:AddToggle('MyToggle', {
-    Text = 'Door ESP',
-    Default = false,
-    Tooltip = '',
 
-    Callback = function(val)
-    flags.espdoors = val
-
-		if val then
-			local function setup(room)
-				task.wait(.1)
-				local door = room:WaitForChild("Door"):WaitForChild("Door")
-
-				if table.find(esptableinstances, door) then
-					return
-				end
-
-				task.wait(0.1)
-				local h = esp(door,Color3.fromRGB(90,255,40),door,"Door")
-				table.insert(esptable.doors,h)
-				table.insert(esptableinstances, door)
-
-				door:WaitForChild("Open").Played:Connect(function()
-					h.delete()
-				end)
-
-				door.AncestryChanged:Connect(function()
-					h.delete()
-				end)
-			end
-
-			local addconnect
-			addconnect = workspace.CurrentRooms.ChildAdded:Connect(function(room)
-				setup(room)
-			end)
-
-			for i,room in pairs(workspace.CurrentRooms:GetChildren()) do
-				if room:FindFirstChild("Assets") then
-					setup(room) 
-				end
-				task.wait()
-			end
-
-			if workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:FindFirstChild("Assets") then
-				setup(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)])
-			end
-
-			repeat task.wait() until BOBHUBLOADED == false or not flags.espdoors
-			addconnect:Disconnect()
-
-			for i,v in pairs(esptable.doors) do
-				v.delete()
-end 
-		end
-	end
-})
-
-LeftGroupBox:AddToggle('MyToggle', {
-    Text = 'Key/Lever ESP',
-    Default = false,
-    Tooltip = '',
-
-    Callback = function(val)
-    flags.espkeys = val
-
-		if val then
-			local function check(v, room)
-				task.wait()
-				if table.find(esptableinstances, v) then
-					return
-				end
-
-				if v:IsA("Model") then
-					if v.Name == "ElectricalKeyObtain" then
-						local hitbox = v:FindFirstChild("Hitbox")
-						local parts = hitbox:GetChildren()
-						table.remove(parts,table.find(parts,v:WaitForChild("PromptHitbox")))
-
-						local h = esp(parts,Color3.fromRGB(255,255,255),hitbox,"Electrical Key")
-						table.insert(esptable.keys,h)
-						table.insert(esptableinstances, v)
-					end
-					if v.Name == "KeyObtain" then
-						local hitbox = v:FindFirstChild("Hitbox")
-						local parts = hitbox:GetChildren()
-						table.remove(parts,table.find(parts,hitbox:WaitForChild("PromptHitbox")))
-
-						local h = esp(parts,Color3.fromRGB(255,255,255),hitbox,"Key")
-						table.insert(esptable.keys,h)
-						table.insert(esptableinstances, v)
-					end;if v.Name == "LeverForGate" then
-						local h = esp(v,Color3.fromRGB(255,255,255),v.PrimaryPart,"Lever")
-						table.insert(esptable.keys,h)
-						table.insert(esptableinstances, v)
-						v.PrimaryPart:WaitForChild("SoundToPlay").Played:Connect(function()
-							h.delete()
-						end) 
-					end
-				end
-			end
-
-			local function setup(room)
-				local assets = room:FindFirstChild("Assets")
-
-				if room then
-					if assets then
-						assets.DescendantAdded:Connect(function(v)
-							check(v, room) 
-						end)
-					else
-						room.DescendantAdded:Connect(function(v)
-							check(v, room) 
-						end)
-					end
-				end
-
-				if assets then
-					for i,v in pairs(assets:GetChildren()) do --:GetDescendants()) do
-						check(v, room)
-					end 
-				else
-					for i,v in pairs(room:GetDescendants()) do
-						check(v, room)
-					end 
-				end
-			end
-
-			local addconnect
-			addconnect = workspace.CurrentRooms.ChildAdded:Connect(function(room)
-				setup(room)
-			end)
-
-			for i,room in pairs(workspace.CurrentRooms:GetChildren()) do
-				setup(room)
-			end
-
-			setup(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)])
-
-			repeat task.wait() until BOBHUBLOADED == false or not flags.espkeys
-			addconnect:Disconnect()
-
-			for i,v in pairs(esptable.keys) do
-				v.delete()
-			end 
-		end
-	end
-})
-
-LeftGroupBox:AddToggle('MyToggle', {
-    Text = 'Item ESP',
-    Default = false,
-    Tooltip = '',
-
-    Callback = function(val)
-    flags.espitems = val
-
-		if val then
-			local function check(v)
-				if table.find(esptableinstances, v) then
-					return
-				end
-
-				if v:IsA("Model") and (v:GetAttribute("Pickup") or v:GetAttribute("PropType")) then
-					task.wait(0.1)
-
-					local part = (v:FindFirstChild("Handle") or v:FindFirstChild("Prop"))
-					local h = esp(part,Color3.fromRGB(160,190,255),part,v.Name)
-					table.insert(esptable.items,h)
-					table.insert(esptableinstances, v)				
-				end
-			end
-
-			local function setup(room)
-				task.wait(.1)
-				local assets = room:WaitForChild("Assets")
-
-				if assets then  
-					local subaddcon
-					subaddcon = assets.DescendantAdded:Connect(function(v)
-						check(v) 
-					end)
-
-					for i,v in pairs(assets:GetDescendants()) do
-						check(v)
-					end
-
-					task.spawn(function()
-						repeat task.wait() until BOBHUBLOADED == false or not flags.espitems
-						subaddcon:Disconnect()  
-					end) 
-				end 
-			end
-
-			local addconnect
-			addconnect = workspace.CurrentRooms.ChildAdded:Connect(function(room)
-				setup(room)
-			end)
-
-			for i,room in pairs(workspace.CurrentRooms:GetChildren()) do
-				if room:FindFirstChild("Assets") then
-					setup(room) 
-				end
-				task.wait()
-			end
-
-			if workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:FindFirstChild("Assets") then
-				setup(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)])
-			end
-
-			repeat task.wait() until BOBHUBLOADED == false or not flags.espitems
-			addconnect:Disconnect()
-
-			for i,v in pairs(esptable.items) do
-				v.delete()
-			end 
-		end
-	end
-})
-
-LeftGroupBox:AddToggle('MyToggle', {
-    Text = 'Book/Breaker ESP',
-    Default = false,
-    Tooltip = '',
-
-    Callback = function(val)
-    flags.espbooks = val
-
-		if val then
-			local function check(v,room)
-				if table.find(esptableinstances, v) then
-					return
-				end
-
-				if v:IsA("Model") and (v.Name == "LiveHintBook" or v.Name == "LiveBreakerPolePickup") then
-					task.wait(0.1)
-					local h
-					if v.Name == "LiveHintBook" then
-						h = esp(v,Color3.fromRGB(0,255,255),v.PrimaryPart,"Book")
-					elseif v.Name == "LiveBreakerPolePickup" then
-						h = esp(v,Color3.fromRGB(0,255,255),v.PrimaryPart,"Breaker")
-					end
-
-					table.insert(esptable.books,h)
-					table.insert(esptableinstances, v)
-
-					v.AncestryChanged:Connect(function()
-						if not v:IsDescendantOf(room) then
-							h.delete() 
-						end
-					end)
-				end
-			end
-
-			local function setup(room)
-				task.wait(.1)
-				if room.Name == "50" or room.Name == "100" then
-					room.DescendantAdded:Connect(function(v)
-						check(v,room) 
-					end)
-
-					for i,v in pairs(room:GetDescendants()) do
-						check(v,room)
-					end
-				end
-			end
-
-			local addconnect
-			addconnect = workspace.CurrentRooms.ChildAdded:Connect(function(room)
-				setup(room)
-			end)
-
-			for i,room in pairs(workspace.CurrentRooms:GetChildren()) do
-				setup(room) 
-				task.wait()
-			end
-
-			if workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:FindFirstChild("Assets") then
-				setup(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)])
-			end
-
-			repeat task.wait() until BOBHUBLOADED == false or not flags.espbooks
-			addconnect:Disconnect()
-
-			for i,v in pairs(esptable.books) do
-				v.delete()
-			end 
-		end
-	end
-})
-    
-    LeftGroupBox:AddToggle('MyToggle', {
-    Text = 'Entity ESP',
-    Default = false,
-    Tooltip = '',
-
-    Callback = function(val)
-    flags.esprush = val
-
-		if val then
-			local addconnect
-			addconnect = workspace.ChildAdded:Connect(function(v)
-				if table.find(entitynames,v.Name) then
-					task.wait(.1)
-					local h = esp(v,Color3.fromRGB(255,25,25),v.PrimaryPart,v.Name:gsub("Moving",""))
-					table.insert(esptable.entity,h)
-				end
-			end)
-
-			for _,v in pairs(workspace:GetChildren()) do
-				if table.find(entitynames,v.Name) then
-					task.wait(.1)
-					local h = esp(v,Color3.fromRGB(255,25,25),v.PrimaryPart,v.Name:gsub("Moving",""))
-					table.insert(esptable.entity,h)
-				end
-			end
-
-			local function setup(room)
-				task.wait()
-				if room.Name == "50" or room.Name == "100" then
-					local figuresetup = room:WaitForChild("FigureSetup")
-
-					if figuresetup then
-						local fig = figuresetup:WaitForChild("FigureRagdoll")
-						task.wait(0.1)
-
-						local h = esp(fig,Color3.fromRGB(255,25,25),fig.PrimaryPart,"Figure")
-						table.insert(esptable.entity,h)
-					end 
-				else
-					local assets = room:WaitForChild("Assets")
-
-					local function check(v)
-						if v:IsA("Model") and table.find(entitynames,v.Name) then
-							task.wait(0.1)
-
-							local h = esp(v:WaitForChild("Base"),Color3.fromRGB(255,25,25),v.Base,"Snare")
-							table.insert(esptable.entity,h)
-						end
-					end
-
-					assets.DescendantAdded:Connect(function(v)
-						check(v) 
-					end)
-
-					for i,v in pairs(assets:GetDescendants()) do
-						check(v)
-					end
-				end 
-			end
-
-			local roomconnect
-			roomconnect = workspace.CurrentRooms.ChildAdded:Connect(function(room)
-				setup(room)
-			end)
-
-			for i,v in pairs(workspace.CurrentRooms:GetChildren()) do
-				setup(v) 
-			end
-
-			setup(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)])
-
-			repeat task.wait() until BOBHUBLOADED == false or not flags.esprush
-			addconnect:Disconnect()
-			roomconnect:Disconnect()
-
-			for i,v in pairs(esptable.entity) do
-				v.delete()
-			end 
-		end
-	end
-})
-    
-    LeftGroupBox:AddToggle('MyToggle', {
-    Text = 'Hide Spot ESP',
-    Default = false,
-    Tooltip = '',
-
-    Callback = function(val)
-    flags.esplocker = val
-
-		if val then
-			local function check(v, room)
-				task.wait()
-				local valuechange = nil
-				if v.Name == "Wardrobe" then
-					local h = esp(v.PrimaryPart,Color3.fromRGB(145,100,25),v.PrimaryPart,"Hide Spot")
-					table.insert(esptable.lockers,h) 
-					table.insert(esptableinstances, v)
-					valuechange = game:GetService("ReplicatedStorage").GameData.LatestRoom:GetPropertyChangedSignal("Value"):Connect(function()
-						if tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value) ~= room.Name then
-							h.delete()
-							valuechange:Disconnect()
-						end
-					end)
-				end
-			end
-
-			local function setup(room)
-				local assets = room:WaitForChild("Assets")
-
-				if assets then
-					local subaddcon
-					subaddcon = assets.DescendantAdded:Connect(function(v)
-						check(v, room) 
-					end)
-
-					for i,v in pairs(assets:GetDescendants()) do
-						check(v, room)
-					end
-
-					task.spawn(function()
-						repeat task.wait() until BOBHUBLOADED == false or not flags.esplocker
-						subaddcon:Disconnect()  
-					end)
-				else
-					local subaddcon
-					subaddcon = room.DescendantAdded:Connect(function(v)
-						check(v, room) 
-					end)
-
-					for i,v in pairs(room:GetDescendants()) do
-						check(v, room)
-					end
-
-					task.spawn(function()
-						repeat task.wait() until BOBHUBLOADED == false or not flags.esplocker
-						subaddcon:Disconnect()  
-					end) 
-				end
-			end
-
-			local addconnect
-			addconnect = workspace.CurrentRooms.ChildAdded:Connect(function(room)
-				setup(room)
-			end)
-
-			if workspace.CurrentRooms:FindFirstChild(tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value-1)) then
-				setup(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value-1)])
-			end
-			setup(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)])
-			if workspace.CurrentRooms:FindFirstChild(tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value+1)) then
-				setup(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value+1)])
-			end
-
-			repeat task.wait() until BOBHUBLOADED == false or not flags.esplocker
-			addconnect:Disconnect()
-
-			for i,v in pairs(esptable.lockers) do
-				v.delete()
-			end 
-		end
-	end
-})
-    
-    LeftGroupBox:AddToggle('MyToggle', {
-    Text = 'Chest ESP',
-    Default = false,
-    Tooltip = '',
-
-    Callback = function(val)
-    flags.espchest = val
-
-		if val then
-			local function check(v, room)
-				task.wait()
-				if table.find(esptableinstances, v) then
-					return
-				end
-
-				if v:IsA("Model") then
-					local okvaluechange = nil
-					if v.Name == "ChestBox" then
-						warn(v.Name)
-						local h = esp(v,Color3.fromRGB(205,120,255),v.PrimaryPart,"Chest")
-						table.insert(esptable.chests,h) 
-						table.insert(esptableinstances, v)
-						okvaluechange = game:GetService("ReplicatedStorage").GameData.LatestRoom:GetPropertyChangedSignal("Value"):Connect(function()
-							if tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value) ~= room.Name then
-								h.delete()
-								okvaluechange:Disconnect()
-							end
-						end)
-					elseif v.Name == "ChestBoxLocked" then
-						local h = esp(v,Color3.fromRGB(255,120,205),v.PrimaryPart,"Locked Chest")
-						table.insert(esptable.chests,h) 
-						table.insert(esptableinstances, v)
-						okvaluechange = game:GetService("ReplicatedStorage").GameData.LatestRoom:GetPropertyChangedSignal("Value"):Connect(function()
-							if tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value) ~= room.Name then
-								h.delete()
-								okvaluechange:Disconnect()
-							end
-						end)
-					end
-				end
-			end
-
-			local function setup(room)
-				task.wait(.1)
-				local subaddcon
-				subaddcon = room.DescendantAdded:Connect(function(v)
-					check(v, room) 
-				end)
-
-				for i,v in pairs(room:GetDescendants()) do
-					check(v, room)
-				end
-
-				task.spawn(function()
-					repeat task.wait() until BOBHUBLOADED == false or not flags.espchest
-					subaddcon:Disconnect()  
-				end)  
-			end
-
-			local addconnect
-			addconnect = workspace.CurrentRooms.ChildAdded:Connect(function(room)
-				setup(room)
-			end)
-
-			for i,room in pairs(workspace.CurrentRooms:GetChildren()) do
-				if room:FindFirstChild("Assets") then
-					setup(room) 
-				end
-				task.wait()
-			end
-
-			if workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:FindFirstChild("Assets") then
-				setup(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)])
-			end
-
-			repeat task.wait() until BOBHUBLOADED == false or not flags.espchest
-			addconnect:Disconnect()
-
-			for i,v in pairs(esptable.chests) do
-				v.delete()
-			end
-		end
-	end
-})
-    
-    LeftGroupBox:AddToggle('MyToggle', {
-    Text = 'Player ESP',
-    Default = false,
-    Tooltip = '',
-
-    Callback = function(val)
-    flags.esphumans = val
-
-		if val then
-			local function personesp(v)
-				if v:IsA("Player") then
-					v.CharacterAdded:Connect(function(vc)
-						local vh = vc:WaitForChild("Humanoid")
-						local torso = vc:WaitForChild("UpperTorso")
-						task.wait(0.1)
-
-						local h = esp(vc,Color3.fromRGB(255,255,255),torso,v.DisplayName)
-						table.insert(esptable.people,h) 
-					end)
-
-					if v.Character then
-						local vc = v.Character
-						local vh = vc:WaitForChild("Humanoid")
-						local torso = vc:WaitForChild("UpperTorso")
-						task.wait(0.1)
-
-						local h = esp(vc,Color3.fromRGB(255,255,255),torso,v.DisplayName)
-						table.insert(esptable.people,h) 
-					end
-				end
-			end
-
-			local addconnect
-			addconnect = game.Players.PlayerAdded:Connect(function(v)
-				if v ~= plr then
-					personesp(v)
-				end
-			end)
-
-			for i,v in pairs(game.Players:GetPlayers()) do
-				if v ~= plr then
-					personesp(v) 
-				end
-				task.wait()
-			end
-
-			if workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:FindFirstChild("Assets") then
-				personesp(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)])
-			end
-
-			repeat task.wait() until BOBHUBLOADED == false or not flags.esphumans
-			addconnect:Disconnect()
-
-			for i,v in pairs(esptable.people) do
-				v.delete()
-			end 
-		end
-	end
-})
-    
-    LeftGroupBox:AddToggle('MyToggle', {
-    Text = 'Gold ESP',
-    Default = false,
-    Tooltip = '',
-
-    Callback = function(val)
-    flags.espgold = val
-
-		if val then
-			local function check(v)
-				if table.find(esptableinstances, v) then
-					return
-				end
-
-				if v:IsA("Model") then
-					task.wait(0.1)
-					local goldvalue = v:GetAttribute("GoldValue")
-
-					if goldvalue and goldvalue >= (flags.goldespvalue or 5) then
-						local hitbox = v:WaitForChild("Hitbox")
-						local h = esp(hitbox:GetChildren(),Color3.fromRGB(255,255,0),hitbox,"GoldPile [".. tostring(goldvalue).."]")
-						table.insert(esptable.gold,h)
-						table.insert(esptableinstances, v)
-					end
-				end
-			end
-
-			local function setup(room)
-				task.wait(.1)
-				local assets = room:WaitForChild("Assets")
-
-				local subaddcon
-				subaddcon = assets.DescendantAdded:Connect(function(v)
-					check(v) 
-				end)
-
-				for i,v in pairs(assets:GetDescendants()) do
-					check(v)
-					task.wait()
-				end
-
-				task.spawn(function()
-					repeat task.wait() until BOBHUBLOADED == false or not flags.espchest
-					subaddcon:Disconnect()  
-				end)  
-			end
-
-			local addconnect
-			addconnect = workspace.CurrentRooms.ChildAdded:Connect(function(room)
-				setup(room)
-			end)
-
-			for i,room in pairs(workspace.CurrentRooms:GetChildren()) do
-				if room:FindFirstChild("Assets") then
-					setup(room) 
-				end
-				task.wait()
-			end
-
-			if workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:FindFirstChild("Assets") then
-				setup(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)])
-			end
-
-			repeat task.wait() until BOBHUBLOADED == false or not flags.espgold
-			addconnect:Disconnect()
-
-			for i,v in pairs(esptable.gold) do
-				v.delete()
-			end 
-		end
-	end
-})
-
-local LeftGroupBox = Tabs.Main:AddLeftGroupbox('Character')
-local LeftGroupBox2 = Tabs.Main:AddLeftGroupbox('Trolling')
-
-if fireproximityprompt then
-LeftGroupBox:AddToggle('MyToggle', {
-    Text = 'Instant Use',
-    Default = false,
-    Tooltip = 'Removes The E Cooldown With Interacting',
-
-    Callback = function(val)
-    flags.instapp = val
-
-			local holdconnect
-			holdconnect = game:GetService("ProximityPromptService").PromptButtonHoldBegan:Connect(function(p)
-				fireproximityprompt(p)
-			end)
-
-			repeat task.wait() until BOBHUBLOADED == false or not flags.instapp
-			holdconnect:Disconnect()
-		end
-	})
-else
-	warnmessage("Hunter Library v"..currentver, "You need to have fireproximityprompt function for 'instant use'.", 7)
-end
-    
-LeftGroupBox:AddToggle('MyToggle', {
-    Text = 'FullBright',
-    Default = false,
-    Tooltip = 'Allows You To See In Dark Rooms',
-
-    Callback = function(val)
-     flags.fullbright = val
-
-		if val then
-			local oldAmbient = game:GetService("Lighting").Ambient
-			local oldColorShift_Bottom = game:GetService("Lighting").ColorShift_Bottom
-			local oldColorShift_Top = game:GetService("Lighting").ColorShift_Top
-
-			local function doFullbright()
-				if flags.fullbright == true then
-					game:GetService("Lighting").Ambient = Color3.new(1, 1, 1)
-					game:GetService("Lighting").ColorShift_Bottom = Color3.new(1, 1, 1)
-					game:GetService("Lighting").ColorShift_Top = Color3.new(1, 1, 1)
-				else
-					game:GetService("Lighting").Ambient = oldAmbient
-					game:GetService("Lighting").ColorShift_Bottom = oldColorShift_Bottom
-					game:GetService("Lighting").ColorShift_Top = oldColorShift_Top
-				end
-			end
-			doFullbright()
-
-			local coneee = game:GetService("Lighting").LightingChanged:Connect(doFullbright)
-			repeat task.wait() until BOBHUBLOADED == false or not flags.fullbright
-
-			coneee:Disconnect()
-			game:GetService("Lighting").Ambient = oldAmbient
-			game:GetService("Lighting").ColorShift_Bottom = oldColorShift_Bottom
-			game:GetService("Lighting").ColorShift_Top = oldColorShift_Top
-		end
-	end
-})
-
-LeftGroupBox:AddSlider('MySlider', {
-    Text = 'Speed Boost',
-    Default = 0,
-    Min = 0,
-    Max = 25,
-    Rounding = 1,
-    Compact = false,
-
-    Callback = function(val)
-        flags.speed = val
-		if flags.walkspeedtoggle == true then
-			hum.WalkSpeed = val
-		end
-	end
-})
-
-LeftGroupBox:AddToggle('MyToggle', {
-    Text = 'Enable Speed Boost',
-    Default = false,
-    Tooltip = '',
-
-    Callback = function(val)
-    flags.walkspeedtoggle = val
-		if not val then
-			hum.WalkSpeed = 16
-		end
-	end
-})
-
-LeftGroupBox:AddSlider('MySlider', {
-    Text = 'FieldOfView',
-    Default = 0,
-    Min = 70,
-    Max = 120,
-    Rounding = 1,
-    Compact = false,
-
-    Callback = function(val)
-        flags.camfov = val
-	end
-})
-
-LeftGroupBox:AddToggle('MyToggle', {
-    Text = 'Enable Custom Field Of View',
-    Default = false,
-    Tooltip = '',
-
-    Callback = function(val)
-    flags.camfovtoggle = val
-		if not val then
-			waitframes(2)
-			game:GetService("Workspace").CurrentCamera.FieldOfView = 70
-		end
-	end
-})
-    
-task.spawn(function()
-	game:GetService("RunService").RenderStepped:Connect(function()
-	if flags.walkspeedtoggle == true then
-			if hum.WalkSpeed < flags.speed then
-				hum.WalkSpeed = flags.speed
-			end
-		end
-		if flags.camfovtoggle == true then
-			if flags.tracers == false then
-				pcall(function()
-					game:GetService("Workspace").CurrentCamera.FieldOfView = flags.camfov
-				end)
-			else
-				if syn or PROTOSMASHER_LOADED then
-					pcall(function()
-						game:GetService("Workspace").CurrentCamera.FieldOfView = flags.camfov
-					end)
-				end
-			end
-		end
-	end)
-end)
-
-LeftGroupBox:AddToggle('MyToggle', {
-    Text = 'Noclip',
-    Default = false,
-    Tooltip = 'Allows You To Noclip Through Walls',
-
-    Callback = function(val)
-    flags.noclip = val
-
-			if val then
-				local Nocliprun =  nil
-				Nocliprun = game:GetService("RunService").Stepped:Connect(function()
-					if game.Players.LocalPlayer.Character ~= nil then
-						for _,v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
-							if v:IsA("BasePart") then
-								pcall(function()
-									v.CanCollide = false
-								end)
-							end
-						end
-					end
-					if flags.noclip == false then
-						if Nocliprun then Nocliprun:Disconnect() end
-					end
-				end)
-			end
-		end
-})
-
-game:GetService("RunService").RenderStepped:Connect(function()
-    pcall(function()
-        if _G.SlowDownnnonononoo then
-local one = false
-
-game.Players.LocalPlayer.Character.Head.Massless = one
-game.Players.LocalPlayer.Character.LeftFoot.Massless = one
-game.Players.LocalPlayer.Character.LeftHand.Massless = one
-game.Players.LocalPlayer.Character.LeftLowerArm.Massless = one
-game.Players.LocalPlayer.Character.LeftLowerLeg.Massless = one
-game.Players.LocalPlayer.Character.LeftUpperArm.Massless = one
-game.Players.LocalPlayer.Character.LeftUpperLeg.Massless = one
-game.Players.LocalPlayer.Character.LowerTorso.Massless = one
-game.Players.LocalPlayer.Character.RightFoot.Massless = one
-game.Players.LocalPlayer.Character.RightHand.Massless = one
-game.Players.LocalPlayer.Character.RightLowerArm.Massless = one
-game.Players.LocalPlayer.Character.RightLowerLeg.Massless = one
-game.Players.LocalPlayer.Character.RightUpperArm.Massless = one
-game.Players.LocalPlayer.Character.RightUpperLeg.Massless = one
-game.Players.LocalPlayer.Character.UpperTorso.Massless = one
-        end
-    end)
-end)
-
-LeftGroupBox:AddToggle('MyToggle', {
-    Text = 'No Slow Down',
-    Default = false,
-    Tooltip = '',
-    Callback = function(lowDownnnonononoo)
-_G.SlowDownnnonononoo = lowDownnnonononoo
-
-if _G.SlowDownnnonononoo == false then
-local one = true
-
-game.Players.LocalPlayer.Character.Head.Massless = one
-game.Players.LocalPlayer.Character.LeftFoot.Massless = one
-game.Players.LocalPlayer.Character.LeftHand.Massless = one
-game.Players.LocalPlayer.Character.LeftLowerArm.Massless = one
-game.Players.LocalPlayer.Character.LeftLowerLeg.Massless = one
-game.Players.LocalPlayer.Character.LeftUpperArm.Massless = one
-game.Players.LocalPlayer.Character.LeftUpperLeg.Massless = one
-game.Players.LocalPlayer.Character.LowerTorso.Massless = one
-game.Players.LocalPlayer.Character.RightFoot.Massless = one
-game.Players.LocalPlayer.Character.RightHand.Massless = one
-game.Players.LocalPlayer.Character.RightLowerArm.Massless = one
-game.Players.LocalPlayer.Character.RightLowerLeg.Massless = one
-game.Players.LocalPlayer.Character.RightUpperArm.Massless = one
-game.Players.LocalPlayer.Character.RightUpperLeg.Massless = one
-game.Players.LocalPlayer.Character.UpperTorso.Massless = one
-end
-  end
-})
-
-local TabBox = Tabs.Main:AddRightTabbox()
+local TabBox = Tabs.Main:AddLeftTabbox()
 
 local Tab1 = TabBox:AddTab('Auto')
 
@@ -2482,47 +1590,367 @@ RightGroupbox:AddToggle('MyToggle', {
 		end
 	})
 
-local RightGroupbox1 = Tabs.Main:AddRightGroupbox('Avoiding');
+local LeftGroupbox1 = Tabs.Main:AddLeftGroupbox('Miscellaneous')
 
-local RightGroupbox2 = Tabs.Main:AddRightGroupbox('Entity Remover');
+LeftGroupbox1:AddToggle('MyToggle', {
+    Text = 'Remove Gate',
+    Default = false,
+    Tooltip = '',
 
-local RightGroupbox3 = Tabs.Main:AddRightGroupbox('Miscellaneous');
+    Callback = function(val)
+    flags.nogates = val
 
-local MyButton = RightGroupbox1:AddButton({
-    Text = 'Enable GodMode',
-    Func = function()
-task.wait(0.3)
-    if _G.God == nil then
-_G.God = true
-local Collision = game.Players.LocalPlayer.Character.Collision
-    Collision.Position = Collision.Position - Vector3.new(0,9.8,0)
-    firesignal(game.ReplicatedStorage.EntityInfo.Caption.OnClientEvent, "GodMode is Enabled...")
-task.spawn(function()
-		local notif = Instance.new("Sound");notif.Parent = game.SoundService;notif.SoundId = "rbxassetid://6897623656";notif.Volume = 2;notif:Play();notif.Stopped:Wait();notif:Destroy()
-		end)
-end
-end,
-    DoubleClick = false,
-    Tooltip = ''
+		if val then
+			spawn(function()
+				for _,room in pairs(workspace.CurrentRooms:GetChildren()) do
+					local gate = room:WaitForChild("Gate",2)
+
+					if gate then
+						local door = gate:WaitForChild("ThingToOpen",2)
+
+						if door then
+							door:Destroy() 
+						end
+					end
+				end
+			end)
+
+			local addconnect
+			addconnect = workspace.CurrentRooms.ChildAdded:Connect(function(room)
+				local gate = room:WaitForChild("Gate",2)
+
+				if gate then
+					local door = gate:WaitForChild("ThingToOpen",2)
+
+					if door then
+						door:Destroy() 
+					end
+				end
+			end)
+
+			spawn(function()
+				local gate = workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Gate",2)
+				if gate then
+					local door = gate:WaitForChild("ThingToOpen",2)
+					if door then
+						door:Destroy() 
+					end
+				end
+			end)
+
+			repeat task.wait() until BOBHUBLOADED == false or not flags.nogates
+			addconnect:Disconnect()
+		end
+	end
 })
 
-local MyButton = RightGroupbox1:AddButton({
-    Text = 'Disable GodMode',
-    Func = function()
-task.wait(0.3)
-    if _G.God == nil then
-_G.God = true
-local Collision = game.Players.LocalPlayer.Character.Collision
-    Collision.Position = Collision.Position + Vector3.new(0,9.8,0)
-    firesignal(game.ReplicatedStorage.EntityInfo.Caption.OnClientEvent, "GodMode is Disabled...")
-task.spawn(function()
-		local notif = Instance.new("Sound");notif.Parent = game.SoundService;notif.SoundId = "rbxassetid://6897623656";notif.Volume = 2;notif:Play();notif.Stopped:Wait();notif:Destroy()
-		end)
-end
-end,
-    DoubleClick = false,
-    Tooltip = ''
+LeftGroupbox1:AddToggle('MyToggle', {
+    Text = 'A-000 Door No Locks',
+    Default = false,
+    Tooltip = '',
+
+    Callback = function(val)
+    flags.roomsnolock = val
+
+		if val then
+			local function check(room)
+				local door = room:WaitForChild("RoomsDoor_Entrance",2)
+
+				if door then
+					local prompt = door:WaitForChild("Door"):WaitForChild("EnterPrompt")
+					prompt.Enabled = true
+				end 
+			end
+
+			local addconnect
+			addconnect = workspace.CurrentRooms.ChildAdded:Connect(function(room)
+				check(room)
+			end)
+
+			for i,v in pairs(workspace.CurrentRooms:GetChildren()) do
+				check(v)
+			end
+
+			spawn(function()
+				check(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)])
+			end)
+
+			repeat task.wait() until BOBHUBLOADED == false or not flags.roomsnolock
+			addconnect:Disconnect()
+		end
+	end
 })
+    
+    LeftGroupbox1:AddToggle('MyToggle', {
+    Text = 'Remove Skeleton Door',
+    Default = false,
+    Tooltip = '',
+
+    Callback = function(val)
+    flags.noskeledoors = val
+
+		if val then
+			local addconnect
+			addconnect = workspace.CurrentRooms.ChildAdded:Connect(function(room)
+				local door = room:WaitForChild("Wax_Door",2)
+
+				if door then
+					door:Destroy() 
+				end
+			end)
+
+			spawn(function()
+				local door = workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Wax_Door",2)
+				if door then
+					door:Destroy() 
+				end 
+			end)
+
+			repeat task.wait() until BOBHUBLOADED == false or not flags.noskeledoors
+			addconnect:Disconnect()
+		end
+	end
+})
+
+LeftGroupbox1:AddToggle('MyToggle', {
+    Text = 'Remove Puzzle Door',
+    Default = false,
+    Tooltip = '',
+
+    Callback = function(val)
+flags.nopuzzle = val
+
+		if val then
+			spawn(function()
+				for _,room in pairs(workspace.CurrentRooms:GetChildren()) do
+					local assets = room:WaitForChild("Assets")
+					local paintings = assets:WaitForChild("Paintings",2)
+
+					if paintings then
+						local door = paintings:WaitForChild("MovingDoor",2)
+
+						if door then
+							door:Destroy() 
+						end 
+					end
+				end
+			end)
+
+			local addconnect
+			addconnect = workspace.CurrentRooms.ChildAdded:Connect(function(room)
+				local assets = room:WaitForChild("Assets")
+				local paintings = assets:WaitForChild("Paintings",2)
+
+				if paintings then
+					local door = paintings:WaitForChild("MovingDoor",2)
+
+					if door then
+						door:Destroy() 
+					end 
+				end
+			end)
+
+			spawn(function()
+				local assets = workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Assets")
+				local paintings = assets:WaitForChild("Paintings",2)
+				if paintings then
+					local door = paintings:WaitForChild("MovingDoor",2)
+					if door then
+						door:Destroy() 
+					end 
+				end
+			end)
+
+			repeat task.wait() until BOBHUBLOADED == false or not flags.nopuzzle
+			addconnect:Disconnect()
+		end
+	end
+})
+
+
+local LeftGroupBox1 = Tabs.Character:AddLeftGroupbox('Character')
+
+if fireproximityprompt then
+LeftGroupBox:AddToggle('MyToggle', {
+    Text = 'Instant Use',
+    Default = false,
+    Tooltip = 'Removes The E Cooldown With Interacting',
+
+    Callback = function(val)
+    flags.instapp = val
+
+			local holdconnect
+			holdconnect = game:GetService("ProximityPromptService").PromptButtonHoldBegan:Connect(function(p)
+				fireproximityprompt(p)
+			end)
+
+			repeat task.wait() until BOBHUBLOADED == false or not flags.instapp
+			holdconnect:Disconnect()
+		end
+	})
+else
+	warnmessage("Hunter Library v"..currentver, "You need to have fireproximityprompt function for 'instant use'.", 7)
+end
+
+LeftGroupBox:AddSlider('MySlider', {
+    Text = 'Speed Boost',
+    Default = 0,
+    Min = 0,
+    Max = 25,
+    Rounding = 1,
+    Compact = false,
+
+    Callback = function(val)
+        flags.speed = val
+		if flags.walkspeedtoggle == true then
+			hum.WalkSpeed = val
+		end
+	end
+})
+
+LeftGroupBox:AddToggle('MyToggle', {
+    Text = 'Enable Speed Boost',
+    Default = false,
+    Tooltip = '',
+
+    Callback = function(val)
+    flags.walkspeedtoggle = val
+		if not val then
+			hum.WalkSpeed = 16
+		end
+	end
+})
+
+LeftGroupBox:AddSlider('MySlider', {
+    Text = 'FieldOfView',
+    Default = 0,
+    Min = 70,
+    Max = 120,
+    Rounding = 1,
+    Compact = false,
+
+    Callback = function(val)
+        flags.camfov = val
+	end
+})
+
+LeftGroupBox:AddToggle('MyToggle', {
+    Text = 'Enable Custom Field Of View',
+    Default = false,
+    Tooltip = '',
+
+    Callback = function(val)
+    flags.camfovtoggle = val
+		if not val then
+			waitframes(2)
+			game:GetService("Workspace").CurrentCamera.FieldOfView = 70
+		end
+	end
+})
+    
+task.spawn(function()
+	game:GetService("RunService").RenderStepped:Connect(function()
+	if flags.walkspeedtoggle == true then
+			if hum.WalkSpeed < flags.speed then
+				hum.WalkSpeed = flags.speed
+			end
+		end
+		if flags.camfovtoggle == true then
+			if flags.tracers == false then
+				pcall(function()
+					game:GetService("Workspace").CurrentCamera.FieldOfView = flags.camfov
+				end)
+			else
+				if syn or PROTOSMASHER_LOADED then
+					pcall(function()
+						game:GetService("Workspace").CurrentCamera.FieldOfView = flags.camfov
+					end)
+				end
+			end
+		end
+	end)
+end)
+
+LeftGroupBox:AddToggle('MyToggle', {
+    Text = 'Noclip',
+    Default = false,
+    Tooltip = 'Allows You To Noclip Through Walls',
+
+    Callback = function(val)
+    flags.noclip = val
+
+			if val then
+				local Nocliprun =  nil
+				Nocliprun = game:GetService("RunService").Stepped:Connect(function()
+					if game.Players.LocalPlayer.Character ~= nil then
+						for _,v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+							if v:IsA("BasePart") then
+								pcall(function()
+									v.CanCollide = false
+								end)
+							end
+						end
+					end
+					if flags.noclip == false then
+						if Nocliprun then Nocliprun:Disconnect() end
+					end
+				end)
+			end
+		end
+})game:GetService("RunService").RenderStepped:Connect(function()
+    pcall(function()
+        if _G.SlowDownnnonononoo then
+local one = false
+
+game.Players.LocalPlayer.Character.Head.Massless = one
+game.Players.LocalPlayer.Character.LeftFoot.Massless = one
+game.Players.LocalPlayer.Character.LeftHand.Massless = one
+game.Players.LocalPlayer.Character.LeftLowerArm.Massless = one
+game.Players.LocalPlayer.Character.LeftLowerLeg.Massless = one
+game.Players.LocalPlayer.Character.LeftUpperArm.Massless = one
+game.Players.LocalPlayer.Character.LeftUpperLeg.Massless = one
+game.Players.LocalPlayer.Character.LowerTorso.Massless = one
+game.Players.LocalPlayer.Character.RightFoot.Massless = one
+game.Players.LocalPlayer.Character.RightHand.Massless = one
+game.Players.LocalPlayer.Character.RightLowerArm.Massless = one
+game.Players.LocalPlayer.Character.RightLowerLeg.Massless = one
+game.Players.LocalPlayer.Character.RightUpperArm.Massless = one
+game.Players.LocalPlayer.Character.RightUpperLeg.Massless = one
+game.Players.LocalPlayer.Character.UpperTorso.Massless = one
+        end
+    end)
+end)
+
+LeftGroupBox:AddToggle('MyToggle', {
+    Text = 'No Slow Down',
+    Default = false,
+    Tooltip = '',
+    Callback = function(lowDownnnonononoo)
+_G.SlowDownnnonononoo = lowDownnnonononoo
+
+if _G.SlowDownnnonononoo == false then
+local one = true
+
+game.Players.LocalPlayer.Character.Head.Massless = one
+game.Players.LocalPlayer.Character.LeftFoot.Massless = one
+game.Players.LocalPlayer.Character.LeftHand.Massless = one
+game.Players.LocalPlayer.Character.LeftLowerArm.Massless = one
+game.Players.LocalPlayer.Character.LeftLowerLeg.Massless = one
+game.Players.LocalPlayer.Character.LeftUpperArm.Massless = one
+game.Players.LocalPlayer.Character.LeftUpperLeg.Massless = one
+game.Players.LocalPlayer.Character.LowerTorso.Massless = one
+game.Players.LocalPlayer.Character.RightFoot.Massless = one
+game.Players.LocalPlayer.Character.RightHand.Massless = one
+game.Players.LocalPlayer.Character.RightLowerArm.Massless = one
+game.Players.LocalPlayer.Character.RightLowerLeg.Massless = one
+game.Players.LocalPlayer.Character.RightUpperArm.Massless = one
+game.Players.LocalPlayer.Character.RightUpperLeg.Massless = one
+game.Players.LocalPlayer.Character.UpperTorso.Massless = one
+end
+  end
+})
+
+local LeftGroupBox2 = Tabs.Character:AddLeftGroupbox('Trolling')
 local MyButton = LeftGroupBox2:AddButton({
     Text = 'Waste Others Items',
     Func = function()
@@ -2561,9 +1989,762 @@ LeftGroupBox2:AddToggle('MyToggle', {
 	end
 })
 
-RightGroupbox2:AddToggle('MyToggle', {
+local LeftGroupBox = Tabs.Visuals:AddLeftGroupbox('ESP')
+LeftGroupBox:AddToggle('MyToggle', {
+    Text = 'Door ESP',
+    Default = false,
+    Tooltip = '',
+
+    Callback = function(val)
+    flags.espdoors = val
+
+		if val then
+			local function setup(room)
+				task.wait(.1)
+				local door = room:WaitForChild("Door"):WaitForChild("Door")
+
+				if table.find(esptableinstances, door) then
+					return
+				end
+
+				task.wait(0.1)
+				local h = esp(door,Color3.fromRGB(90,255,40),door,"Door")
+				table.insert(esptable.doors,h)
+				table.insert(esptableinstances, door)
+
+				door:WaitForChild("Open").Played:Connect(function()
+					h.delete()
+				end)
+
+				door.AncestryChanged:Connect(function()
+					h.delete()
+				end)
+			end
+
+			local addconnect
+			addconnect = workspace.CurrentRooms.ChildAdded:Connect(function(room)
+				setup(room)
+			end)
+
+			for i,room in pairs(workspace.CurrentRooms:GetChildren()) do
+				if room:FindFirstChild("Assets") then
+					setup(room) 
+				end
+				task.wait()
+			end
+
+			if workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:FindFirstChild("Assets") then
+				setup(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)])
+			end
+
+			repeat task.wait() until BOBHUBLOADED == false or not flags.espdoors
+			addconnect:Disconnect()
+
+			for i,v in pairs(esptable.doors) do
+				v.delete()
+end 
+		end
+	end
+})
+
+LeftGroupBox:AddToggle('MyToggle', {
+    Text = 'Key/Lever ESP',
+    Default = false,
+    Tooltip = '',
+
+    Callback = function(val)
+    flags.espkeys = val
+
+		if val then
+			local function check(v, room)
+				task.wait()
+				if table.find(esptableinstances, v) then
+					return
+				end
+
+				if v:IsA("Model") then
+					if v.Name == "ElectricalKeyObtain" then
+						local hitbox = v:FindFirstChild("Hitbox")
+						local parts = hitbox:GetChildren()
+						table.remove(parts,table.find(parts,v:WaitForChild("PromptHitbox")))
+
+						local h = esp(parts,Color3.fromRGB(255,255,255),hitbox,"Electrical Key")
+						table.insert(esptable.keys,h)
+						table.insert(esptableinstances, v)
+					end
+					if v.Name == "KeyObtain" then
+						local hitbox = v:FindFirstChild("Hitbox")
+						local parts = hitbox:GetChildren()
+						table.remove(parts,table.find(parts,hitbox:WaitForChild("PromptHitbox")))
+
+						local h = esp(parts,Color3.fromRGB(255,255,255),hitbox,"Key")
+						table.insert(esptable.keys,h)
+						table.insert(esptableinstances, v)
+					end;if v.Name == "LeverForGate" then
+						local h = esp(v,Color3.fromRGB(255,255,255),v.PrimaryPart,"Lever")
+						table.insert(esptable.keys,h)
+						table.insert(esptableinstances, v)
+						v.PrimaryPart:WaitForChild("SoundToPlay").Played:Connect(function()
+							h.delete()
+						end) 
+					end
+				end
+			end
+
+			local function setup(room)
+				local assets = room:FindFirstChild("Assets")
+
+				if room then
+					if assets then
+						assets.DescendantAdded:Connect(function(v)
+							check(v, room) 
+						end)
+					else
+						room.DescendantAdded:Connect(function(v)
+							check(v, room) 
+						end)
+					end
+				end
+
+				if assets then
+					for i,v in pairs(assets:GetChildren()) do --:GetDescendants()) do
+						check(v, room)
+					end 
+				else
+					for i,v in pairs(room:GetDescendants()) do
+						check(v, room)
+					end 
+				end
+			end
+
+			local addconnect
+			addconnect = workspace.CurrentRooms.ChildAdded:Connect(function(room)
+				setup(room)
+			end)
+
+			for i,room in pairs(workspace.CurrentRooms:GetChildren()) do
+				setup(room)
+			end
+
+			setup(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)])
+
+			repeat task.wait() until BOBHUBLOADED == false or not flags.espkeys
+			addconnect:Disconnect()
+
+			for i,v in pairs(esptable.keys) do
+				v.delete()
+			end 
+		end
+	end
+})
+
+LeftGroupBox:AddToggle('MyToggle', {
+    Text = 'Item ESP',
+    Default = false,
+    Tooltip = '',
+
+    Callback = function(val)
+    flags.espitems = val
+
+		if val then
+			local function check(v)
+				if table.find(esptableinstances, v) then
+					return
+				end
+
+				if v:IsA("Model") and (v:GetAttribute("Pickup") or v:GetAttribute("PropType")) then
+					task.wait(0.1)
+
+					local part = (v:FindFirstChild("Handle") or v:FindFirstChild("Prop"))
+					local h = esp(part,Color3.fromRGB(160,190,255),part,v.Name)
+					table.insert(esptable.items,h)
+					table.insert(esptableinstances, v)				
+				end
+			end
+
+			local function setup(room)
+				task.wait(.1)
+				local assets = room:WaitForChild("Assets")
+
+				if assets then  
+					local subaddcon
+					subaddcon = assets.DescendantAdded:Connect(function(v)
+						check(v) 
+					end)
+
+					for i,v in pairs(assets:GetDescendants()) do
+						check(v)
+					end
+
+					task.spawn(function()
+						repeat task.wait() until BOBHUBLOADED == false or not flags.espitems
+						subaddcon:Disconnect()  
+					end) 
+				end 
+			end
+
+			local addconnect
+			addconnect = workspace.CurrentRooms.ChildAdded:Connect(function(room)
+				setup(room)
+			end)
+
+			for i,room in pairs(workspace.CurrentRooms:GetChildren()) do
+				if room:FindFirstChild("Assets") then
+					setup(room) 
+				end
+				task.wait()
+			end
+
+			if workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:FindFirstChild("Assets") then
+				setup(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)])
+			end
+
+			repeat task.wait() until BOBHUBLOADED == false or not flags.espitems
+			addconnect:Disconnect()
+
+			for i,v in pairs(esptable.items) do
+				v.delete()
+			end 
+		end
+	end
+})
+
+LeftGroupBox:AddToggle('MyToggle', {
+    Text = 'Book/Breaker ESP',
+    Default = false,
+    Tooltip = '',
+
+    Callback = function(val)
+    flags.espbooks = val
+
+		if val then
+			local function check(v,room)
+				if table.find(esptableinstances, v) then
+					return
+				end
+
+				if v:IsA("Model") and (v.Name == "LiveHintBook" or v.Name == "LiveBreakerPolePickup") then
+					task.wait(0.1)
+					local h
+					if v.Name == "LiveHintBook" then
+						h = esp(v,Color3.fromRGB(0,255,255),v.PrimaryPart,"Book")
+					elseif v.Name == "LiveBreakerPolePickup" then
+						h = esp(v,Color3.fromRGB(0,255,255),v.PrimaryPart,"Breaker")
+					end
+
+					table.insert(esptable.books,h)
+					table.insert(esptableinstances, v)
+
+					v.AncestryChanged:Connect(function()
+						if not v:IsDescendantOf(room) then
+							h.delete() 
+						end
+					end)
+				end
+			end
+
+			local function setup(room)
+				task.wait(.1)
+				if room.Name == "50" or room.Name == "100" then
+					room.DescendantAdded:Connect(function(v)
+						check(v,room) 
+					end)
+
+					for i,v in pairs(room:GetDescendants()) do
+						check(v,room)
+					end
+				end
+			end
+
+			local addconnect
+			addconnect = workspace.CurrentRooms.ChildAdded:Connect(function(room)
+				setup(room)
+			end)
+
+			for i,room in pairs(workspace.CurrentRooms:GetChildren()) do
+				setup(room) 
+				task.wait()
+			end
+
+			if workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:FindFirstChild("Assets") then
+				setup(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)])
+			end
+
+			repeat task.wait() until BOBHUBLOADED == false or not flags.espbooks
+			addconnect:Disconnect()
+
+			for i,v in pairs(esptable.books) do
+				v.delete()
+			end 
+		end
+	end
+})
+    
+    LeftGroupBox:AddToggle('MyToggle', {
+    Text = 'Entity ESP',
+    Default = false,
+    Tooltip = '',
+
+    Callback = function(val)
+    flags.esprush = val
+
+		if val then
+			local addconnect
+			addconnect = workspace.ChildAdded:Connect(function(v)
+				if table.find(entitynames,v.Name) then
+					task.wait(.1)
+					local h = esp(v,Color3.fromRGB(255,25,25),v.PrimaryPart,v.Name:gsub("Moving",""))
+					table.insert(esptable.entity,h)
+				end
+			end)
+
+			for _,v in pairs(workspace:GetChildren()) do
+				if table.find(entitynames,v.Name) then
+					task.wait(.1)
+					local h = esp(v,Color3.fromRGB(255,25,25),v.PrimaryPart,v.Name:gsub("Moving",""))
+					table.insert(esptable.entity,h)
+				end
+			end
+
+			local function setup(room)
+				task.wait()
+				if room.Name == "50" or room.Name == "100" then
+					local figuresetup = room:WaitForChild("FigureSetup")
+
+					if figuresetup then
+						local fig = figuresetup:WaitForChild("FigureRagdoll")
+						task.wait(0.1)
+
+						local h = esp(fig,Color3.fromRGB(255,25,25),fig.PrimaryPart,"Figure")
+						table.insert(esptable.entity,h)
+					end 
+				else
+					local assets = room:WaitForChild("Assets")
+
+					local function check(v)
+						if v:IsA("Model") and table.find(entitynames,v.Name) then
+							task.wait(0.1)
+
+							local h = esp(v:WaitForChild("Base"),Color3.fromRGB(255,25,25),v.Base,"Snare")
+							table.insert(esptable.entity,h)
+						end
+					end
+
+					assets.DescendantAdded:Connect(function(v)
+						check(v) 
+					end)
+
+					for i,v in pairs(assets:GetDescendants()) do
+						check(v)
+					end
+				end 
+			end
+
+			local roomconnect
+			roomconnect = workspace.CurrentRooms.ChildAdded:Connect(function(room)
+				setup(room)
+			end)
+
+			for i,v in pairs(workspace.CurrentRooms:GetChildren()) do
+				setup(v) 
+			end
+
+			setup(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)])
+
+			repeat task.wait() until BOBHUBLOADED == false or not flags.esprush
+			addconnect:Disconnect()
+			roomconnect:Disconnect()
+
+			for i,v in pairs(esptable.entity) do
+				v.delete()
+			end 
+		end
+	end
+})
+    
+    LeftGroupBox:AddToggle('MyToggle', {
+    Text = 'Locker ESP',
+    Default = false,
+    Tooltip = '',
+
+    Callback = function(val)
+    flags.esplocker = val
+
+		if val then
+			local function check(v, room)
+				task.wait()
+				local valuechange = nil
+				if v.Name == "Wardrobe" then
+					local h = esp(v.PrimaryPart,Color3.fromRGB(145,100,25),v.PrimaryPart,"Hide Spot")
+					table.insert(esptable.lockers,h) 
+					table.insert(esptableinstances, v)
+					valuechange = game:GetService("ReplicatedStorage").GameData.LatestRoom:GetPropertyChangedSignal("Value"):Connect(function()
+						if tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value) ~= room.Name then
+							h.delete()
+							valuechange:Disconnect()
+						end
+					end)
+				end
+			end
+
+			local function setup(room)
+				local assets = room:WaitForChild("Assets")
+
+				if assets then
+					local subaddcon
+					subaddcon = assets.DescendantAdded:Connect(function(v)
+						check(v, room) 
+					end)
+
+					for i,v in pairs(assets:GetDescendants()) do
+						check(v, room)
+					end
+
+					task.spawn(function()
+						repeat task.wait() until BOBHUBLOADED == false or not flags.esplocker
+						subaddcon:Disconnect()  
+					end)
+				else
+					local subaddcon
+					subaddcon = room.DescendantAdded:Connect(function(v)
+						check(v, room) 
+					end)
+
+					for i,v in pairs(room:GetDescendants()) do
+						check(v, room)
+					end
+
+					task.spawn(function()
+						repeat task.wait() until BOBHUBLOADED == false or not flags.esplocker
+						subaddcon:Disconnect()  
+					end) 
+				end
+			end
+
+			local addconnect
+			addconnect = workspace.CurrentRooms.ChildAdded:Connect(function(room)
+				setup(room)
+			end)
+
+			if workspace.CurrentRooms:FindFirstChild(tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value-1)) then
+				setup(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value-1)])
+			end
+			setup(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)])
+			if workspace.CurrentRooms:FindFirstChild(tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value+1)) then
+				setup(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value+1)])
+			end
+
+			repeat task.wait() until BOBHUBLOADED == false or not flags.esplocker
+			addconnect:Disconnect()
+
+			for i,v in pairs(esptable.lockers) do
+				v.delete()
+			end 
+		end
+	end
+})
+    
+    LeftGroupBox:AddToggle('MyToggle', {
+    Text = 'Chest ESP',
+    Default = false,
+    Tooltip = '',
+
+    Callback = function(val)
+    flags.espchest = val
+
+		if val then
+			local function check(v, room)
+				task.wait()
+				if table.find(esptableinstances, v) then
+					return
+				end
+
+				if v:IsA("Model") then
+					local okvaluechange = nil
+					if v.Name == "ChestBox" then
+						warn(v.Name)
+						local h = esp(v,Color3.fromRGB(205,120,255),v.PrimaryPart,"Chest")
+						table.insert(esptable.chests,h) 
+						table.insert(esptableinstances, v)
+						okvaluechange = game:GetService("ReplicatedStorage").GameData.LatestRoom:GetPropertyChangedSignal("Value"):Connect(function()
+							if tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value) ~= room.Name then
+								h.delete()
+								okvaluechange:Disconnect()
+							end
+						end)
+					elseif v.Name == "ChestBoxLocked" then
+						local h = esp(v,Color3.fromRGB(255,120,205),v.PrimaryPart,"Locked Chest")
+						table.insert(esptable.chests,h) 
+						table.insert(esptableinstances, v)
+						okvaluechange = game:GetService("ReplicatedStorage").GameData.LatestRoom:GetPropertyChangedSignal("Value"):Connect(function()
+							if tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value) ~= room.Name then
+								h.delete()
+								okvaluechange:Disconnect()
+							end
+						end)
+					end
+				end
+			end
+
+			local function setup(room)
+				task.wait(.1)
+				local subaddcon
+				subaddcon = room.DescendantAdded:Connect(function(v)
+					check(v, room) 
+				end)
+
+				for i,v in pairs(room:GetDescendants()) do
+					check(v, room)
+				end
+
+				task.spawn(function()
+					repeat task.wait() until BOBHUBLOADED == false or not flags.espchest
+					subaddcon:Disconnect()  
+				end)  
+			end
+
+			local addconnect
+			addconnect = workspace.CurrentRooms.ChildAdded:Connect(function(room)
+				setup(room)
+			end)
+
+			for i,room in pairs(workspace.CurrentRooms:GetChildren()) do
+				if room:FindFirstChild("Assets") then
+					setup(room) 
+				end
+				task.wait()
+			end
+
+			if workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:FindFirstChild("Assets") then
+				setup(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)])
+			end
+
+			repeat task.wait() until BOBHUBLOADED == false or not flags.espchest
+			addconnect:Disconnect()
+
+			for i,v in pairs(esptable.chests) do
+				v.delete()
+			end
+		end
+	end
+})
+    
+    LeftGroupBox:AddToggle('MyToggle', {
+    Text = 'Player ESP',
+    Default = false,
+    Tooltip = '',
+
+    Callback = function(val)
+    flags.esphumans = val
+
+		if val then
+			local function personesp(v)
+				if v:IsA("Player") then
+					v.CharacterAdded:Connect(function(vc)
+						local vh = vc:WaitForChild("Humanoid")
+						local torso = vc:WaitForChild("UpperTorso")
+						task.wait(0.1)
+
+						local h = esp(vc,Color3.fromRGB(255,255,255),torso,v.DisplayName)
+						table.insert(esptable.people,h) 
+					end)
+
+					if v.Character then
+						local vc = v.Character
+						local vh = vc:WaitForChild("Humanoid")
+						local torso = vc:WaitForChild("UpperTorso")
+						task.wait(0.1)
+
+						local h = esp(vc,Color3.fromRGB(255,255,255),torso,v.DisplayName)
+						table.insert(esptable.people,h) 
+					end
+				end
+			end
+
+			local addconnect
+			addconnect = game.Players.PlayerAdded:Connect(function(v)
+				if v ~= plr then
+					personesp(v)
+				end
+			end)
+
+			for i,v in pairs(game.Players:GetPlayers()) do
+				if v ~= plr then
+					personesp(v) 
+				end
+				task.wait()
+			end
+
+			if workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:FindFirstChild("Assets") then
+				personesp(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)])
+			end
+
+			repeat task.wait() until BOBHUBLOADED == false or not flags.esphumans
+			addconnect:Disconnect()
+
+			for i,v in pairs(esptable.people) do
+				v.delete()
+			end 
+		end
+	end
+})
+    
+    LeftGroupBox:AddToggle('MyToggle', {
+    Text = 'Gold ESP',
+    Default = false,
+    Tooltip = '',
+
+    Callback = function(val)
+    flags.espgold = val
+
+		if val then
+			local function check(v)
+				if table.find(esptableinstances, v) then
+					return
+				end
+
+				if v:IsA("Model") then
+					task.wait(0.1)
+					local goldvalue = v:GetAttribute("GoldValue")
+
+					if goldvalue and goldvalue >= (flags.goldespvalue or 5) then
+						local hitbox = v:WaitForChild("Hitbox")
+						local h = esp(hitbox:GetChildren(),Color3.fromRGB(255,255,0),hitbox,"GoldPile [".. tostring(goldvalue).."]")
+						table.insert(esptable.gold,h)
+						table.insert(esptableinstances, v)
+					end
+				end
+			end
+
+			local function setup(room)
+				task.wait(.1)
+				local assets = room:WaitForChild("Assets")
+
+				local subaddcon
+				subaddcon = assets.DescendantAdded:Connect(function(v)
+					check(v) 
+				end)
+
+				for i,v in pairs(assets:GetDescendants()) do
+					check(v)
+					task.wait()
+				end
+
+				task.spawn(function()
+					repeat task.wait() until BOBHUBLOADED == false or not flags.espchest
+					subaddcon:Disconnect()  
+				end)  
+			end
+
+			local addconnect
+			addconnect = workspace.CurrentRooms.ChildAdded:Connect(function(room)
+				setup(room)
+			end)
+
+			for i,room in pairs(workspace.CurrentRooms:GetChildren()) do
+				if room:FindFirstChild("Assets") then
+					setup(room) 
+				end
+				task.wait()
+			end
+
+			if workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:FindFirstChild("Assets") then
+				setup(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)])
+			end
+
+			repeat task.wait() until BOBHUBLOADED == false or not flags.espgold
+			addconnect:Disconnect()
+
+			for i,v in pairs(esptable.gold) do
+				v.delete()
+			end 
+		end
+	end
+})
+
+local RightGroupBox2 = Tabs.Visuals:AddRightGroupbox('Other Visual Matters')
+RightGroupBox:AddToggle('MyToggle', {
+    Text = 'FullBright',
+    Default = false,
+    Tooltip = 'Allows You To See In Dark Rooms',
+
+    Callback = function(val)
+     flags.fullbright = val
+
+		if val then
+			local oldAmbient = game:GetService("Lighting").Ambient
+			local oldColorShift_Bottom = game:GetService("Lighting").ColorShift_Bottom
+			local oldColorShift_Top = game:GetService("Lighting").ColorShift_Top
+
+			local function doFullbright()
+				if flags.fullbright == true then
+					game:GetService("Lighting").Ambient = Color3.new(1, 1, 1)
+					game:GetService("Lighting").ColorShift_Bottom = Color3.new(1, 1, 1)
+					game:GetService("Lighting").ColorShift_Top = Color3.new(1, 1, 1)
+				else
+					game:GetService("Lighting").Ambient = oldAmbient
+					game:GetService("Lighting").ColorShift_Bottom = oldColorShift_Bottom
+					game:GetService("Lighting").ColorShift_Top = oldColorShift_Top
+				end
+			end
+			doFullbright()
+
+			local coneee = game:GetService("Lighting").LightingChanged:Connect(doFullbright)
+			repeat task.wait() until BOBHUBLOADED == false or not flags.fullbright
+
+			coneee:Disconnect()
+			game:GetService("Lighting").Ambient = oldAmbient
+			game:GetService("Lighting").ColorShift_Bottom = oldColorShift_Bottom
+			game:GetService("Lighting").ColorShift_Top = oldColorShift_Top
+		end
+	end
+})
+
+local LeftGroupbox1 = Tabs.Entity:AddLeftGroupbox('Entity Remover');
+
+local LeftGroupbox2 = Tabs.Entity:AddLeftGroupbox('Avoiding');
+
+local RightGroupbox1 = Tabs.Entity:AddRightGroupbox('Entity Disabler (Anti)');
+
+local MyButton = LeftGroupbox2:AddButton({
+    Text = 'Enable GodMode',
+    Func = function()
+task.wait(0.3)
+    if _G.God == nil then
+_G.God = true
+local Collision = game.Players.LocalPlayer.Character.Collision
+    Collision.Position = Collision.Position - Vector3.new(0,9.8,0)
+    firesignal(game.ReplicatedStorage.EntityInfo.Caption.OnClientEvent, "GodMode is Enabled...")
+task.spawn(function()
+		local notif = Instance.new("Sound");notif.Parent = game.SoundService;notif.SoundId = "rbxassetid://6897623656";notif.Volume = 2;notif:Play();notif.Stopped:Wait();notif:Destroy()
+		end)
+end
+end,
+    DoubleClick = false,
+    Tooltip = ''
+})
+
+local MyButton = LeftGroupbox2:AddButton({
+    Text = 'Disable GodMode',
+    Func = function()
+task.wait(0.3)
+    if _G.God == nil then
+_G.God = true
+local Collision = game.Players.LocalPlayer.Character.Collision
+    Collision.Position = Collision.Position + Vector3.new(0,9.8,0)
+    firesignal(game.ReplicatedStorage.EntityInfo.Caption.OnClientEvent, "GodMode is Disabled...")
+task.spawn(function()
+		local notif = Instance.new("Sound");notif.Parent = game.SoundService;notif.SoundId = "rbxassetid://6897623656";notif.Volume = 2;notif:Play();notif.Stopped:Wait();notif:Destroy()
+		end)
+end
+end,
+    DoubleClick = false,
+    Tooltip = ''
+})
+
+RightGroupbox1:AddToggle('MyToggle', {
     Text = 'No Anti Cheat',
-    Default = true,
+    Default = false,
     Tooltip = 'RECCOMMENDED',
 
     Callback = function(BypassSpeedss)
@@ -2578,61 +2759,7 @@ end
 	end
 })
 
-RightGroupbox2:AddToggle('MyToggle', {
-    Text = 'No Seek Chase',
-    Default = false,
-    Tooltip = '',
-
-    Callback = function(val)
-    flags.noseek = val
-
-		if val then
-			local addconnect
-			addconnect = workspace.CurrentRooms.ChildAdded:Connect(function(room)
-				local trigger = room:WaitForChild("TriggerEventCollision",2)
-
-				if trigger then
-					trigger:Destroy() 
-				end
-			end)
-
-			repeat task.wait() until BOBHUBLOADED == false or not flags.noseek
-			addconnect:Disconnect()
-		end
-	end
-})
-
-    game:GetService("ReplicatedStorage").GameData.LatestRoom:GetPropertyChangedSignal("Value"):Connect(function()
-	task.wait(.1)
-	for _,descendant in pairs(game:GetService("Workspace").CurrentRooms:GetDescendants()) do
-		if descendant.Name == "Seek_Arm" or descendant.Name == "ChandelierObstruction" then
-			descendant.Parent = nil
-			descendant:Destroy()
-		end
-	end
-end)
-
-local ScreechModule = plr.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Modules:FindFirstChild("Screech")
-RightGroupbox2:AddToggle('MyToggle', {
-    Text = 'No Screech',
-    Default = false,
-    Tooltip = '',
-
-    Callback = function(val)
-flags.noscreech = val
-end
-})
-
-game:GetService("RunService").RenderStepped:Connect(function()
-    pcall(function()
-        if flags.noscreech then
-        game:GetService("ReplicatedStorage").Entities.Screech:destroy()
-        end
-        end)
-        end)
-
-
-RightGroupbox2:AddToggle('MyToggle', {
+LeftGroupbox1:AddToggle('MyToggle', {
     Text = 'No Timothy [NoJumpScare]',
     Default = false,
     Tooltip = '',
@@ -2655,7 +2782,36 @@ local old
 		return old(self,...)
 	end))
 
-RightGroupbox2:AddToggle('MyToggle', {
+local ScreechModule = plr.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Modules:FindFirstChild("Screech")
+LeftGroupbox1:AddToggle('MyToggle', {
+    Text = 'No Screech',
+    Default = false,
+    Tooltip = '',
+
+    Callback = function(val)
+flags.noscreech = val
+end
+})
+
+game:GetService("RunService").RenderStepped:Connect(function()
+    pcall(function()
+        if flags.noscreech then
+        game:GetService("ReplicatedStorage").Entities.Screech:destroy()
+        end
+        end)
+        end)
+
+LeftGroupbox1:AddToggle('MyToggle', {
+    Text = 'No Halt',
+    Default = false,
+    Tooltip = '',
+
+    Callback = function(val)
+    _G.NoHalt = val
+    end
+})
+
+LeftGroupbox1:AddToggle('MyToggle', {
     Text = 'No Eyes Damage',
     Default = false,
     Tooltip = '',
@@ -3014,19 +3170,33 @@ EntityInfo.SpiderJumpscare.OnClientEvent:Connect(function(...)
         end)
     end
 end)
-	
 
-RightGroupbox2:AddToggle('MyToggle', {
-    Text = 'No Halt',
+
+LeftGroupbox1:AddToggle('MyToggle', {
+    Text = 'No Seek Chase',
     Default = false,
     Tooltip = '',
 
     Callback = function(val)
-    _G.NoHalt = val
-    end
+    flags.noseek = val
+
+		if val then
+			local addconnect
+			addconnect = workspace.CurrentRooms.ChildAdded:Connect(function(room)
+				local trigger = room:WaitForChild("TriggerEventCollision",2)
+
+				if trigger then
+					trigger:Destroy() 
+				end
+			end)
+
+			repeat task.wait() until BOBHUBLOADED == false or not flags.noseek
+			addconnect:Disconnect()
+		end
+	end
 })
-	
-RightGroupbox2:AddToggle('MyToggle', {
+
+RightGroupbox1:AddToggle('MyToggle', {
     Text = 'Disable Seek Arms & Fire',
     Default = false,
     Tooltip = '',
@@ -3035,8 +3205,8 @@ RightGroupbox2:AddToggle('MyToggle', {
     flags.noseekarmsfire = val
 	end
 })
-        
-RightGroupbox2:AddToggle('MyToggle', {
+
+RightGroupbox1:AddToggle('MyToggle', {
     Text = 'Always Win Heartbeat Minigame',
     Default = false,
     Tooltip = '',
@@ -3102,181 +3272,6 @@ game:GetService("RunService").RenderStepped:Connect(function()
         end
         end)
         end)
-        
-RightGroupbox3:AddToggle('MyToggle', {
-    Text = 'Remove Gate',
-    Default = false,
-    Tooltip = '',
-
-    Callback = function(val)
-    flags.nogates = val
-
-		if val then
-			spawn(function()
-				for _,room in pairs(workspace.CurrentRooms:GetChildren()) do
-					local gate = room:WaitForChild("Gate",2)
-
-					if gate then
-						local door = gate:WaitForChild("ThingToOpen",2)
-
-						if door then
-							door:Destroy() 
-						end
-					end
-				end
-			end)
-
-			local addconnect
-			addconnect = workspace.CurrentRooms.ChildAdded:Connect(function(room)
-				local gate = room:WaitForChild("Gate",2)
-
-				if gate then
-					local door = gate:WaitForChild("ThingToOpen",2)
-
-					if door then
-						door:Destroy() 
-					end
-				end
-			end)
-
-			spawn(function()
-				local gate = workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Gate",2)
-				if gate then
-					local door = gate:WaitForChild("ThingToOpen",2)
-					if door then
-						door:Destroy() 
-					end
-				end
-			end)
-
-			repeat task.wait() until BOBHUBLOADED == false or not flags.nogates
-			addconnect:Disconnect()
-		end
-	end
-})
-
-RightGroupbox3:AddToggle('MyToggle', {
-    Text = 'A-000 Door No Locks',
-    Default = false,
-    Tooltip = '',
-
-    Callback = function(val)
-    flags.roomsnolock = val
-
-		if val then
-			local function check(room)
-				local door = room:WaitForChild("RoomsDoor_Entrance",2)
-
-				if door then
-					local prompt = door:WaitForChild("Door"):WaitForChild("EnterPrompt")
-					prompt.Enabled = true
-				end 
-			end
-
-			local addconnect
-			addconnect = workspace.CurrentRooms.ChildAdded:Connect(function(room)
-				check(room)
-			end)
-
-			for i,v in pairs(workspace.CurrentRooms:GetChildren()) do
-				check(v)
-			end
-
-			spawn(function()
-				check(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)])
-			end)
-
-			repeat task.wait() until BOBHUBLOADED == false or not flags.roomsnolock
-			addconnect:Disconnect()
-		end
-	end
-})
-    
-    RightGroupbox3:AddToggle('MyToggle', {
-    Text = 'Remove Skeleton Door',
-    Default = false,
-    Tooltip = '',
-
-    Callback = function(val)
-    flags.noskeledoors = val
-
-		if val then
-			local addconnect
-			addconnect = workspace.CurrentRooms.ChildAdded:Connect(function(room)
-				local door = room:WaitForChild("Wax_Door",2)
-
-				if door then
-					door:Destroy() 
-				end
-			end)
-
-			spawn(function()
-				local door = workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Wax_Door",2)
-				if door then
-					door:Destroy() 
-				end 
-			end)
-
-			repeat task.wait() until BOBHUBLOADED == false or not flags.noskeledoors
-			addconnect:Disconnect()
-		end
-	end
-})
-
-RightGroupbox3:AddToggle('MyToggle', {
-    Text = 'Remove Puzzle Door',
-    Default = false,
-    Tooltip = '',
-
-    Callback = function(val)
-flags.nopuzzle = val
-
-		if val then
-			spawn(function()
-				for _,room in pairs(workspace.CurrentRooms:GetChildren()) do
-					local assets = room:WaitForChild("Assets")
-					local paintings = assets:WaitForChild("Paintings",2)
-
-					if paintings then
-						local door = paintings:WaitForChild("MovingDoor",2)
-
-						if door then
-							door:Destroy() 
-						end 
-					end
-				end
-			end)
-
-			local addconnect
-			addconnect = workspace.CurrentRooms.ChildAdded:Connect(function(room)
-				local assets = room:WaitForChild("Assets")
-				local paintings = assets:WaitForChild("Paintings",2)
-
-				if paintings then
-					local door = paintings:WaitForChild("MovingDoor",2)
-
-					if door then
-						door:Destroy() 
-					end 
-				end
-			end)
-
-			spawn(function()
-				local assets = workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:WaitForChild("Assets")
-				local paintings = assets:WaitForChild("Paintings",2)
-				if paintings then
-					local door = paintings:WaitForChild("MovingDoor",2)
-					if door then
-						door:Destroy() 
-					end 
-				end
-			end)
-
-			repeat task.wait() until BOBHUBLOADED == false or not flags.nopuzzle
-			addconnect:Disconnect()
-		end
-	end
-})
 
 local LeftGroupBox4 = Tabs.Credits:AddLeftGroupbox('Credits')
 
