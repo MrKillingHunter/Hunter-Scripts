@@ -570,7 +570,7 @@ local SaveManager = loadstring(game:HttpGet(repo .. 'addons/SaveManager.lua'))()
 
 local Window = Library:CreateWindow({
 
-    Title = 'Hunter Library v'..currentver..' | DOORS 👁️',
+    Title = 'Hunter Library (v'..currentver..')'' | DOORS 👁️',
     Center = true,
     AutoShow = true,
     Resizable = true,
@@ -676,12 +676,12 @@ end
 local Tab2 = TabBox:AddTab('Notify')
 
 Tab2:AddInput('MyTextbox', {
-    Default = 'Text',
+    Default = '',
     Numeric = false, -- true / false, only allows numbers
     Finished = false, -- true / false, only calls callback when you press enter
     Text = 'Chat Notify Text',
     Tooltip = 'Chat Notify Text', -- Information shown when you hover over the textbox
-    Placeholder = 'Chat Notify Text', -- placeholder text when the box is empty
+    Placeholder = '', -- placeholder text when the box is empty
     Callback = function(caht)
 casjfg = caht
     end
@@ -755,7 +755,7 @@ workspace.ChildAdded:Connect(function(inst)
 			if inst:IsDescendantOf(workspace) then
 				if inst.Name:gsub("Moving","") == "Rush" then
 					warnmessage("ENTITIES", "Rush Is Coming! ", "Don't Worry! You Have Godmode Enabled!", 0, "11102256553", inst)
-				elseif inst.Name:gsub("Moving","") == "Ambush" then
+				else if inst.Name:gsub("Moving","") == "Ambush" then
 					warnmessage("ENTITIES", "Ambush Is Coming! ", "Don't Worry! You Have Godmode Enabled!", 0, "10938726652", inst)
 				end
 
@@ -817,13 +817,13 @@ workspace.ChildAdded:Connect(function(inst)
 				end)
 			end
 		end
-	end--]]
+	end
 end)
 
 local casjfg = ""
 
 Tab2:AddToggle('MyToggle', {
-    Text = 'Chat Notify',
+    Text = 'Notify Entities In Chat',
     Default = false,
     Tooltip = '',
     Callback = function(Chats)
@@ -3206,6 +3206,16 @@ RightGroupbox1:AddToggle('MyToggle', {
 	end
 })
 
+     game:GetService("ReplicatedStorage").GameData.LatestRoom:GetPropertyChangedSignal("Value"):Connect(function()
+	task.wait(.1)
+	for _,descendant in pairs(game:GetService("Workspace").CurrentRooms:GetDescendants()) do
+		if descendant.Name == "Seek_Arm" or descendant.Name == "ChandelierObstruction" then
+			descendant.Parent = nil
+			descendant:Destroy()
+		end
+	end
+end)
+	
 RightGroupbox1:AddToggle('MyToggle', {
     Text = 'Always Win Heartbeat Minigame',
     Default = false,
