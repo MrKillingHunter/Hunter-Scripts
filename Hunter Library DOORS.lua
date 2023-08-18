@@ -581,9 +581,9 @@ local Window = Library:CreateWindow({
 
 local Tabs = {
     Main = Window:AddTab('Main'),
-    Character = Window:AddTab('Character')
-    Visuals = Window:AddTab('Visuals And ESP')
-    Entity = Window:AddTab('Entity Matters')
+    Character = Window:AddTab('Character'),
+    Visuals = Window:AddTab('Visuals And ESP'),
+    Entity = Window:AddTab('Entity Matters'),
     Credits = Window:AddTab('Credits'),
     ['UI Settings'] = Window:AddTab('Configs'),
 }
@@ -1771,7 +1771,7 @@ flags.nopuzzle = val
 local LeftGroupBox1 = Tabs.Character:AddLeftGroupbox('Character')
 
 if fireproximityprompt then
-LeftGroupBox:AddToggle('MyToggle', {
+LeftGroupBox1:AddToggle('MyToggle', {
     Text = 'Instant Use',
     Default = false,
     Tooltip = 'Removes The E Cooldown With Interacting',
@@ -1792,7 +1792,7 @@ else
 	warnmessage("Hunter Library v"..currentver, "You need to have fireproximityprompt function for 'instant use'.", 7)
 end
 
-LeftGroupBox:AddSlider('MySlider', {
+LeftGroupBox1:AddSlider('MySlider', {
     Text = 'Speed Boost',
     Default = 0,
     Min = 0,
@@ -1808,7 +1808,7 @@ LeftGroupBox:AddSlider('MySlider', {
 	end
 })
 
-LeftGroupBox:AddToggle('MyToggle', {
+LeftGroupBox1:AddToggle('MyToggle', {
     Text = 'Enable Speed Boost',
     Default = false,
     Tooltip = '',
@@ -1821,7 +1821,7 @@ LeftGroupBox:AddToggle('MyToggle', {
 	end
 })
 
-LeftGroupBox:AddSlider('MySlider', {
+LeftGroupBox1:AddSlider('MySlider', {
     Text = 'FieldOfView',
     Default = 0,
     Min = 70,
@@ -1834,7 +1834,7 @@ LeftGroupBox:AddSlider('MySlider', {
 	end
 })
 
-LeftGroupBox:AddToggle('MyToggle', {
+LeftGroupBox1:AddToggle('MyToggle', {
     Text = 'Enable Custom Field Of View',
     Default = false,
     Tooltip = '',
@@ -1871,7 +1871,7 @@ task.spawn(function()
 	end)
 end)
 
-LeftGroupBox:AddToggle('MyToggle', {
+LeftGroupBox1:AddToggle('MyToggle', {
     Text = 'Noclip',
     Default = false,
     Tooltip = 'Allows You To Noclip Through Walls',
@@ -1921,7 +1921,7 @@ game.Players.LocalPlayer.Character.UpperTorso.Massless = one
     end)
 end)
 
-LeftGroupBox:AddToggle('MyToggle', {
+LeftGroupBox1:AddToggle('MyToggle', {
     Text = 'No Slow Down',
     Default = false,
     Tooltip = '',
@@ -2662,7 +2662,7 @@ LeftGroupBox:AddToggle('MyToggle', {
 	end
 })
 
-local RightGroupBox2 = Tabs.Visuals:AddRightGroupbox('Other Visual Matters')
+local RightGroupBox = Tabs.Visuals:AddRightGroupbox('Other Visual Matters')
 RightGroupBox:AddToggle('MyToggle', {
     Text = 'FullBright',
     Default = false,
@@ -3216,7 +3216,7 @@ RightGroupbox1:AddToggle('MyToggle', {
 		end
 })
 
-RightGroupbox2:AddToggle('MyToggle', {
+RightGroupbox1:AddToggle('MyToggle', {
     Text = 'Anti-Dupe',
     Default = false,
     Tooltip = '',
@@ -3236,7 +3236,7 @@ RightGroupbox2:AddToggle('MyToggle', {
     end
 })
 								
-RightGroupbox2:AddToggle('MyToggle', {
+RightGroupbox1:AddToggle('MyToggle', {
     Text = 'Anti-Glitch',
     Default = false,
     Tooltip = '',
@@ -3246,7 +3246,7 @@ RightGroupbox2:AddToggle('MyToggle', {
 end
 })
 
-RightGroupbox2:AddToggle('Enable', {
+RightGroupbox1:AddToggle('Enable', {
     Text = 'Anti-Snare',
     Default = false,
 
@@ -3273,14 +3273,14 @@ game:GetService("RunService").RenderStepped:Connect(function()
         end)
         end)
 
-local LeftGroupBox4 = Tabs.Credits:AddLeftGroupbox('Credits')
+local LeftGroupBox = Tabs.Credits:AddLeftGroupbox('Credits')
 
-LeftGroupBox4:AddLabel('Scripter :')
-LeftGroupBox4:AddLabel('Hunter And Yieviro92 (BIG SHOUTOUT)')
+LeftGroupBox:AddLabel('Scripter :')
+LeftGroupBox:AddLabel('Hunter And Yieviro92 As Well As a00pkidd (BIG SHOUTOUT)')
 
-LeftGroupBox4:AddLabel('Youtube')
+LeftGroupBox:AddLabel('Youtube')
 
-local MyButton = LeftGroupBox4:AddButton({
+local MyButton = LeftGroupBox:AddButton({
     Text = 'yieviro92',
     Func = function()
         if setclipboard then 
@@ -3291,7 +3291,7 @@ local MyButton = LeftGroupBox4:AddButton({
     Tooltip = ''
 })
 
-local MyButton = LeftGroupBox4:AddButton({
+local MyButton = LeftGroupBox:AddButton({
     Text = 'Hunter',
     Func = function()
         if setclipboard then 
@@ -3304,7 +3304,7 @@ local MyButton = LeftGroupBox4:AddButton({
 
 LeftGroupBox4:AddLabel('Discord')
 
-local MyButton = LeftGroupBox4:AddButton({
+local MyButton = LeftGroupBox:AddButton({
     Text = 'yieviro92',
     Func = function()
         if setclipboard then 
@@ -3315,7 +3315,7 @@ local MyButton = LeftGroupBox4:AddButton({
     Tooltip = ''
 })
 
-local MyButton = LeftGroupBox4:AddButton({
+local MyButton = LeftGroupBox:AddButton({
     Text = 'Hunter',
     Func = function()
         if setclipboard then 
@@ -3326,9 +3326,9 @@ local MyButton = LeftGroupBox4:AddButton({
     Tooltip = ''
 })
 
-LeftGroupBox4:AddLabel('Discord Server And Other')
+LeftGroupBox:AddLabel('Discord Server And Other')
 
-local MyButton = LeftGroupBox4:AddButton({
+local MyButton = LeftGroupBox:AddButton({
     Text = 'Join The Discord (Moving Soon)',
     Func = function()
         if setclipboard then 
@@ -3341,7 +3341,7 @@ local MyButton = LeftGroupBox4:AddButton({
 
 
 
-Library:SetWatermarkVisibility(false)
+Library:SetWatermarkVisibility(true)
 
 -- Example of dynamically-updating watermark with common traits (fps and ping)
 local FrameTimer = tick()
@@ -3366,6 +3366,17 @@ end);
 local MenuGroup = Tabs['UI Settings']:AddLeftGroupbox('UI Settings')
 
 MenuGroup:AddLabel('UI Toggle Keybind'):AddKeyPicker('MenuKeybind', { Default = 'End', NoUI = true, Text = 'UI Toggle Keybind' })
+
+local MyButton = LeftGroupBox:AddButton({
+    Text = 'Close GUI',
+    Func = function()
+        if .Enabled then 
+            .Enabled == false   
+        end
+    end,
+    DoubleClick = false,
+    Tooltip = ''
+})
 	
 Library.ToggleKeybind = Options.MenuKeybind
 
