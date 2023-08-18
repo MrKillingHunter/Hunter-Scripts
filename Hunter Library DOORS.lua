@@ -3302,7 +3302,7 @@ local MyButton = LeftGroupBox:AddButton({
     Tooltip = ''
 })
 
-LeftGroupBox4:AddLabel('Discord')
+LeftGroupBox:AddLabel('Discord')
 
 local MyButton = LeftGroupBox:AddButton({
     Text = 'yieviro92',
@@ -3341,7 +3341,7 @@ local MyButton = LeftGroupBox:AddButton({
 
 
 
-Library:SetWatermarkVisibility(true)
+Library:SetWatermarkVisibility(false)
 
 -- Example of dynamically-updating watermark with common traits (fps and ping)
 local FrameTimer = tick()
@@ -3365,19 +3365,8 @@ end);
 
 local MenuGroup = Tabs['UI Settings']:AddLeftGroupbox('UI Settings')
 
-MenuGroup:AddLabel('UI Toggle Keybind'):AddKeyPicker('MenuKeybind', { Default = 'End', NoUI = true, Text = 'UI Toggle Keybind' })
+MenuGroup:AddLabel('UI Toggle Keybind'):AddKeyPicker('MenuKeybind', { Default = 'Ins', NoUI = true, Text = 'UI Toggle Keybind' })
 
-local MyButton = LeftGroupBox:AddButton({
-    Text = 'Close GUI',
-    Func = function()
-        if .Enabled then 
-            .Enabled == false   
-        end
-    end,
-    DoubleClick = false,
-    Tooltip = ''
-})
-	
 Library.ToggleKeybind = Options.MenuKeybind
 
 -- SaveManager (Allows you to have a configuration system)
