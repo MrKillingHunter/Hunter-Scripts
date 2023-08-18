@@ -3375,6 +3375,16 @@ end);
 
 local MenuGroup = Tabs['UI Settings']:AddLeftGroupbox('UI Settings')
 
+LeftGroupbox:AddToggle('MyToggle', {
+    Text = 'Custom Cursor',
+    Default = true,
+    Tooltip = '',
+
+    Callback = function(val)
+    ShowCustomCursor = val
+end
+})
+	
 MenuGroup:AddLabel('UI Toggle Keybind'):AddKeyPicker('MenuKeybind', { Default = 'Ins', NoUI = true, Text = 'UI Toggle Keybind' })
 
 Library.ToggleKeybind = Options.MenuKeybind
