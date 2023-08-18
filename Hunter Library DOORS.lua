@@ -3387,6 +3387,10 @@ end
 	
 MenuGroup:AddLabel('UI Toggle Keybind'):AddKeyPicker('MenuKeybind', { Default = 'Ins', NoUI = true, Text = 'UI Toggle Keybind' })
 
+MenuGroup:AddButton('Close GUI', function() Library:Unload() end)
+	if true then
+		BOBHUBLOADED = false
+	
 Library.ToggleKeybind = Options.MenuKeybind
 
 -- SaveManager (Allows you to have a configuration system)
