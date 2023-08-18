@@ -570,7 +570,7 @@ local SaveManager = loadstring(game:HttpGet(repo .. 'addons/SaveManager.lua'))()
 
 local Window = Library:CreateWindow({
 
-    Title = 'Hunter Library (v'..currentver..')'' | DOORS 👁️',
+    Title = 'Hunter Library (v4.00)'..earlyrelease..' | DOORS 👁️',
     Center = true,
     AutoShow = true,
     Resizable = true,
@@ -755,7 +755,7 @@ workspace.ChildAdded:Connect(function(inst)
 			if inst:IsDescendantOf(workspace) then
 				if inst.Name:gsub("Moving","") == "Rush" then
 					warnmessage("ENTITIES", "Rush Is Coming! ", "Don't Worry! You Have Godmode Enabled!", 0, "11102256553", inst)
-				else if inst.Name:gsub("Moving","") == "Ambush" then
+				elseif inst.Name:gsub("Moving","") == "Ambush" then
 					warnmessage("ENTITIES", "Ambush Is Coming! ", "Don't Worry! You Have Godmode Enabled!", 0, "10938726652", inst)
 				end
 
