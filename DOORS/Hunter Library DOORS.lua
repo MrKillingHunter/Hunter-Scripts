@@ -583,7 +583,7 @@ local Tabs = {
     Main = Window:AddTab('Main'),
     Character = Window:AddTab('Character'),
     Visuals = Window:AddTab('Visuals'),
-    Entity = Window:AddTab('Entity Matters'),
+    Entity = Window:AddTab('Entities'),
     Credits = Window:AddTab('Credits'),
     ['UI Settings'] = Window:AddTab('Configs'),
 }
@@ -1767,47 +1767,10 @@ flags.nopuzzle = val
 	end
 })
 
--- Groupbox:AddDivider
--- Arguments: None
-LeftGroupBox1:AddDivider()
-
---[[
-    Groupbox:AddSlider
-    Arguments: Idx, SliderOptions
-
-    SliderOptions: {
-        Text = string,
-        Default = number,
-        Min = number,
-        Max = number,
-        Suffix = string,
-        Rounding = number,
-        Compact = boolean,
-        HideMax = boolean,
-    }
-
-    Text, Default, Min, Max, Rounding must be specified.
-    Suffix is optional.
-    Rounding is the number of decimal places for precision.
-
-    Compact will hide the title label of the Slider
-
-    HideMax will only display the value instead of the value & max value of the slider
-    Compact will do the same thing
-]]
-local MyButton = LeftGroupBox1:AddButton({
-    Text = 'Auto Doors 0-99 BETA',
-    Func = function()
-        print('You clicked a button!')
-    end,
-    DoubleClick = false,
-    Tooltip = 'This is the main button'
-})
-
-local LeftGroupBox1 = Tabs.Character:AddLeftGroupbox('Character')
+local RightGroupbox2 = Tabs.Main:AddLeftGroupbox('Other main Stuff')
 
 if fireproximityprompt then
-LeftGroupBox1:AddToggle('MyToggle', {
+RightGroupBox2:AddToggle('MyToggle', {
     Text = 'Instant Use',
     Default = false,
     Tooltip = 'Removes The E Cooldown With Interacting',
@@ -1827,6 +1790,8 @@ LeftGroupBox1:AddToggle('MyToggle', {
 else
 	warnmessage("Hunter Library v"..currentver, "You need to have fireproximityprompt function for 'instant use'.", 7)
 end
+
+local LeftGroupBox1 = Tabs.Character:AddLeftGroupbox('Character')
 
 LeftGroupBox1:AddSlider('MySlider', {
     Text = 'Speed Boost',
@@ -1858,7 +1823,7 @@ LeftGroupBox1:AddToggle('MyToggle', {
 })
 
 LeftGroupBox1:AddSlider('MySlider', {
-    Text = 'FieldOfView',
+    Text = 'Custom FOV',
     Default = 0,
     Min = 70,
     Max = 120,
