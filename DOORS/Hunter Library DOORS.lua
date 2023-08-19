@@ -570,7 +570,7 @@ local SaveManager = loadstring(game:HttpGet(repo .. 'addons/SaveManager.lua'))()
 
 local Window = Library:CreateWindow({
 
-    Title = 'Hunter Library (v4.00)'..' | DOORS 👁️',
+    Title = 'Hunter Library (v4.03)'..' | DOORS 👁️',
     Center = true,
     AutoShow = true,
     Resizable = true,
