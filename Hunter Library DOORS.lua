@@ -570,7 +570,7 @@ local SaveManager = loadstring(game:HttpGet(repo .. 'addons/SaveManager.lua'))()
 
 local Window = Library:CreateWindow({
 
-    Title = 'Hunter Library (v4.00)'..earlyrelease..' | DOORS 👁️',
+    Title = 'Hunter Library (v4.00)'..' | DOORS 👁️',
     Center = true,
     AutoShow = true,
     Resizable = true,
@@ -3374,23 +3374,11 @@ local WatermarkConnection = game:GetService('RunService').RenderStepped:Connect(
 end);
 
 local MenuGroup = Tabs['UI Settings']:AddLeftGroupbox('UI Settings')
-
-LeftGroupbox:AddToggle('MyToggle', {
-    Text = 'Custom Cursor',
-    Default = true,
-    Tooltip = '',
-
-    Callback = function(val)
-    ShowCustomCursor = val
-end
-})
 	
 MenuGroup:AddLabel('UI Toggle Keybind'):AddKeyPicker('MenuKeybind', { Default = 'Ins', NoUI = true, Text = 'UI Toggle Keybind' })
 
 MenuGroup:AddButton('Close GUI', function() Library:Unload() end)
-	if true then
-		BOBHUBLOADED = false
-	
+
 Library.ToggleKeybind = Options.MenuKeybind
 
 -- SaveManager (Allows you to have a configuration system)
