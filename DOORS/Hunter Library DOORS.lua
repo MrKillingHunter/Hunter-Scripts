@@ -1766,7 +1766,44 @@ flags.nopuzzle = val
 		end
 	end
 })
-			
+
+-- Groupbox:AddDivider
+-- Arguments: None
+LeftGroupBox1:AddDivider()
+
+--[[
+    Groupbox:AddSlider
+    Arguments: Idx, SliderOptions
+
+    SliderOptions: {
+        Text = string,
+        Default = number,
+        Min = number,
+        Max = number,
+        Suffix = string,
+        Rounding = number,
+        Compact = boolean,
+        HideMax = boolean,
+    }
+
+    Text, Default, Min, Max, Rounding must be specified.
+    Suffix is optional.
+    Rounding is the number of decimal places for precision.
+
+    Compact will hide the title label of the Slider
+
+    HideMax will only display the value instead of the value & max value of the slider
+    Compact will do the same thing
+]]
+local MyButton = LeftGroupBox1:AddButton({
+    Text = 'Auto Doors 0-99 BETA',
+    Func = function()
+        print('You clicked a button!')
+    end,
+    DoubleClick = false,
+    Tooltip = 'This is the main button'
+})
+
 local LeftGroupBox1 = Tabs.Character:AddLeftGroupbox('Character')
 
 if fireproximityprompt then
