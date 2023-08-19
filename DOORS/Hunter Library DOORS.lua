@@ -2845,6 +2845,230 @@ LeftGroupbox1:AddToggle('MyToggle', {
 	end
 })
 
+RightGroupbox1:AddToggle('MyToggle', {
+    Text = 'Disable Seek Arms & Fire',
+    Default = false,
+    Tooltip = '',
+
+    Callback = function(val)
+    flags.noseekarmsfire = val
+	end
+})
+
+     game:GetService("ReplicatedStorage").GameData.LatestRoom:GetPropertyChangedSignal("Value"):Connect(function()
+	task.wait(.1)
+	for _,descendant in pairs(game:GetService("Workspace").CurrentRooms:GetDescendants()) do
+		if descendant.Name == "Seek_Arm" or descendant.Name == "ChandelierObstruction" then
+			descendant.Parent = nil
+			descendant:Destroy()
+		end
+	end
+end)
+	
+RightGroupbox1:AddToggle('MyToggle', {
+    Text = 'Always Win Heartbeat Minigame',
+    Default = false,
+    Tooltip = '',
+
+    Callback = function(val)
+    flags.heartbeatwin = val
+		end
+})
+
+RightGroupbox1:AddToggle('MyToggle', {
+    Text = 'Anti-Dupe',
+    Default = false,
+    Tooltip = '',
+
+    Callback = function(val)
+    _G.Fake_Hitbox = val
+
+        while wait() and _G.Fake_Hitbox == true do
+            for i, v in ipairs(workspace:GetDescendants()) do
+                if v.Name == "Closet" then
+                    local Hitbox = v:FindFirstChild("Hitbox")
+            
+                    Hitbox.CanTouch = false
+                end
+            end
+        end
+    end
+})
+								
+RightGroupbox1:AddToggle('MyToggle', {
+    Text = 'Anti-Glitch',
+    Default = false,
+    Tooltip = '',
+
+    Callback = function(val)
+    DisableGlitch = val
+end
+})
+
+RightGroupbox1:AddToggle('Enable', {
+    Text = 'Anti-Snare',
+    Default = false,
+
+    Callback = function(Value)
+        _G.Snare_Hitbox = Value
+
+        while wait() and _G.Snare_Hitbox == true do
+            for i, v in ipairs(workspace:GetDescendants()) do
+                if v.Name == "Snare" then
+                    local Hitbox = v:FindFirstChild("Hitbox")
+            
+                    Hitbox.CanTouch = false
+                end
+            end
+        end
+    end
+})
+	
+game:GetService("RunService").RenderStepped:Connect(function()
+    pcall(function()
+        if _G.NoHalt then
+        game:GetService("ReplicatedStorage").ClientModules.EntityModules.Shade:remove()
+        end
+        end)
+        end)
+
+local LeftGroupBox = Tabs.Credits:AddLeftGroupbox('Credits')
+
+LeftGroupBox:AddLabel('Scripter :')
+LeftGroupBox:AddLabel('Hunter And Yieviro92 As Well As a00pkidd (BIG SHOUTOUT)')
+
+LeftGroupBox:AddLabel('Youtube')
+
+local MyButton = LeftGroupBox:AddButton({
+    Text = 'yieviro92',
+    Func = function()
+        if setclipboard then 
+            setclipboard("youtube.com/@yieviro92creepy")   
+        end
+    end,
+    DoubleClick = false,
+    Tooltip = ''
+})
+
+local MyButton = LeftGroupBox:AddButton({
+    Text = 'Hunter',
+    Func = function()
+        if setclipboard then 
+            setclipboard("https://youtube.com/@SirotanAndEthan")   
+        end
+    end,
+    DoubleClick = false,
+    Tooltip = ''
+})
+
+local MyButton = LeftGroupBox:AddButton({
+    Text = 'a00pkidd',
+    Func = function()
+        if setclipboard then 
+            setclipboard("youtube.com/@teama00pkidd")   
+        end
+    end,
+    DoubleClick = false,
+    Tooltip = ''
+})
+
+LeftGroupBox:AddLabel('Discord')
+
+local MyButton = LeftGroupBox:AddButton({
+    Text = 'yieviro92',
+    Func = function()
+        if setclipboard then 
+            setclipboard("yieviro92")   
+        end
+    end,
+    DoubleClick = false,
+    Tooltip = ''
+})
+
+local MyButton = LeftGroupBox:AddButton({
+    Text = 'Hunter',
+    Func = function()
+        if setclipboard then 
+            setclipboard("mrkillinghunter_")   
+        end
+    end,
+    DoubleClick = false,
+    Tooltip = ''
+})
+
+local MyButton = LeftGroupBox:AddButton({
+    Text = 'a00pkidd',
+    Func = function()
+        if setclipboard then 
+            setclipboard("a00pkidd")   
+        end
+    end,
+    DoubleClick = false,
+    Tooltip = ''
+})
+
+LeftGroupBox:AddLabel('Discord Server And Other')
+
+local MyButton = LeftGroupBox:AddButton({
+    Text = 'Join The Discord (Moving Soon)',
+    Func = function()
+        if setclipboard then 
+            setclipboard("https://discord.gg/RSzEmBC9rZ")   
+        end
+    end,
+    DoubleClick = false,
+    Tooltip = ''
+})
+
+
+
+Library:SetWatermarkVisibility(false)
+
+-- Example of dynamically-updating watermark with common traits (fps and ping)
+local FrameTimer = tick()
+local FrameCounter = 0;
+local FPS = 60;
+
+local WatermarkConnection = game:GetService('RunService').RenderStepped:Connect(function()
+    FrameCounter += 1;
+
+    if (tick() - FrameTimer) >= 1 then
+        FPS = FrameCounter;
+        FrameTimer = tick();
+        FrameCounter = 0;
+    end;
+
+    Library:SetWatermark((''):format(
+        math.floor(FPS),
+        math.floor(game:GetService('Stats').Network.ServerStatsItem['Data Ping']:GetValue())
+    ));
+end);
+
+local MenuGroup = Tabs['UI Settings']:AddLeftGroupbox('UI Settings')
+	
+MenuGroup:AddLabel('UI Toggle Keybind'):AddKeyPicker('MenuKeybind', { Default = 'Ins', NoUI = true, Text = 'UI Toggle Keybind' })
+
+MenuGroup:AddButton('Close GUI', function() Library:Unload() getgenv().BOBHUBLOADED = false end)
+
+Library.ToggleKeybind = Options.MenuKeybind
+
+-- SaveManager (Allows you to have a configuration system)
+-- ThemeManager (Allows you to have a menu theme system)
+
+ThemeManager:SetLibrary(Library)
+SaveManager:SetLibrary(Library)
+
+SaveManager:IgnoreThemeSettings()
+
+ThemeManager:SetFolder('Hunter Library')
+SaveManager:SetFolder('Hunter Library/Doors')
+
+SaveManager:BuildConfigSection(Tabs['UI Settings'])
+
+ThemeManager:ApplyToTab(Tabs['UI Settings'])
+
+SaveManager:LoadAutoloadConfig()
+
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
@@ -3195,227 +3419,3 @@ EntityInfo.SpiderJumpscare.OnClientEvent:Connect(function(...)
     end
 end)
 
-
-RightGroupbox1:AddToggle('MyToggle', {
-    Text = 'Disable Seek Arms & Fire',
-    Default = false,
-    Tooltip = '',
-
-    Callback = function(val)
-    flags.noseekarmsfire = val
-	end
-})
-
-     game:GetService("ReplicatedStorage").GameData.LatestRoom:GetPropertyChangedSignal("Value"):Connect(function()
-	task.wait(.1)
-	for _,descendant in pairs(game:GetService("Workspace").CurrentRooms:GetDescendants()) do
-		if descendant.Name == "Seek_Arm" or descendant.Name == "ChandelierObstruction" then
-			descendant.Parent = nil
-			descendant:Destroy()
-		end
-	end
-end)
-	
-RightGroupbox1:AddToggle('MyToggle', {
-    Text = 'Always Win Heartbeat Minigame',
-    Default = false,
-    Tooltip = '',
-
-    Callback = function(val)
-    flags.heartbeatwin = val
-		end
-})
-
-RightGroupbox1:AddToggle('MyToggle', {
-    Text = 'Anti-Dupe',
-    Default = false,
-    Tooltip = '',
-
-    Callback = function(val)
-    _G.Fake_Hitbox = val
-
-        while wait() and _G.Fake_Hitbox == true do
-            for i, v in ipairs(workspace:GetDescendants()) do
-                if v.Name == "Closet" then
-                    local Hitbox = v:FindFirstChild("Hitbox")
-            
-                    Hitbox.CanTouch = false
-                end
-            end
-        end
-    end
-})
-								
-RightGroupbox1:AddToggle('MyToggle', {
-    Text = 'Anti-Glitch',
-    Default = false,
-    Tooltip = '',
-
-    Callback = function(val)
-    DisableGlitch = val
-end
-})
-
-RightGroupbox1:AddToggle('Enable', {
-    Text = 'Anti-Snare',
-    Default = false,
-
-    Callback = function(Value)
-        _G.Snare_Hitbox = Value
-
-        while wait() and _G.Snare_Hitbox == true do
-            for i, v in ipairs(workspace:GetDescendants()) do
-                if v.Name == "Snare" then
-                    local Hitbox = v:FindFirstChild("Hitbox")
-            
-                    Hitbox.CanTouch = false
-                end
-            end
-        end
-    end
-})
-	
-game:GetService("RunService").RenderStepped:Connect(function()
-    pcall(function()
-        if _G.NoHalt then
-        game:GetService("ReplicatedStorage").ClientModules.EntityModules.Shade:remove()
-        end
-        end)
-        end)
-
-local LeftGroupBox = Tabs.Credits:AddLeftGroupbox('Credits')
-
-LeftGroupBox:AddLabel('Scripter :')
-LeftGroupBox:AddLabel('Hunter And Yieviro92 As Well As a00pkidd (BIG SHOUTOUT)')
-
-LeftGroupBox:AddLabel('Youtube')
-
-local MyButton = LeftGroupBox:AddButton({
-    Text = 'yieviro92',
-    Func = function()
-        if setclipboard then 
-            setclipboard("youtube.com/@yieviro92creepy")   
-        end
-    end,
-    DoubleClick = false,
-    Tooltip = ''
-})
-
-local MyButton = LeftGroupBox:AddButton({
-    Text = 'Hunter',
-    Func = function()
-        if setclipboard then 
-            setclipboard("https://youtube.com/@SirotanAndEthan")   
-        end
-    end,
-    DoubleClick = false,
-    Tooltip = ''
-})
-
-local MyButton = LeftGroupBox:AddButton({
-    Text = 'a00pkidd',
-    Func = function()
-        if setclipboard then 
-            setclipboard("youtube.com/@teama00pkidd")   
-        end
-    end,
-    DoubleClick = false,
-    Tooltip = ''
-})
-
-LeftGroupBox:AddLabel('Discord')
-
-local MyButton = LeftGroupBox:AddButton({
-    Text = 'yieviro92',
-    Func = function()
-        if setclipboard then 
-            setclipboard("yieviro92")   
-        end
-    end,
-    DoubleClick = false,
-    Tooltip = ''
-})
-
-local MyButton = LeftGroupBox:AddButton({
-    Text = 'Hunter',
-    Func = function()
-        if setclipboard then 
-            setclipboard("mrkillinghunter_")   
-        end
-    end,
-    DoubleClick = false,
-    Tooltip = ''
-})
-
-local MyButton = LeftGroupBox:AddButton({
-    Text = 'a00pkidd',
-    Func = function()
-        if setclipboard then 
-            setclipboard("a00pkidd")   
-        end
-    end,
-    DoubleClick = false,
-    Tooltip = ''
-})
-
-LeftGroupBox:AddLabel('Discord Server And Other')
-
-local MyButton = LeftGroupBox:AddButton({
-    Text = 'Join The Discord (Moving Soon)',
-    Func = function()
-        if setclipboard then 
-            setclipboard("https://discord.gg/RSzEmBC9rZ")   
-        end
-    end,
-    DoubleClick = false,
-    Tooltip = ''
-})
-
-
-
-Library:SetWatermarkVisibility(false)
-
--- Example of dynamically-updating watermark with common traits (fps and ping)
-local FrameTimer = tick()
-local FrameCounter = 0;
-local FPS = 60;
-
-local WatermarkConnection = game:GetService('RunService').RenderStepped:Connect(function()
-    FrameCounter += 1;
-
-    if (tick() - FrameTimer) >= 1 then
-        FPS = FrameCounter;
-        FrameTimer = tick();
-        FrameCounter = 0;
-    end;
-
-    Library:SetWatermark((''):format(
-        math.floor(FPS),
-        math.floor(game:GetService('Stats').Network.ServerStatsItem['Data Ping']:GetValue())
-    ));
-end);
-
-local MenuGroup = Tabs['UI Settings']:AddLeftGroupbox('UI Settings')
-	
-MenuGroup:AddLabel('UI Toggle Keybind'):AddKeyPicker('MenuKeybind', { Default = 'Ins', NoUI = true, Text = 'UI Toggle Keybind' })
-
-MenuGroup:AddButton('Close GUI', function() Library:Unload() getgenv().BOBHUBLOADED = false end)
-
-Library.ToggleKeybind = Options.MenuKeybind
-
--- SaveManager (Allows you to have a configuration system)
--- ThemeManager (Allows you to have a menu theme system)
-
-ThemeManager:SetLibrary(Library)
-SaveManager:SetLibrary(Library)
-
-SaveManager:IgnoreThemeSettings()
-
-ThemeManager:SetFolder('Hunter Library')
-SaveManager:SetFolder('Hunter Library/Doors')
-
-SaveManager:BuildConfigSection(Tabs['UI Settings'])
-
-ThemeManager:ApplyToTab(Tabs['UI Settings'])
-
-SaveManager:LoadAutoloadConfig()
