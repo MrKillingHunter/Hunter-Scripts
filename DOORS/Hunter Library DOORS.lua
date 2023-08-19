@@ -873,9 +873,9 @@ end
 	end
 })
 
-local RightGroupbox = Tabs.Main:AddRightGroupbox('Auras');
+local RightGroupbox1 = Tabs.Main:AddRightGroupbox('Auras');
 if fireproximityprompt then
-RightGroupbox:AddToggle('MyToggle', {
+RightGroupbox1:AddToggle('MyToggle', {
     Text = 'Loot Aura',
     Default = false,
     Tooltip = '',
@@ -1099,7 +1099,7 @@ else
 oldwarnmessage("Hunter Library v"..currentver, "You need to have fireproximityprompt function for 'loot aura'.", 7)
 end
 
-RightGroupbox:AddToggle('MyToggle', {
+RightGroupbox1:AddToggle('MyToggle', {
     Text = 'Item Aura',
     Default = false,
     Tooltip = '',
@@ -1330,7 +1330,7 @@ RightGroupbox:AddToggle('MyToggle', {
 		end
 })
 
-RightGroupbox:AddToggle('MyToggle', {
+RightGroupbox1:AddToggle('MyToggle', {
     Text = 'Lever Aura',
     Default = false,
     Tooltip = '',
@@ -1416,7 +1416,7 @@ RightGroupbox:AddToggle('MyToggle', {
 		end
 	})
 
-RightGroupbox:AddToggle('MyToggle', {
+RightGroupbox1:AddToggle('MyToggle', {
     Text = 'Book Aura',
     Default = false,
     Tooltip = '',
@@ -1503,7 +1503,7 @@ RightGroupbox:AddToggle('MyToggle', {
 		end
 	})
 	
-	RightGroupbox:AddToggle('MyToggle', {
+	RightGroupbox1:AddToggle('MyToggle', {
     Text = 'Breaker Aura',
     Default = false,
     Tooltip = '',
