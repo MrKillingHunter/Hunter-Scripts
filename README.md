@@ -3,6 +3,10 @@
  ## The best Scripts.
 
 ## For Supported Executors, Go Down
+## Hunter Library v4
+ ```lua
+ loadstring:(game:HttpGet(("https://raw.githubusercontent.com/MrKillingHunter/Hunter-Scripts/main/DOORS/Hunter%20Library%20DOORS.lua"),true))()
+ ```
 ## Bobhub Script (credits to a00pkidd, KingHUb and Wvpul)
  ```lua
  loadstring(game:HttpGet(("https://raw.githubusercontent.com/MrKillingHunter/Hunter-Scripts/main/BobHub.lua"),true))()
