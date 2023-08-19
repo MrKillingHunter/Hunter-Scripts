@@ -1770,7 +1770,7 @@ flags.nopuzzle = val
 local RightGroupbox2 = Tabs.Main:AddLeftGroupbox('Other main Stuff')
 
 if fireproximityprompt then
-RightGroupBox2:AddToggle('MyToggle', {
+RightGroupbox2:AddToggle('MyToggle', {
     Text = 'Instant Use',
     Default = false,
     Tooltip = 'Removes The E Cooldown With Interacting',
