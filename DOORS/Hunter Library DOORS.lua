@@ -2363,7 +2363,7 @@ LeftGroupBox:AddToggle('MyToggle', {
 })
     
     LeftGroupBox:AddToggle('MyToggle', {
-    Text = 'Locker ESP',
+    Text = 'Locker/Wadrobe ESP',
     Default = false,
     Tooltip = '',
 
@@ -2375,7 +2375,7 @@ LeftGroupBox:AddToggle('MyToggle', {
 				task.wait()
 				local valuechange = nil
 				if v.Name == "Wardrobe" then
-					local h = esp(v.PrimaryPart,Color3.fromRGB(145,100,25),v.PrimaryPart,"Hide Spot")
+					local h = esp(v.PrimaryPart,Color3.fromRGB(145,100,25),v.PrimaryPart,"Wadrobe")
 					table.insert(esptable.lockers,h) 
 					table.insert(esptableinstances, v)
 					valuechange = game:GetService("ReplicatedStorage").GameData.LatestRoom:GetPropertyChangedSignal("Value"):Connect(function()
