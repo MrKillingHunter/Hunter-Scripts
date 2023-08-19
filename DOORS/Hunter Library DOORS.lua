@@ -1766,8 +1766,6 @@ flags.nopuzzle = val
 		end
 	end
 })
-
-LeftGroupBox:AddDivider()
 			
 local LeftGroupBox1 = Tabs.Character:AddLeftGroupbox('Character')
 
