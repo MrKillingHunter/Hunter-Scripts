@@ -1767,7 +1767,8 @@ flags.nopuzzle = val
 	end
 })
 
-
+LeftGroupBox:AddDivider()
+			
 local LeftGroupBox1 = Tabs.Character:AddLeftGroupbox('Character')
 
 if fireproximityprompt then
