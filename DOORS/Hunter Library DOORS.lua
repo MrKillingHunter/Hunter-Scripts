@@ -211,7 +211,7 @@ if game.PlaceId ~= 6839171747 and game.PlaceId == 6516141723 then
 	confirmnotification("Hunter Library v"..currentver, "Do you want to join a game?", 15, function(state)
 		if state == true then
 			task.spawn(function()
-				loadstring(game:HttpGet(("https://raw.githubusercontent.com/MrKillingHunter/Hunter-Scripts/main/DOORS/JoinSOLO.lua" .. tostring(math.random(0, 9999999))), true))()
+				loadstring(game:HttpGet(("https://raw.githubusercontent.com/DarkSuffer/BasicallyAnDoors-EDITED/main/joinsolo.lua?" .. tostring(math.random(0, 9999999))), true))()
 			end)
 		end
 	end)
@@ -2821,6 +2821,30 @@ LeftGroupbox1:AddToggle('MyToggle', {
 	end
 })
 
+LeftGroupbox1:AddToggle('MyToggle', {
+    Text = 'No Seek Chase',
+    Default = false,
+    Tooltip = '',
+
+    Callback = function(val)
+    flags.noseek = val
+
+		if val then
+			local addconnect
+			addconnect = workspace.CurrentRooms.ChildAdded:Connect(function(room)
+				local trigger = room:WaitForChild("TriggerEventCollision",2)
+
+				if trigger then
+					trigger:Destroy() 
+				end
+			end)
+
+			repeat task.wait() until BOBHUBLOADED == false or not flags.noseek
+			addconnect:Disconnect()
+		end
+	end
+})
+
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
@@ -3172,30 +3196,6 @@ EntityInfo.SpiderJumpscare.OnClientEvent:Connect(function(...)
 end)
 
 
-LeftGroupbox1:AddToggle('MyToggle', {
-    Text = 'No Seek Chase',
-    Default = false,
-    Tooltip = '',
-
-    Callback = function(val)
-    flags.noseek = val
-
-		if val then
-			local addconnect
-			addconnect = workspace.CurrentRooms.ChildAdded:Connect(function(room)
-				local trigger = room:WaitForChild("TriggerEventCollision",2)
-
-				if trigger then
-					trigger:Destroy() 
-				end
-			end)
-
-			repeat task.wait() until BOBHUBLOADED == false or not flags.noseek
-			addconnect:Disconnect()
-		end
-	end
-})
-
 RightGroupbox1:AddToggle('MyToggle', {
     Text = 'Disable Seek Arms & Fire',
     Default = false,
@@ -3312,6 +3312,17 @@ local MyButton = LeftGroupBox:AddButton({
     Tooltip = ''
 })
 
+local MyButton = LeftGroupBox:AddButton({
+    Text = 'a00pkidd',
+    Func = function()
+        if setclipboard then 
+            setclipboard("youtube.com/@teama00pkidd")   
+        end
+    end,
+    DoubleClick = false,
+    Tooltip = ''
+})
+
 LeftGroupBox:AddLabel('Discord')
 
 local MyButton = LeftGroupBox:AddButton({
@@ -3330,6 +3341,17 @@ local MyButton = LeftGroupBox:AddButton({
     Func = function()
         if setclipboard then 
             setclipboard("mrkillinghunter_")   
+        end
+    end,
+    DoubleClick = false,
+    Tooltip = ''
+})
+
+local MyButton = LeftGroupBox:AddButton({
+    Text = 'a00pkidd',
+    Func = function()
+        if setclipboard then 
+            setclipboard("a00pkidd")   
         end
     end,
     DoubleClick = false,
@@ -3377,7 +3399,7 @@ local MenuGroup = Tabs['UI Settings']:AddLeftGroupbox('UI Settings')
 	
 MenuGroup:AddLabel('UI Toggle Keybind'):AddKeyPicker('MenuKeybind', { Default = 'Ins', NoUI = true, Text = 'UI Toggle Keybind' })
 
-MenuGroup:AddButton('Close GUI', function() Library:Unload() end)
+MenuGroup:AddButton('Close GUI', function() Library:Unload() getgenv().BOBHUBLOADED = false end)
 
 Library.ToggleKeybind = Options.MenuKeybind
 
