@@ -211,7 +211,7 @@ if game.PlaceId ~= 6839171747 and game.PlaceId == 6516141723 then
 	confirmnotification("Hunter Library v"..currentver, "Do you want to join a game?", 15, function(state)
 		if state == true then
 			task.spawn(function()
-				loadstring(game:HttpGet(("https://raw.githubusercontent.com/DarkSuffer/BasicallyAnDoors-EDITED/main/joinsolo.lua?" .. tostring(math.random(0, 9999999))), true))()
+				loadstring(game:HttpGet(("https://raw.githubusercontent.com/MrKillingHunter/Hunter-Scripts/main/DOORS/JoinSOLO.lua" .. tostring(math.random(0, 9999999))), true))()
 			end)
 		end
 	end)
