@@ -50,27 +50,26 @@ end
 local teleported = false
 repeat
 	for _,v in pairs(game:GetService("Workspace").Lobby.LobbyElevators:GetChildren()) do
-		if v.Name == "GameElevatorFools" then return end
+		--pcall(function()
 			if v:FindFirstChild("DoorHitbox") then
 				if v.DoorHitbox:FindFirstChild("BillboardGui") then
 					if v.DoorHitbox.BillboardGui:FindFirstChild("Title") then
-						--if not v.DoorHitbox.BillboardGui:FindFirstChild("Warning") then
-							if v.DoorHitbox.BillboardGui.Title.Text == "0 / 1" or v.DoorHitbox.BillboardGui.Title.Text == "0 / 12" then
-								repeat
-									game.Players.LocalPlayer.Character:PivotTo(v.DoorHitbox.CFrame)
-									task.wait()
-								until v.DoorHitbox.BillboardGui.Players:FindFirstChild(game.Players.LocalPlayer.DisplayName) or v.DoorHitbox.BillboardGui.Players:FindFirstChild(game.Players.LocalPlayer.Name) --v.DoorHitbox.BillboardGui.Title.Text == "1 / 1" or v.DoorHitbox.BillboardGui.Title.Text == "1 / 12"
-								teleported = true
-								break
-							end
-						--end
+						if v.DoorHitbox.BillboardGui.Title.Text == "0 / 1" or v.DoorHitbox.BillboardGui.Title.Text == "0 / 12" then
+							repeat
+								game.Players.LocalPlayer.Character:PivotTo(v.DoorHitbox.CFrame)
+								task.wait()
+							until v.DoorHitbox.BillboardGui.Title.Text == "1 / 1" or v.DoorHitbox.BillboardGui.Title.Text == "1 / 12"
+							teleported = true
+							break
+						end
 					end
 				end
 			end
+		--end)
 	end
 	task.wait(1)
 	if teleported == false then
-		normalmessage("Hunter Library v4", "Solo elevators are full, retrying...", 2)
+		normalmessage("Hunter Library v4", "Solo games are full, retrying...", 2)
 	end
 until teleported == true
-normalmessage("Hunter Library v4", "Joining...", 10)
+normalmessage("Hunter Livrary v4", "Joining...", 10)
