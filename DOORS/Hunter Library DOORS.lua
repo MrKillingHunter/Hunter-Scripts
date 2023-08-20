@@ -1767,7 +1767,7 @@ flags.nopuzzle = val
 	end
 })
 
-local RightGroupbox2 = Tabs.Main:AddLeftGroupbox('Other main Stuff')
+local RightGroupbox2 = Tabs.Main:AddRightGroupbox('Other main Stuff')
 
 if fireproximityprompt then
 RightGroupbox2:AddToggle('MyToggle', {
