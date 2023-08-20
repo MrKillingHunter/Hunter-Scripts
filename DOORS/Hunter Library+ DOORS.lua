@@ -586,6 +586,7 @@ local Tabs = {
     Entity = Window:AddTab('Entities'),
     Credits = Window:AddTab('Credits'),
     ['UI Settings'] = Window:AddTab('Configs'),
+    PREMIUM = Window:AddTab('HL+')
 }
 
 local TabBox = Tabs.Main:AddLeftTabbox()
@@ -3070,6 +3071,51 @@ ThemeManager:ApplyToTab(Tabs['UI Settings'])
 
 SaveManager:LoadAutoloadConfig()
 
+local LeftGroupbox1:AddToggle('MyToggle', {
+    Text = 'Auto Doors 0-99 (ALPHA)',
+    Default = false,
+    Tooltip = '',
+
+    Callback = function(val)
+    game:HttpGet(("https://raw.githubusercontent.com/mstudio45/MSDOORS/main/Codes/Pathfinding_Doors.lua"),true(), val)
+end
+})
+
+LeftGroupBox1:AddToggle('Fly'):AddKeyPicker('KeyPicker', {
+    -- SyncToggleState only works with toggles.
+    -- It allows you to make a keybind which has its state synced with its parent toggle
+
+    -- Example: Keybind which you use to toggle flyhack, etc.
+    -- Changing the toggle disables the keybind state and toggling the keybind switches the toggle state
+
+    Default = 'F', -- String as the name of the keybind (MB1, MB2 for mouse buttons)
+    SyncToggleState = true,
+
+
+    -- You can define custom Modes but I have never had a use for it.
+    Mode = 'Toggle', -- Modes: Always, Toggle, Hold
+
+    Text = 'Fly', -- Text to display in the keybind menu
+    NoUI = false, -- Set to true if you want to hide from the Keybind menu,
+
+    -- Occurs when the keybind is clicked, Value is `true`/`false`
+    Callback = function(Val)
+        Fly = Val
+    end,
+
+    -- Occurs when the keybind itself is changed, `New` is a KeyCode Enum OR a UserInputType Enum
+    ChangedCallback = function()
+        print('[cb] Keybind changed!', New)
+    end
+		
+    repeat task.wait() until BOBHUBLOADED == false or not Fly
+			addconnect:Disconnect()
+		end
+	end
+})
+
+
+local Fly = game:HttpGet(("https://pastebin.com/raw/YvKv4AuY")))()
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
