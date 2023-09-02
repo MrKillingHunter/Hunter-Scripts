@@ -31,7 +31,57 @@ local Discord = Tabs['UI Settings']:AddLeftGroupbox('Discord')
 
 
 local linoria = LeftGroupBox:AddButton({
-    Text = 'Linoria',
+    Text = 'Linoria UI',
+    Func = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/MrKillingHunter/Hunter-Scripts/main/Hunter%20Library/Linoria%20UI%20(DEFAULT)/Hunter%20Library%20Loader.lua"))()
+        Library.Unload()
+    end,
+    DoubleClick = false,
+    Tooltip = 'Loads The Default Hunter Library'
+})
+
+local kavo = LeftGroupBox:AddButton({
+    Text = 'Kavo UI',
+    Func = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/MrKillingHunter/Hunter-Scripts/main/Hunter%20Library/Kavo%20UI%20Version/Hunter%20Library%20Kavo%20Loader.lua"))()
+        Library.Unload()
+    end,
+    DoubleClick = false,
+    Tooltip = 'Loads The Default Hunter Library'
+})
+
+local venyx = LeftGroupBox:AddButton({
+    Text = 'Venyx UI',
+    Func = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/MrKillingHunter/Hunter-Scripts/main/Hunter%20Library/Linoria%20UI%20(DEFAULT)/Hunter%20Library%20Loader.lua"))()
+        Library.Unload()
+    end,
+    DoubleClick = false,
+    Tooltip = 'Loads The Default Hunter Library'
+})
+
+local rayfield = LeftGroupBox:AddButton({
+    Text = 'Rayfield UI',
+    Func = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/MrKillingHunter/Hunter-Scripts/main/Hunter%20Library/Linoria%20UI%20(DEFAULT)/Hunter%20Library%20Loader.lua"))()
+        Library.Unload()
+    end,
+    DoubleClick = false,
+    Tooltip = 'Loads The Default Hunter Library'
+})
+
+local flux = LeftGroupBox:AddButton({
+    Text = 'Flux UI',
+    Func = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/MrKillingHunter/Hunter-Scripts/main/Hunter%20Library/Linoria%20UI%20(DEFAULT)/Hunter%20Library%20Loader.lua"))()
+        Library.Unload()
+    end,
+    DoubleClick = false,
+    Tooltip = 'Loads The Default Hunter Library'
+})
+
+local orion = LeftGroupBox:AddButton({
+    Text = 'Orion Library',
     Func = function()
         loadstring(game:HttpGet("https://raw.githubusercontent.com/MrKillingHunter/Hunter-Scripts/main/Hunter%20Library/Linoria%20UI%20(DEFAULT)/Hunter%20Library%20Loader.lua"))()
         Library.Unload()
