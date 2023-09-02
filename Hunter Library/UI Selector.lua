@@ -3,6 +3,7 @@ local repo = 'https://raw.githubusercontent.com/violin-suzutsuki/LinoriaLib/main
 local Library = loadstring(game:HttpGet('https://raw.githubusercontent.com/MrKillingHunter/LinoriaLibREMAKE/main/Library.lua'))()
 local ThemeManager = loadstring(game:HttpGet(repo .. 'addons/ThemeManager.lua'))()
 local SaveManager = loadstring(game:HttpGet(repo .. 'addons/SaveManager.lua'))()
+local loaderuniversallink = 'https://raw.githubusercontent.com/MrKillingHunter/Hunter-Scripts/main/Hunter%20Library/'
 
 local Window = Library:CreateWindow({
     -- Set Center to true if you want the menu to appear in the center
@@ -33,7 +34,7 @@ local Discord = Tabs['UI Settings']:AddLeftGroupbox('Discord')
 local linoria = LeftGroupBox:AddButton({
     Text = 'Linoria UI',
     Func = function()
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/MrKillingHunter/Hunter-Scripts/main/Hunter%20Library/Linoria%20UI%20(DEFAULT)/Hunter%20Library%20Loader.lua"))()
+        loadstring(game:HttpGet(loaderuniversallink .. 'Linoria%20UI%20(DEFAULT)/Hunter%20Library%20Loader.lua'))()
         Library.Unload()
     end,
     DoubleClick = false,
