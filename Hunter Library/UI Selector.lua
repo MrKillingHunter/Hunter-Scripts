@@ -1,11 +1,3 @@
-local BOBHUBLOADED = false
-local orionidk = loadstring(game:HttpGet('https://raw.githubusercontent.com/MrKillingHunter/Hunter-Scripts/main/Hunter%20Library/Orion%20Library%20Version/Hunter%20Library%20Orion%20Loader.lua'),true)()
-local Fluxshit = loadstring(game:HttpGet('https://raw.githubusercontent.com/MrKillingHunter/Hunter-Scripts/main/Hunter%20Library/Flux%20UI%20Version/Hunter%20Library%20Flux%20Loader.lua'),true)()
-local rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/MrKillingHunter/Hunter-Scripts/main/Hunter%20Library/Linoria%20UI%20(DEFAULT)/Hunter%20Library%20Loader.lua'),true)()
-local venyx = loadstring(game:HttpGet('https://raw.githubusercontent.com/MrKillingHunter/Hunter-Scripts/main/Hunter%20Library/Venyx%20UI%20Version/Hunter%20Library%20Venyx%20Loader.lua'),true)()
-local kavo = loadstring(game:HttpGet('https://raw.githubusercontent.com/MrKillingHunter/Hunter-Scripts/main/Hunter%20Library/Kavo%20UI%20Version/Hunter%20Library%20Kavo%20Loader.lua'),true)()
-local linoria = loadstring(game:HttpGet('https://raw.githubusercontent.com/MrKillingHunter/Hunter-Scripts/main/Hunter%20Library/Linoria%20UI%20(DEFAULT)/Hunter%20Library%20Loader.lua'),true)()
-
 local repo = 'https://raw.githubusercontent.com/violin-suzutsuki/LinoriaLib/main/'
 
 local Library = loadstring(game:HttpGet('https://raw.githubusercontent.com/MrKillingHunter/LinoriaLibREMAKE/main/Library.lua'))()
@@ -20,6 +12,9 @@ local Window = Library:CreateWindow({
 
     Title = 'UI Selector',
     Center = true,
+    AutoShow = true,
+    TabPadding = 8,
+    MenuFadeTime = 0.2
 })
 
 local Tabs = {
@@ -30,19 +25,64 @@ local Tabs = {
     
 
 local LeftGroupBox = Tabs.Main:AddLeftGroupbox("UI Libraries")
-local MenuGroup = Tabs.Main:AddRightGroupBox("Selector Settings")
-
-LeftGroupBox:AddButton('Linoria UI', function(val), Tooltip = 'Loads the Default Hunter Library (Linoria UI)', Library:Unload() getgenv().BOBHUBLOADED = false end),
-LeftGroupBox:AddButton('Kavo UI', function(val1), Tooltip = 'Loads the Kavo UI Version of Hunter Library', Library:Unload() getgenv().BOBHUBLOADED = false end),
-LeftGroupBox:AddButton('Venyx UI', function(val2), Tooltip = 'Loads the Venyx Ui Version of Hunter Library', Library:Unload() getgenv().BOBHUBLOADED = false end),
-LeftGroupBox:AddButton('Rayfield UI', function(val3), Tooltip = 'Loads the Rayfield UI Version Of Hunter Library', Library:Unload() getgenv().BOBHUBLOADED = false end),
-LeftGroupBox:AddButton('Flux UI', function(val4), Tooltip = 'Loads The Flux Version Of Hunter Library', Library:Unload() getgenv().BOBHUBLOADED = false end),
-LeftGroupBox:AddButton('Orion Library UI', function(val5), Tooltip = 'Loads The Orion Library Version Of Hunter Library', Library:Unload() getgenv().BOBHUBLOADED = false end),
+local MenuGroup = Tabs.Main:AddRightGroupbox("Selector Settings")
+local Credits = Tabs['UI Settings']:AddLeftGroupbox('Credits')
+local Discord = Tabs['UI Settings']:AddLeftGroupbox('Discord')
 
 
+local linoria = LeftGroupBox:AddButton({
+    Text = 'Linoria',
+    Func = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/MrKillingHunter/Hunter-Scripts/main/Hunter%20Library/Linoria%20UI%20(DEFAULT)/Hunter%20Library%20Loader.lua"))()
+        Library.Unload()
+    end,
+    DoubleClick = false,
+    Tooltip = 'Loads The Default Hunter Library'
+})
 
+MenuGroup:AddButton('Destroy Selector', function() Library:Unload() end)
 
+MenuGroup:AddDivider()
 
+Credits:AddLabel('Hunter Library is Made And updated By mrkillinghunter_, A Hard Working Programmer/Developer Whom Works Hard To bring Awesome\n Scripts For You', true)
+Credits:AddDivider()
+Credits:AddLabel('Hunter Library Concept And Scripting - mrkillinghunter_', true)
+Credits:AddLabel('Hunter Library Concept - yieviro92creepy', true)
+Credits:AddLabel('LinoriaUI - violin sutsuki', true)
+Credits:AddLabel('OtherUIs - idk but credits and prompts for them', true)
+local mrkillinghunter = Discord:AddButton({
+    Text = 'mrkillinghunter_',
+    Func = function()
+        if setclipboard then
+                setclipboard("mrkillinghunter_")
+            end
+    end,
+    DoubleClick = false,
+    Tooltip = ''
+})
+local yieviro = Discord:AddButton({
+    Text = 'yieviro92creepy',
+    Func = function()
+        if setclipboard then
+                setclipboard("yieviro92creepy")
+            end
+    end,
+    DoubleClick = false,
+    Tooltip = ''
+})
+
+Discord:AddDivider()
+
+local discordserver = Discord:AddButton({
+    Text = 'Join Discord Server',
+    Func = function()
+        if setclipboard then
+                setclipboard("https://discord.gg/NSwjbqHRs7")
+            end
+    end,
+    DoubleClick = false,
+    Tooltip = 'Discord invite Link'
+})
 
 Library:SetWatermarkVisibility(false)
 
@@ -66,6 +106,11 @@ local WatermarkConnection = game:GetService('RunService').RenderStepped:Connect(
     ));
 end);
 
+ThemeManager:SetLibrary(Library)
+SaveManager:SetLibrary(Library)
+
+-- Ignore keys that are used by ThemeManager.
+-- (we dont want configs to save themes, do we?)
 SaveManager:IgnoreThemeSettings()
 
 -- Adds our MenuKeybind to the ignore list
@@ -76,14 +121,14 @@ SaveManager:SetIgnoreIndexes({ 'MenuKeybind' })
 -- a script hub could have themes in a global folder
 -- and game configs in a separate folder per game
 ThemeManager:SetFolder('Hunter Library')
-SaveManager:SetFolder('Hunter Library/Loader-Configs?')
+SaveManager:SetFolder('Hunter Library/Ui Selector')
 
 -- Builds our config menu on the right side of our tab
 SaveManager:BuildConfigSection(Tabs['UI Settings'])
 
 -- Builds our theme menu (with plenty of built in themes) on the left side
 -- NOTE: you can also call ThemeManager:ApplyToGroupbox to add it to a specific groupbox
-ThemeManager:ApplyToTab(Tabs['UI Settings'])
+ThemeManager:ApplyToGroupbox(MenuGroup)
 
 -- You can use the SaveManager:LoadAutoloadConfig() to load a config
 -- which has been marked to be one that auto loads!
