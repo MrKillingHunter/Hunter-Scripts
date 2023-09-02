@@ -1,4 +1,10 @@
 local BOBHUBLOADED = false
+local orionidk = loadstring(game:HttpGet('https://raw.githubusercontent.com/MrKillingHunter/Hunter-Scripts/main/Hunter%20Library/Orion%20Library%20Version/Hunter%20Library%20Orion%20Loader.lua'),true)()
+local Fluxshit = loadstring(game:HttpGet('https://raw.githubusercontent.com/MrKillingHunter/Hunter-Scripts/main/Hunter%20Library/Flux%20UI%20Version/Hunter%20Library%20Flux%20Loader.lua'),true)()
+local rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/MrKillingHunter/Hunter-Scripts/main/Hunter%20Library/Linoria%20UI%20(DEFAULT)/Hunter%20Library%20Loader.lua'),true)()
+local venyx = loadstring(game:HttpGet('https://raw.githubusercontent.com/MrKillingHunter/Hunter-Scripts/main/Hunter%20Library/Venyx%20UI%20Version/Hunter%20Library%20Venyx%20Loader.lua'),true)()
+local kavo = loadstring(game:HttpGet('https://raw.githubusercontent.com/MrKillingHunter/Hunter-Scripts/main/Hunter%20Library/Kavo%20UI%20Version/Hunter%20Library%20Kavo%20Loader.lua'),true)()
+local linoria = loadstring(game:HttpGet('https://raw.githubusercontent.com/MrKillingHunter/Hunter-Scripts/main/Hunter%20Library/Linoria%20UI%20(DEFAULT)/Hunter%20Library%20Loader.lua'),true)()
 
 local repo = 'https://raw.githubusercontent.com/violin-suzutsuki/LinoriaLib/main/'
 
@@ -18,20 +24,20 @@ local Window = Library:CreateWindow({
 
 local Tabs = {
   -- Creates a new tab titled Main
-    Main = Window:AddTab('UI Selector')
-    ['UI Settings'] = Window:AddTab('Configs And Themes')
+    Main = Window:AddTab('UI Selector'),
+    ['UI Settings'] = Window:AddTab('Configs And Themes'),
 }
     
 
 local LeftGroupBox = Tabs.Main:AddLeftGroupbox("UI Libraries")
 local MenuGroup = Tabs.Main:AddRightGroupBox("Selector Settings")
 
-LeftGroupBox:AddButton('Linoria UI', function(loadstring(game:HttpGet(("https://raw.githubusercontent.com/MrKillingHunter/Hunter-Scripts/main/Hunter%20Library/Linoria%20UI%20(DEFAULT)/Hunter%20Library%20Loader.lua"),true))()), Tooltip = 'Loads the Default Hunter Library (Linoria UI)', Library:Unload() getgenv().BOBHUBLOADED = false end)
-LeftGroupBox:AddButton('Kavo UI', function(loadstring(game:HttpGet(("https://raw.githubusercontent.com/MrKillingHunter/Hunter-Scripts/main/Hunter%20Library/Kavo%20UI%20Version/Hunter%20Library%20Kavo%20Loader.lua"),true))()), Tooltip = 'Loads the Kavo UI Version of Hunter Library', Library:Unload() getgenv().BOBHUBLOADED = false end)
-LeftGroupBox:AddButton('Venyx UI', function(loadstring(game:HttpGet(("https://raw.githubusercontent.com/MrKillingHunter/Hunter-Scripts/main/Hunter%20Library/Venyx%20UI%20Version/Hunter%20Library%20Venyx%20Loader.lua"),true))()), Tooltip = 'Loads the Venyx Ui Version of Hunter Library', Library:Unload() getgenv().BOBHUBLOADED = false end)
-LeftGroupBox:AddButton('Rayfield UI', function(loadstring(game:HttpGet(("https://raw.githubusercontent.com/MrKillingHunter/Hunter-Scripts/main/Hunter%20Library/Linoria%20UI%20(DEFAULT)/Hunter%20Library%20Loader.lua"),true))()), Tooltip = 'Loads the Rayfield UI Version Of Hunter Library', Library:Unload() getgenv().BOBHUBLOADED = false end)
-LeftGroupBox:AddButton('Flux UI', function(loadstring(game:HttpGet(("https://raw.githubusercontent.com/MrKillingHunter/Hunter-Scripts/main/Hunter%20Library/Flux%20UI%20Version/Hunter%20Library%20Flux%20Loader.lua"),true))()), Tooltip = 'Loads The Flux Version Of Hunter Library', Library:Unload() getgenv().BOBHUBLOADED = false end)
-LeftGroupBox:AddButton('Orion Library UI', function(loadstring(game:HttpGet(("https://raw.githubusercontent.com/MrKillingHunter/Hunter-Scripts/main/Hunter%20Library/Orion%20Library%20Version/Hunter%20Library%20Orion%20Loader.lua"),true))()), Tooltip = 'Loads The Orion Library Version Of Hunter Library', Library:Unload() getgenv().BOBHUBLOADED = false end)
+LeftGroupBox:AddButton('Linoria UI', function(val), Tooltip = 'Loads the Default Hunter Library (Linoria UI)', Library:Unload() getgenv().BOBHUBLOADED = false end),
+LeftGroupBox:AddButton('Kavo UI', function(val1), Tooltip = 'Loads the Kavo UI Version of Hunter Library', Library:Unload() getgenv().BOBHUBLOADED = false end),
+LeftGroupBox:AddButton('Venyx UI', function(val2), Tooltip = 'Loads the Venyx Ui Version of Hunter Library', Library:Unload() getgenv().BOBHUBLOADED = false end),
+LeftGroupBox:AddButton('Rayfield UI', function(val3), Tooltip = 'Loads the Rayfield UI Version Of Hunter Library', Library:Unload() getgenv().BOBHUBLOADED = false end),
+LeftGroupBox:AddButton('Flux UI', function(val4), Tooltip = 'Loads The Flux Version Of Hunter Library', Library:Unload() getgenv().BOBHUBLOADED = false end),
+LeftGroupBox:AddButton('Orion Library UI', function(val5), Tooltip = 'Loads The Orion Library Version Of Hunter Library', Library:Unload() getgenv().BOBHUBLOADED = false end),
 
 
 
