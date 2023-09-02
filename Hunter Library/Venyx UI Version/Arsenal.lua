@@ -27,6 +27,14 @@ fakeanim.AnimationId = 'rbxassetid://0'
 local userInputService = game:GetService("UserInputService")
 userInputService.MouseBehavior = Enum.MouseBehavior.Default
 
+local flags = {
+       light = false,
+	    fullbright = false,
+   	 noclip = false,
+	    camfov = 70,
+	    speed = 0,
+	    walkspeedtoggle = false,
+}
 local target;
 local bodyname;
 local ChatDebounce = false
@@ -224,6 +232,77 @@ local Misc = venyx:addPage("Misc", 5894272440)
 local Movement = Misc:addSection("Movement")
 local Troll = Misc:addSection("Troll")
 local MiscLocal = Misc:addSection("Local")
+
+Movement:addSlider("FOV", 0, 0, 300, function(value)
+   flags.camfov = value
+end)
+
+Movement:addToggle("Enable FOV", nil, function(value)
+       flags.camfovtoggle = value
+		if not val then
+			waitframes(2)
+			game:GetService("Workspace").CurrentCamera.FieldOfView = 70
+		end
+end)
+
+Movement:addSlider("Speed Boost", 0, 0, 25, function(value)
+           flags.speed = value
+		if flags.walkspeedtoggle == true then
+			hum.WalkSpeed = val
+		end
+end)
+
+Movement:addToggle("Enable Speed Boost", nil, function(value)
+           flags.walkspeedtoggle = val
+		if not val then
+			hum.WalkSpeed = 16
+		end
+end)
+
+MiscLocal:addToggle("Noclip", nil, function(val)
+    flags.noclip = val
+
+			if val then
+				local Nocliprun =  nil
+				Nocliprun = game:GetService("RunService").Stepped:Connect(function()
+					if game.Players.LocalPlayer.Character ~= nil then
+						for _,v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+							if v:IsA("BasePart") then
+								pcall(function()
+									v.CanCollide = false
+								end)
+							end
+						end
+					end
+					if flags.noclip == false then
+						if Nocliprun then Nocliprun:Disconnect() end
+					end
+				end)
+			end
+		end
+)game:GetService("RunService").RenderStepped:Connect(function()
+    pcall(function()
+        if _G.SlowDownnnonononoo then
+local one = false
+
+game.Players.LocalPlayer.Character.Head.Massless = one
+game.Players.LocalPlayer.Character.LeftFoot.Massless = one
+game.Players.LocalPlayer.Character.LeftHand.Massless = one
+game.Players.LocalPlayer.Character.LeftLowerArm.Massless = one
+game.Players.LocalPlayer.Character.LeftLowerLeg.Massless = one
+game.Players.LocalPlayer.Character.LeftUpperArm.Massless = one
+game.Players.LocalPlayer.Character.LeftUpperLeg.Massless = one
+game.Players.LocalPlayer.Character.LowerTorso.Massless = one
+game.Players.LocalPlayer.Character.RightFoot.Massless = one
+game.Players.LocalPlayer.Character.RightHand.Massless = one
+game.Players.LocalPlayer.Character.RightLowerArm.Massless = one
+game.Players.LocalPlayer.Character.RightLowerLeg.Massless = one
+game.Players.LocalPlayer.Character.RightUpperArm.Massless = one
+game.Players.LocalPlayer.Character.RightUpperLeg.Massless = one
+game.Players.LocalPlayer.Character.UpperTorso.Massless = one
+        end
+    end)
+end)
 
 MiscLocal:addToggle("Collect Debris", nil, function(value)
    CollectDebris = value
