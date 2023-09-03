@@ -27,7 +27,7 @@ Money:NewToggle("Toggle Add Money", "Adds money", function(state)
         togglemoney = true
         while togglemoney == true do
             game:GetService("ReplicatedStorage").Shop.Events.BuyItem:FireServer(-99999999999999, "1 Stick", true)
-            wait(0.0000001)
+            wait(0.00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001)
         end
     else
         togglemoney = false
