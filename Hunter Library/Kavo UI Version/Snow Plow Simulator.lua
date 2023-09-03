@@ -37,7 +37,7 @@ end)
 Money:NewButton("Add Snow", "Adds money", function()
    game:GetService("ReplicatedStorage").Shop.Events.BuyItem:FireServer(-999999999999999, "1 Stick", true)
 end)
-Rebirths:NewToggle("Toggle Rebirths", "Toggles adding rebirths", function(state)
+Money:NewToggle("Toggle Rebirths", "Toggles adding rebirths", function(state)
     if state then
         togglerebirths = true
         while togglerebirths == true do
