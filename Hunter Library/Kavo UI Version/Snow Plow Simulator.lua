@@ -1,10 +1,10 @@
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
 local colors = {
-    SchemeColor = Color3.fromRGB(33, 231, 216),
-    Background = Color3.fromRGB(15, 15, 15),
-    Header = Color3.fromRGB(15, 15, 15),
-    TextColor = Color3.fromRGB(255,255,255),
-    ElementColor = Color3.fromRGB(33, 231, 216)
+    SchemeColor  = Color3.fromRGB(48, 118, 112),
+    Background   = Color3.fromRGB(15, 15, 15),
+    Header       = Color3.fromRGB(15, 15, 15),
+    TextColor    = Color3.fromRGB(255,255,255),
+    ElementColor = Color3.fromRGB(46, 85, 83)
 }
 local Window = Library.CreateLib("Hunter Library (v1.1) - Snow Plow Sim", colors)
 
@@ -19,7 +19,7 @@ local Movement = Player:NewSection("Movement")
 local GUI = Credits:NewSection("GUI")
 local CreditsSec = Credits:NewSection("Credits")
 
-Money:NewToggle("", "Enable Adding", function(state)
+Money:NewToggle("Enable Adding", "Enable Adding", function(state)
     if state then
         
         togglemoney = true
@@ -27,9 +27,7 @@ Money:NewToggle("", "Enable Adding", function(state)
             game:GetService("ReplicatedStorage").Shop.Events.BuyItem:FireServer(-99999999999999, "1 Stick", true)
             wait(0.001)
         end
-    else
         togglemoney = false
-    end
     togglerebirths = true
         while togglerebirths == true do
             game:GetService("ReplicatedStorage").RebirthEvent:FireServer(10000)
@@ -37,6 +35,7 @@ Money:NewToggle("", "Enable Adding", function(state)
         end
     else
         togglerebirths = false
+        togglemoney    = false
     end
 end)
 
@@ -88,8 +87,8 @@ Movement:NewKeybind("Fly", "Toggles flying.", Enum.KeyCode.F, function()
     else
         flying = false
     end
-	    repeat wait() 
-	until game.Players.LocalPlayer and game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:findFirstChild("HumanoidRootPart") and game.Players.LocalPlayer.Character:findFirstChild("Humanoid") 
+        repeat wait() 
+    until game.Players.LocalPlayer and game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:findFirstChild("HumanoidRootPart") and game.Players.LocalPlayer.Character:findFirstChild("Humanoid") 
 local mouse = game.Players.LocalPlayer:GetMouse() 
 repeat wait() until mouse
 local plr = game.Players.LocalPlayer 
@@ -184,10 +183,7 @@ end
 end)
 
 GUI:NewKeybind("UI Toggle Keybind", "Toggle UI's Visiblility", Enum.KeyCode.End, function()
-	Library:ToggleUI()
-end)
-GUI:NewButton("Destroy GUI (IF X DOESNT WORK)", "Destroys The GUI", function()
-    Library:Unload()
+    Library:ToggleUI()
 end)
 
 CreditsSec:NewLabel("UIs - violin stutsuki, and respective creators")
