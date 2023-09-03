@@ -3,7 +3,7 @@
  ## The best Scripts.
 
 ## For Supported Executors, Go Down
-## Hunter Library (DISCONTINUED UNTIL FURTHER NOTICE)
+## Hunter Library (REWRITTING, FEATURES BELOW)
  ```lua
  loadstring(game:HttpGet(("https://raw.githubusercontent.com/MrKillingHunter/Hunter-Scripts/main/Hunter%20Library/UI%20Selector.lua"),true))()
  ```
@@ -43,17 +43,23 @@
    loadstring(game:HttpGet(("https://raw.githubusercontent.com/RegularVynixu/Vynixius/main/Doors/Script.lua"),true))()
    ```
 
-## Supported Executors (Bobhub)
+## Supported Executors (HL)
  #### Paid
    - Synapse X`DOWN`
    - Script Ware Windows`DOWN`
    - Script Ware Mac
+   - Hunter Z
+   - Aspect
  #### Free
    - Fluxus
    - Electron
    - Script Ware iOS
    - Codex
-   - Krnl`DOWN`
+   - Krnl
+   - Celery
+   - comet
+   - evon
+   - delta
 
 ## Supported Executors (MSHUB)
  #### Paid
