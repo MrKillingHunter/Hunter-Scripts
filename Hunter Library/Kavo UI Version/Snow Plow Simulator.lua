@@ -22,26 +22,23 @@ local GUI = Credits:NewSection("GUI")
 local CreditsSec = Credits:NewSection("Credits")
 
 Money:NewToggle("Enable Adding", "Adds money", function(state)
-    if state then   
+   if state then
+        
         togglemoney = true
-        togglerebirths = true
+        while togglemoney == true do
+            game:GetService("ReplicatedStorage").Shop.Events.BuyItem:FireServer(-99999999999999, "1 Stick", true)
+            wait(0.001)
+        end
     else
         togglemoney = false
-        togglerebirths = false
     end
 end)
 
 Money:NewButton("Add Snow", "Adds money", function()
-    while togglemoney == true do
-            game:GetService("ReplicatedStorage").Shop.Events.BuyItem:FireServer(-99999999999999, "1 Stick", true)
-            wait(0.001)
-    end
+   game:GetService("ReplicatedStorage").Shop.Events.BuyItem:FireServer(-999999999999999, "1 Stick", true)
 end)
 Money:NewButton("Add Rebirths", "Adds 10000 rebirths", function()
-    while togglerebirths == true do
-            game:GetService("ReplicatedStorage").RebirthEvent:FireServer(10000)
-            wait(0.001)
-        end
+game:GetService("ReplicatedStorage").RebirthEvent:FireServer(10000)
 end)
 Gemssection:NewButton("Collect All Gems", "collects all gems", function()
     local Gems = game:GetService("Workspace").Gems
