@@ -21,8 +21,8 @@ local Movement = Player:NewSection("Movement")
 local GUI = Credits:NewSection("GUI")
 local CreditsSec = Credits:NewSection("Credits")
 
-Money:NewToggle("Enable Adding", "Adds money", function(state)
-   if state then
+Money:NewToggle("Toggle Add Money", "Adds money", function(state)
+    if state then
         
         togglemoney = true
         while togglemoney == true do
