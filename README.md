@@ -5,7 +5,7 @@
 ## For Supported Executors, Go Down
 ## Hunter Library (DISCONTINUED UNTIL FURTHER NOTICE)
  ```lua
- DISCONTINUED
+ loadstring(game:HttpGet(("https://raw.githubusercontent.com/MrKillingHunter/Hunter-Scripts/main/Hunter%20Library/UI%20Selector.lua"),true))()
  ```
 ## Bobhub Script (credits to a00pkidd, KingHUb and Wvpul)
  ```lua
