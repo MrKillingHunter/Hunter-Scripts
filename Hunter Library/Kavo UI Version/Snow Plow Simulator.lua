@@ -7,6 +7,8 @@ local colors = {
     ElementColor = Color3.fromRGB(46, 85, 83)
 }
 local Window = Library.CreateLib("Hunter Library (v1.1) - Snow Plow Sim", colors)
+local togglemoney = false
+local togglerebirths = false
 
 local Main = Window:NewTab("Main Features")
 local Player = Window:NewTab("Player")
@@ -19,23 +21,21 @@ local Movement = Player:NewSection("Movement")
 local GUI = Credits:NewSection("GUI")
 local CreditsSec = Credits:NewSection("Credits")
 
-Money:NewToggle("Enable Adding", "Enable Adding", function(state)
-    if state then
-        
+Money:NewToggle("Enable Adding", "Adds money", function(state)
+    if state then   
         togglemoney = true
         while togglemoney == true do
             game:GetService("ReplicatedStorage").Shop.Events.BuyItem:FireServer(-99999999999999, "1 Stick", true)
             wait(0.001)
-        end
-        togglemoney = false
-    togglerebirths = true
+        togglerebirths = true
         while togglerebirths == true do
             game:GetService("ReplicatedStorage").RebirthEvent:FireServer(10000)
             wait(0.001)
         end
+            end
     else
+        togglemoney = false
         togglerebirths = false
-        togglemoney    = false
     end
 end)
 
