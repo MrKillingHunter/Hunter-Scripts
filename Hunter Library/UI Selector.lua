@@ -43,7 +43,7 @@ local linoria = LeftGroupBox:AddButton({
 local kavo = LeftGroupBox:AddButton({
     Text = 'Kavo UI',
     Func = function()
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/MrKillingHunter/Hunter-Scripts/main/Hunter%20Library/Kavo%20UI%20Version/Hunter%20Library%20Kavo%20Loader.lua"))()
+        loadstring(game:HttpGet(loaderuniversallink .. 'Kavo%20UI%20Version/Hunter%20Library%20Kavo%20Loader.lua"))()
     end,
     DoubleClick = false,
     Tooltip = 'Loads The kavo Ui Version Hunter Library'
