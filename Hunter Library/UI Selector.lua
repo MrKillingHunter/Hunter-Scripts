@@ -35,7 +35,6 @@ local linoria = LeftGroupBox:AddButton({
     Text = 'Linoria UI',
     Func = function()
         loadstring(game:HttpGet(loaderuniversallink .. 'Linoria%20UI%20(DEFAULT)/Hunter%20Library%20Loader.lua'))()
-        Library.Unload()
     end,
     DoubleClick = false,
     Tooltip = 'Loads The Default Hunter Library'
@@ -45,50 +44,45 @@ local kavo = LeftGroupBox:AddButton({
     Text = 'Kavo UI',
     Func = function()
         loadstring(game:HttpGet("https://raw.githubusercontent.com/MrKillingHunter/Hunter-Scripts/main/Hunter%20Library/Kavo%20UI%20Version/Hunter%20Library%20Kavo%20Loader.lua"))()
-        Library.Unload()
     end,
     DoubleClick = false,
-    Tooltip = 'Loads The Default Hunter Library'
+    Tooltip = 'Loads The kavo Ui Version Hunter Library'
 })
 
 local venyx = LeftGroupBox:AddButton({
     Text = 'Venyx UI',
     Func = function()
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/MrKillingHunter/Hunter-Scripts/main/Hunter%20Library/Linoria%20UI%20(DEFAULT)/Hunter%20Library%20Loader.lua"))()
-        Library.Unload()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/MrKillingHunter/Hunter-Scripts/main/Hunter%20Library/Venyx%20UI%20Version/Hunter%20Library%20Venyx%20Loader.lua"))()
     end,
     DoubleClick = false,
-    Tooltip = 'Loads The Default Hunter Library'
+    Tooltip = 'Loads The Venyx Ui version Of Hunter Library'
 })
 
 local rayfield = LeftGroupBox:AddButton({
     Text = 'Rayfield UI',
     Func = function()
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/MrKillingHunter/Hunter-Scripts/main/Hunter%20Library/Linoria%20UI%20(DEFAULT)/Hunter%20Library%20Loader.lua"))()
-        Library.Unload()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/MrKillingHunter/Hunter-Scripts/main/Hunter%20Library/Rayfield%20UI%20Version/Hunter%20Library%20Rayfield%20Loader.lua"))()
     end,
     DoubleClick = false,
-    Tooltip = 'Loads The Default Hunter Library'
+    Tooltip = 'Loads The Rayfield UI Version Hunter Library'
 })
 
 local flux = LeftGroupBox:AddButton({
     Text = 'Flux UI',
     Func = function()
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/MrKillingHunter/Hunter-Scripts/main/Hunter%20Library/Linoria%20UI%20(DEFAULT)/Hunter%20Library%20Loader.lua"))()
-        Library.Unload()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/MrKillingHunter/Hunter-Scripts/main/Hunter%20Library/Flux%20UI%20Version/Hunter%20Library%20Flux%20Loader.lua"))()
     end,
     DoubleClick = false,
-    Tooltip = 'Loads The Default Hunter Library'
+    Tooltip = 'Loads The Flux UI version Of Hunter Library'
 })
 
 local orion = LeftGroupBox:AddButton({
     Text = 'Orion Library',
     Func = function()
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/MrKillingHunter/Hunter-Scripts/main/Hunter%20Library/Linoria%20UI%20(DEFAULT)/Hunter%20Library%20Loader.lua"))()
-        Library.Unload()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/MrKillingHunter/Hunter-Scripts/main/Hunter%20Library/Orion%20Library%20Version/Hunter%20Library%20Orion%20Loader.lua"))()
     end,
     DoubleClick = false,
-    Tooltip = 'Loads The Default Hunter Library'
+    Tooltip = 'Loads The Orion UI Version Of Hunter Library'
 })
 
 MenuGroup:AddButton('Destroy Selector', function() Library:Unload() end)
