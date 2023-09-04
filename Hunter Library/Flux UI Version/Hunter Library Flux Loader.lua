@@ -8,7 +8,7 @@ if game.PlaceId == 286090429 then
         loadstring(game:HttpGet((""),true))()
       else -- Undead defense --
   if game.PlaceId == 11701792069 then
-          loadstring(game:HttpGet((""),true))()
+          loadstring(game:HttpGet(("https://raw.githubusercontent.com/MrKillingHunter/Hunter-Scripts/main/Hunter%20Library/Flux%20UI%20Version/Snow%20Plow%20Simulator.lua"),true))()
         else -- snow plow --
   if game.PlaceId == 13622981808 then
             loadstring(game:HttpGet((""),true))() --[[ rb friends]]
