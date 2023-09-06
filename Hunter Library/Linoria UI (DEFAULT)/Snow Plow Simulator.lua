@@ -130,7 +130,7 @@ Movement:AddSlider('MySlider', {
        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Wspeed
     end
 })
-Movement:AddLabel('Keybind'):AddKeyPicker('KeyPicker', {
+Movement:AddLabel('Fly'):AddKeyPicker('KeyPicker', {
     -- SyncToggleState only works with toggles.
     -- It allows you to make a keybind which has its state synced with its parent toggle
 
