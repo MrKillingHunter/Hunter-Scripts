@@ -81,16 +81,6 @@ local flux = LeftGroupBox:AddButton({
     Tooltip = 'Loads The Flux UI version Of Hunter Library'
 })
 
-local orion = LeftGroupBox:AddButton({
-    Text = 'Orion Library',
-    Func = function()
-        loadstring(game:HttpGet(loaderuniversallink .. 'Orion%20Library%20Version/Hunter%20Library%20Orion%20Loader.lua'))()
-        Library.Unload()
-    end,
-    DoubleClick = false,
-    Tooltip = 'Loads The Orion UI Version Of Hunter Library'
-})
-
 MenuGroup:AddButton('Destroy Selector', function() Library:Unload() end)
 
 MenuGroup:AddDivider()
