@@ -1,3 +1,11 @@
+local NotificationHolder = loadstring(game:HttpGet("https://raw.githubusercontent.com/BocusLuke/UI/main/STX/Module.Lua"))()
+local Notification = loadstring(game:HttpGet("https://raw.githubusercontent.com/BocusLuke/UI/main/STX/Client.Lua"))()
+
+Notification:Notify(
+    {Title = "Arsenal Is Patched!", Description = "We Are Not Responsible For Your Account's ban On Arsenal!\nYou've Already Been Warned"},
+    {OutlineColor = Color3.fromRGB(80, 80, 80),Time = 10, Type = "option"}
+)
+
 local repo = 'https://raw.githubusercontent.com/violin-suzutsuki/LinoriaLib/main/'
 
 local Library = loadstring(game:HttpGet('https://raw.githubusercontent.com/MrKillingHunter/LinoriaLibREMAKE/main/Library.lua'))()
