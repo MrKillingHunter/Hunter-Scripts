@@ -13,7 +13,10 @@ if game.PlaceId == 286090429 then
   if game.PlaceId == 13622981808 then
             loadstring(game:HttpGet((""),true))() --[[ rb friends]]
     else 
+                          if game.PlaceId == 3956818381 then
       loadstring(game:HttpGet((""),true))() -- ninja legends --
+                    else print("Game Not Supported")
+          end
           end
         end
     end
