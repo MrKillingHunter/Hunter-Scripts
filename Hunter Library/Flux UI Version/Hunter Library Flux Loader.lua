@@ -5,16 +5,19 @@ if game.PlaceId == 286090429 then
       loadstring(game:HttpGet((""),true))() 
     else -- bloxburg --
   if game.PlaceId == 5670292785 then 
-        loadstring(game:HttpGet((""),true))()
+        loadstring(game:HttpGet(("https://raw.githubusercontent.com/MrKillingHunter/Hunter-Scripts/main/Hunter%20Library/Flux%20UI%20Version/Undead%20Defense%20Tycoon.lua"),true))()
       else -- Undead defense --
   if game.PlaceId == 11701792069 then
           loadstring(game:HttpGet(("https://raw.githubusercontent.com/MrKillingHunter/Hunter-Scripts/main/Hunter%20Library/Flux%20UI%20Version/Snow%20Plow%20Simulator.lua"),true))()
         else -- snow plow --
   if game.PlaceId == 13622981808 then
             loadstring(game:HttpGet((""),true))() --[[ rb friends]]
-    else 
+    else
+                    if game.PlaceId == 3956818381 then
       loadstring(game:HttpGet((""),true))() -- ninja legends --
+                    else print("Game Not Supported")
           end
+                end
         end
     end
 end
