@@ -3,7 +3,7 @@
  ## The best Scripts.
 
 ## For Supported Executors, Go Down
-## Hunter Library (REWRITTING, FEATURES BELOW)
+## Hunter Library
  ```lua
  loadstring(game:HttpGet(("https://raw.githubusercontent.com/MrKillingHunter/Hunter-Scripts/main/Hunter%20Library.lua"),true))()
  ```
