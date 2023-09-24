@@ -16,5 +16,6 @@ for ids, url in next, games do
         break
     else
         loadstring(game:HttpGet(("https://raw.githubusercontent.com/MrKillingHunter/Hunter-Scripts/main/Hunter%20Library%20Assets/Universal.lua"),true))()
+        break
     end
 end
