@@ -1,5 +1,14 @@
 
 
+
+function waitframes(ii) for i = 1, ii do task.wait() end end
+
+local plr = game.Players.LocalPlayer
+local char = plr.Character or plr.CharacterAdded:Wait()
+local hum = char:FindFirstChildOfClass("Humanoid") or char:WaitForChild("Humanoid")
+
+
+
 function oldnormalmessage(title, text, timee)
     task.spawn(function()
         local notif = Instance.new("Sound");notif.Parent = game.SoundService;notif.SoundId = "rbxassetid://"..oldcustomnotifid;notif.Volume = 1;notif:Play();notif.Stopped:Wait();notif:Destroy()
@@ -473,8 +482,8 @@ local UniversalScripts = UniversalTab:CreateSection("Universal Player Adjustment
     
 local WalkSpeedSlider = UniversalTab:CreateSlider({
     Name = "Walkspeed",
-    Range = {16, 5000},
-    Increment = 5,
+    Range = {16, 200},
+    Increment = 1,
     Suffix = "Walkspeed",
     CurrentValue = 16,
     Flag = "walkspeed",
@@ -496,37 +505,7 @@ local JumpPowerTextBox = UniversalTab:CreateInput({
     game.Players.LocalPlayer.Character.Humanoid.JumpPower = Text
     end,
 })
-
-local infjumpButton = UniversalTab:CreateButton({
-   Name = "Enable/Disable Infinite Jump",
-   Callback = function()
-       --Toggles the infinite jump between on or off on every script run
-_G.infinjump = not _G.infinjump
-
-if _G.infinJumpStarted == nil then
-	--Ensures this only runs once to save resources
-	_G.infinJumpStarted = true
-	
-	--Notifies readiness
-	game.StarterGui:SetCore("SendNotification", {Title="Youtube Hub"; Text="Infinite Jump Activated!"; Duration=5;})
-
-	--The actual infinite jump
-	local plr = game:GetService('Players').LocalPlayer
-	local m = plr:GetMouse()
-	m.KeyDown:connect(function(k)
-		if _G.infinjump then
-			if k:byte() == 32 then
-			humanoid = game:GetService'Players'.LocalPlayer.Character:FindFirstChildOfClass('Humanoid')
-			humanoid:ChangeState('Jumping')
-			wait()
-			humanoid:ChangeState('Seated')
-			end
-		end
-	end)
-end
-   end,
-})
-
+    
 local FlyBind = UniversalTab:CreateKeybind({
     Name = "Fly",
     CurrentKeybind = "F",
@@ -751,7 +730,7 @@ local SnowPlowButton2 = gameTab:CreateButton({
 local BXBobhubButton = gameTab:CreateButton({
     Name = "Blackking X Bobhub For DOORS by a00pkidd And KingHub",
     Callback = function()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/ZanoLeafVN/Blackking-x-BobHub/main/77_8PVUQMXI.lua"))()
+        loadstring(game:HttpGet(("https://raw.githubusercontent.com/ZanoLeafVN/Blackking-x-BobHub/main/77_8PVUQMXI.lua"),true))()
     end,
 })
     
@@ -779,15 +758,18 @@ local NL = gameTab:CreateButton({
 local Destroy = GUITAB:CreateButton({
     Name = "Destroy GUI",
     Callback = function()
-    Library:Destroy()
+        Library:Destroy()
+        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
     end,
 })
     
 local CreditsSection = GUITAB:CreateSection("Credits")
+
+local executorename = getexecutorname()
     
 local UILabel = GUITAB:CreateLabel("User Interface Suite - Sirius")
 local SCRLabel = GUITAB:CreateLabel("Scripting - mrkillinghunter_")
-    
+local executor = GUITAB:CreateLabel("Your Executor, " .. executorename .. ", Is Supported")
     
 local MAINDOORS = DoorsTab:CreateSection("Main")
     
@@ -2047,23 +2029,18 @@ end
 local fovSlider = DoorsTab:CreateSlider({
     Name = "Field Of View",
     Range = {70, 120},
-    Increment = 10,
+    Increment = 0.5,
     Suffix = "FOV",
     CurrentValue = 0,
     Flag = "fov",
     Callback = function(val)
-        flags.camfov = (val)
+        flags.camfov = val
     end,
 })
 
 task.spawn(function()
 	game:GetService("RunService").RenderStepped:Connect(function()
-	if flags.walkspeedtoggle == true then
-			if hum.WalkSpeed < flags.speed then
-				hum.WalkSpeed = flags.speed
-			end
-		end
-		if flags.camfovtoggle == true then
+        if flags.camfovtoggle == true then
 			if flags.tracers == false then
 				pcall(function()
 					game:GetService("Workspace").CurrentCamera.FieldOfView = flags.camfov
@@ -2158,4 +2135,1188 @@ game.Players.LocalPlayer.Character.UpperTorso.Massless = one
 end
     end,
 })
+
+local ESPSection = DoorsTab:CreateSection("ESP")
+
+local DoorESPToggle = DoorsTab:CreateToggle({
+    Name = "Door ESP",
+    CurrentValue = false,
+    Flag = "dooresp", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(val)
+        flags.espdoors = val
+
+		if val then
+			local function setup(room)
+				task.wait(.1)
+				local door = room:WaitForChild("Door"):WaitForChild("Door")
+
+				if table.find(esptableinstances, door) then
+					return
+				end
+
+				task.wait(0.1)
+				local h = esp(door,Color3.fromRGB(90,255,40),door,"Door")
+				table.insert(esptable.doors,h)
+				table.insert(esptableinstances, door)
+
+				door:WaitForChild("Open").Played:Connect(function()
+					h.delete()
+				end)
+
+				door.AncestryChanged:Connect(function()
+					h.delete()
+				end)
+			end
+
+			local addconnect
+			addconnect = workspace.CurrentRooms.ChildAdded:Connect(function(room)
+				setup(room)
+			end)
+
+			for i,room in pairs(workspace.CurrentRooms:GetChildren()) do
+				if room:FindFirstChild("Assets") then
+					setup(room) 
+				end
+				task.wait()
+			end
+
+			if workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:FindFirstChild("Assets") then
+				setup(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)])
+			end
+
+			repeat task.wait() until not flags.espdoors
+			addconnect:Disconnect()
+
+			for i,v in pairs(esptable.doors) do
+				v.delete()
+end 
+		end
+    end,
+})
+
+local keyToggle = DoorsTab:CreateToggle({
+    Name = "Key And Kever ESP",
+    CurrentValue = false,
+    Flag = "keyesp", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(val)
+        flags.espkeys = val
+
+		if val then
+			local function check(v, room)
+				task.wait()
+				if table.find(esptableinstances, v) then
+					return
+				end
+
+				if v:IsA("Model") then
+					if v.Name == "ElectricalKeyObtain" then
+						local hitbox = v:FindFirstChild("Hitbox")
+						local parts = hitbox:GetChildren()
+						table.remove(parts,table.find(parts,v:WaitForChild("PromptHitbox")))
+
+						local h = esp(parts,Color3.fromRGB(255,255,255),hitbox,"Electrical Key")
+						table.insert(esptable.keys,h)
+						table.insert(esptableinstances, v)
+					end
+					if v.Name == "KeyObtain" then
+						local hitbox = v:FindFirstChild("Hitbox")
+						local parts = hitbox:GetChildren()
+						table.remove(parts,table.find(parts,hitbox:WaitForChild("PromptHitbox")))
+
+						local h = esp(parts,Color3.fromRGB(255,255,255),hitbox,"Key")
+						table.insert(esptable.keys,h)
+						table.insert(esptableinstances, v)
+					end;if v.Name == "LeverForGate" then
+						local h = esp(v,Color3.fromRGB(255,255,255),v.PrimaryPart,"Lever")
+						table.insert(esptable.keys,h)
+						table.insert(esptableinstances, v)
+						v.PrimaryPart:WaitForChild("SoundToPlay").Played:Connect(function()
+							h.delete()
+						end) 
+					end
+				end
+			end
+
+            local function setup(room)
+				local assets = room:FindFirstChild("Assets")
+
+				if room then
+					if assets then
+						assets.DescendantAdded:Connect(function(v)
+							check(v, room) 
+						end)
+					else
+						room.DescendantAdded:Connect(function(v)
+							check(v, room) 
+						end)
+					end
+				end
+
+				if assets then
+					for i,v in pairs(assets:GetChildren()) do --:GetDescendants()) do
+						check(v, room)
+					end 
+				else
+					for i,v in pairs(room:GetDescendants()) do
+						check(v, room)
+					end 
+				
+                end
+			end
+
+			local addconnect
+			addconnect = workspace.CurrentRooms.ChildAdded:Connect(function(room)
+				setup(room)
+			end)
+
+			for i,room in pairs(workspace.CurrentRooms:GetChildren()) do
+				setup(room)
+			end
+
+			setup(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)])
+
+			repeat task.wait() until not flags.espkeys
+			addconnect:Disconnect()
+
+			for i,v in pairs(esptable.keys) do
+				v.delete()
+			end 
+		end
+    end,
+})
+
+local itemToggle = DoorsTab:CreateToggle({
+    Name = "Item ESP",
+    CurrentValue = false,
+    Flag = "itemesp", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(val)
+        flags.espitems = val
+
+		if val then
+			local function check(v)
+				if table.find(esptableinstances, v) then
+					return
+				end
+
+				if v:IsA("Model") and (v:GetAttribute("Pickup") or v:GetAttribute("PropType")) then
+					task.wait(0.1)
+
+					local part = (v:FindFirstChild("Handle") or v:FindFirstChild("Prop"))
+					local h = esp(part,Color3.fromRGB(160,190,255),part,v.Name)
+					table.insert(esptable.items,h)
+					table.insert(esptableinstances, v)				
+				end
+			end
+
+			local function setup(room)
+				task.wait(.1)
+				local assets = room:WaitForChild("Assets")
+
+				if assets then  
+					local subaddcon
+					subaddcon = assets.DescendantAdded:Connect(function(v)
+						check(v) 
+					end)
+
+					for i,v in pairs(assets:GetDescendants()) do
+						check(v)
+					end
+
+					task.spawn(function()
+						repeat task.wait() until not flags.espitems
+						subaddcon:Disconnect()  
+					end) 
+				end 
+			end
+
+            local addconnect
+			addconnect = workspace.CurrentRooms.ChildAdded:Connect(function(room)
+				setup(room)
+			end)
+
+			for i,room in pairs(workspace.CurrentRooms:GetChildren()) do
+				if room:FindFirstChild("Assets") then
+					setup(room) 
+				end
+				task.wait()
+			end
+
+			if workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:FindFirstChild("Assets") then
+				setup(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)])
+			end
+
+			repeat task.wait() until not flags.espitems
+			addconnect:Disconnect()
+
+			for i,v in pairs(esptable.items) do
+				v.delete()
+			end 
+		end
+    end,
+})
+
+local BOOKToggle = DoorsTab:CreateToggle({
+    Name = "Book And Breaker ESP",
+    CurrentValue = false,
+    Flag = "bbesp", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(val)
+        flags.espbooks = val
+
+		if val then
+			local function check(v,room)
+				if table.find(esptableinstances, v) then
+					return
+				end
+
+				if v:IsA("Model") and (v.Name == "LiveHintBook" or v.Name == "LiveBreakerPolePickup") then
+					task.wait(0.1)
+					local h
+					if v.Name == "LiveHintBook" then
+						h = esp(v,Color3.fromRGB(0,255,255),v.PrimaryPart,"Book")
+					elseif v.Name == "LiveBreakerPolePickup" then
+						h = esp(v,Color3.fromRGB(0,255,255),v.PrimaryPart,"Breaker")
+					end
+
+					table.insert(esptable.books,h)
+					table.insert(esptableinstances, v)
+
+					v.AncestryChanged:Connect(function()
+						if not v:IsDescendantOf(room) then
+							h.delete() 
+						end
+					end)
+				end
+			end
+
+			local function setup(room)
+				task.wait(.1)
+				if room.Name == "50" or room.Name == "100" then
+					room.DescendantAdded:Connect(function(v)
+						check(v,room) 
+					end)
+
+					for i,v in pairs(room:GetDescendants()) do
+						check(v,room)
+					end
+				end
+			end
+
+			local addconnect
+			addconnect = workspace.CurrentRooms.ChildAdded:Connect(function(room)
+				setup(room)
+			end)
+
+			for i,room in pairs(workspace.CurrentRooms:GetChildren()) do
+				setup(room) 
+				task.wait()
+			end
+
+			if workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:FindFirstChild("Assets") then
+				setup(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)])
+			end
+
+			repeat task.wait() until not flags.espbooks
+			addconnect:Disconnect()
+
+			for i,v in pairs(esptable.books) do
+				v.delete()
+			end 
+		end
+    end,
+})
+
+local entityToggle = DoorsTab:CreateToggle({
+    Name = "Entity ESP",
+    CurrentValue = false,
+    Flag = "entityesp", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function()
+        flags.esprush = val
+
+		if val then
+			local addconnect
+			addconnect = workspace.ChildAdded:Connect(function(v)
+				if table.find(entitynames,v.Name) then
+					task.wait(.1)
+					local h = esp(v,Color3.fromRGB(255,25,25),v.PrimaryPart,v.Name:gsub("Moving",""))
+					table.insert(esptable.entity,h)
+				end
+			end)
+
+			for _,v in pairs(workspace:GetChildren()) do
+				if table.find(entitynames,v.Name) then
+					task.wait(.1)
+					local h = esp(v,Color3.fromRGB(255,25,25),v.PrimaryPart,v.Name:gsub("Moving",""))
+					table.insert(esptable.entity,h)
+				end
+			end
+
+			local function setup(room)
+				task.wait()
+				if room.Name == "50" or room.Name == "100" then
+					local figuresetup = room:WaitForChild("FigureSetup")
+
+					if figuresetup then
+						local fig = figuresetup:WaitForChild("FigureRagdoll")
+						task.wait(0.1)
+
+						local h = esp(fig,Color3.fromRGB(255,25,25),fig.PrimaryPart,"Figure")
+						table.insert(esptable.entity,h)
+					end 
+				else
+					local assets = room:WaitForChild("Assets")
+
+					local function check(v)
+						if v:IsA("Model") and table.find(entitynames,v.Name) then
+							task.wait(0.1)
+
+							local h = esp(v:WaitForChild("Base"),Color3.fromRGB(255,25,25),v.Base,"Snare")
+							table.insert(esptable.entity,h)
+						end
+					end
+
+					assets.DescendantAdded:Connect(function(v)
+						check(v) 
+					end)
+
+					for i,v in pairs(assets:GetDescendants()) do
+						check(v)
+					end
+				end 
+			end
+
+			local roomconnect
+			roomconnect = workspace.CurrentRooms.ChildAdded:Connect(function(room)
+				setup(room)
+			end)
+
+			for i,v in pairs(workspace.CurrentRooms:GetChildren()) do
+				setup(v) 
+			end
+
+			setup(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)])
+
+			repeat task.wait() until not flags.esprush
+			addconnect:Disconnect()
+			roomconnect:Disconnect()
+
+			for i,v in pairs(esptable.entity) do
+				v.delete()
+			end 
+		end
+    end,
+})
+
+local lockerToggle = DoorsTab:CreateToggle({
+    Name = "Locker ESP (ROOMS)",
+    CurrentValue = false,
+    Flag = "lockeresp", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(val)
+        flags.esplocker = val
+
+		if val then
+			local function check(v, room)
+				task.wait()
+				local valuechange = nil
+				if v.Name == "Wardrobe" then
+					local h = esp(v.PrimaryPart,Color3.fromRGB(145,100,25),v.PrimaryPart,"Wadrobe")
+					table.insert(esptable.lockers,h) 
+					table.insert(esptableinstances, v)
+					valuechange = game:GetService("ReplicatedStorage").GameData.LatestRoom:GetPropertyChangedSignal("Value"):Connect(function()
+						if tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value) ~= room.Name then
+							h.delete()
+							valuechange:Disconnect()
+						end
+					end)
+				end
+			end
+
+			local function setup(room)
+				local assets = room:WaitForChild("Assets")
+
+				if assets then
+					local subaddcon
+					subaddcon = assets.DescendantAdded:Connect(function(v)
+						check(v, room) 
+					end)
+
+					for i,v in pairs(assets:GetDescendants()) do
+						check(v, room)
+					end
+
+					task.spawn(function()
+						repeat task.wait() until not flags.esplocker
+						subaddcon:Disconnect()  
+					end)
+				else
+					local subaddcon
+					subaddcon = room.DescendantAdded:Connect(function(v)
+						check(v, room) 
+					end)
+
+					for i,v in pairs(room:GetDescendants()) do
+						check(v, room)
+					end
+
+					task.spawn(function()
+						repeat task.wait() until not flags.esplocker
+						subaddcon:Disconnect()  
+					end) 
+				end
+			end
+
+			local addconnect
+			addconnect = workspace.CurrentRooms.ChildAdded:Connect(function(room)
+				setup(room)
+			end)
+
+			if workspace.CurrentRooms:FindFirstChild(tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value-1)) then
+				setup(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value-1)])
+			end
+			setup(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)])
+			if workspace.CurrentRooms:FindFirstChild(tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value+1)) then
+				setup(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value+1)])
+			end
+
+			repeat task.wait() until not flags.esplocker
+			addconnect:Disconnect()
+
+			for i,v in pairs(esptable.lockers) do
+				v.delete()
+			end 
+		end
+    end,
+})
+
+local chestToggle = DoorsTab:CreateToggle({
+    Name = "Chest ESP",
+    CurrentValue = false,
+    Flag = "chestesp", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(val)
+        flags.espchest = val
+
+		if val then
+			local function check(v, room)
+				task.wait()
+				if table.find(esptableinstances, v) then
+					return
+				end
+
+				if v:IsA("Model") then
+					local okvaluechange = nil
+					if v.Name == "ChestBox" then
+						warn(v.Name)
+						local h = esp(v,Color3.fromRGB(205,120,255),v.PrimaryPart,"Chest")
+						table.insert(esptable.chests,h) 
+						table.insert(esptableinstances, v)
+						okvaluechange = game:GetService("ReplicatedStorage").GameData.LatestRoom:GetPropertyChangedSignal("Value"):Connect(function()
+							if tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value) ~= room.Name then
+								h.delete()
+								okvaluechange:Disconnect()
+							end
+						end)
+					elseif v.Name == "ChestBoxLocked" then
+						local h = esp(v,Color3.fromRGB(255,120,205),v.PrimaryPart,"Locked Chest")
+						table.insert(esptable.chests,h) 
+						table.insert(esptableinstances, v)
+						okvaluechange = game:GetService("ReplicatedStorage").GameData.LatestRoom:GetPropertyChangedSignal("Value"):Connect(function()
+							if tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value) ~= room.Name then
+								h.delete()
+								okvaluechange:Disconnect()
+							end
+						end)
+					end
+				end
+			end
+
+			local function setup(room)
+				task.wait(.1)
+				local subaddcon
+				subaddcon = room.DescendantAdded:Connect(function(v)
+					check(v, room) 
+				end)
+
+				for i,v in pairs(room:GetDescendants()) do
+					check(v, room)
+				end
+
+				task.spawn(function()
+					repeat task.wait() until not flags.espchest
+					subaddcon:Disconnect()  
+				end)  
+			end
+
+			local addconnect
+			addconnect = workspace.CurrentRooms.ChildAdded:Connect(function(room)
+				setup(room)
+			end)
+
+			for i,room in pairs(workspace.CurrentRooms:GetChildren()) do
+				if room:FindFirstChild("Assets") then
+					setup(room) 
+				end
+				task.wait()
+			end
+
+			if workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:FindFirstChild("Assets") then
+				setup(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)])
+			end
+
+			repeat task.wait() until not flags.espchest
+			addconnect:Disconnect()
+
+			for i,v in pairs(esptable.chests) do
+				v.delete()
+			end
+		end
+    end,
+})
+
+local goldToggle = DoorsTab:CreateToggle({
+    Name = "Gold ESP",
+    CurrentValue = false,
+    Flag = "golesp", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(val)
+        flags.espgold = val
+
+		if val then
+			local function check(v)
+				if table.find(esptableinstances, v) then
+					return
+				end
+
+				if v:IsA("Model") then
+					task.wait(0.1)
+					local goldvalue = v:GetAttribute("GoldValue")
+
+					if goldvalue and goldvalue >= (flags.goldespvalue or 5) then
+						local hitbox = v:WaitForChild("Hitbox")
+						local h = esp(hitbox:GetChildren(),Color3.fromRGB(255,255,0),hitbox,"GoldPile [".. tostring(goldvalue).."]")
+						table.insert(esptable.gold,h)
+						table.insert(esptableinstances, v)
+					end
+				end
+			end
+
+			local function setup(room)
+				task.wait(.1)
+				local assets = room:WaitForChild("Assets")
+
+				local subaddcon
+				subaddcon = assets.DescendantAdded:Connect(function(v)
+					check(v) 
+				end)
+
+				for i,v in pairs(assets:GetDescendants()) do
+					check(v)
+					task.wait()
+				end
+
+				task.spawn(function()
+					repeat task.wait() until not flags.espchest
+					subaddcon:Disconnect()  
+				end)  
+			end
+
+			local addconnect
+			addconnect = workspace.CurrentRooms.ChildAdded:Connect(function(room)
+				setup(room)
+			end)
+
+			for i,room in pairs(workspace.CurrentRooms:GetChildren()) do
+				if room:FindFirstChild("Assets") then
+					setup(room) 
+				end
+				task.wait()
+			end
+
+			if workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)]:FindFirstChild("Assets") then
+				setup(workspace.CurrentRooms[tostring(game:GetService("ReplicatedStorage").GameData.LatestRoom.Value)])
+			end
+
+			repeat task.wait() until not flags.espgold
+			addconnect:Disconnect()
+
+			for i,v in pairs(esptable.gold) do
+				v.delete()
+			end 
+		end
+    end,
+})
+
+local fullbrightToggle = DoorsTab:CreateToggle({
+    Name = "Full Bright (may not work sometimes)",
+    CurrentValue = false,
+    Flag = "fb", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        flags.fullbright = val
+
+		if val then
+			local oldAmbient = game:GetService("Lighting").Ambient
+			local oldColorShift_Bottom = game:GetService("Lighting").ColorShift_Bottom
+			local oldColorShift_Top = game:GetService("Lighting").ColorShift_Top
+
+			local function doFullbright()
+				if flags.fullbright == true then
+					game:GetService("Lighting").Ambient = Color3.new(1, 1, 1)
+					game:GetService("Lighting").ColorShift_Bottom = Color3.new(1, 1, 1)
+					game:GetService("Lighting").ColorShift_Top = Color3.new(1, 1, 1)
+				else
+					game:GetService("Lighting").Ambient = oldAmbient
+					game:GetService("Lighting").ColorShift_Bottom = oldColorShift_Bottom
+					game:GetService("Lighting").ColorShift_Top = oldColorShift_Top
+				end
+			end
+			doFullbright()
+
+			local coneee = game:GetService("Lighting").LightingChanged:Connect(doFullbright)
+			repeat task.wait() until not flags.fullbright
+
+			coneee:Disconnect()
+			game:GetService("Lighting").Ambient = oldAmbient
+			game:GetService("Lighting").ColorShift_Bottom = oldColorShift_Bottom
+			game:GetService("Lighting").ColorShift_Top = oldColorShift_Top
+		end
+    end,
+})
+
+local EntitySection = DoorsTab:CreateSection("Entities")
+
+local GMButton = DoorsTab:CreateButton({
+    Name = "Enable / Disable Godmode",
+    Callback = function()
+        task.wait(0.3)
+    if _G.God == nil then
+_G.God = true
+local Collision = game.Players.LocalPlayer.Character.Collision
+    Collision.Position = Collision.Position - Vector3.new(0,9.8,0)
+    firesignal(game.ReplicatedStorage.EntityInfo.Caption.OnClientEvent, "GodMode is Enabled...")
+task.spawn(function()
+		local notif = Instance.new("Sound");notif.Parent = game.SoundService;notif.SoundId = "rbxassetid://6897623656";notif.Volume = 2;notif:Play();notif.Stopped:Wait();notif:Destroy()
+		end)
+    end
+    end,
+})
+
+local dantiButton = DoorsTab:CreateButton({
+    Name = "Disable Anti-Cheat",
+    Callback = function(BypassSpeedss)
+        _G.BypassSpeeds = BypassSpeedss
+while _G.BypassSpeeds do wait(0.2)
+    pcall(function()
+game.Players.LocalPlayer.Character.Collision.Size = Vector3.new(2, 2, 2)
+wait(0.2)
+game.Players.LocalPlayer.Character.Collision.Size = Vector3.new(3, 4.5, 3)
+    end)
+end
+    end,
+})
+
+local timothyToggle = DoorsTab:CreateToggle({
+    Name = "Disable Timothy Jumpscare",
+    CurrentValue = false,
+    Flag = "tim", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(val)
+        flags.DisableTimothy = val
+    end,
+})
+
+local old
+	old = hookmetamethod(game,"__namecall",newcclosure(function(self,...)
+		local args = {...}
+		local method = getnamecallmethod()
+
+		if tostring(self) == 'ClutchHeartbeat' and method == "FireServer" and flags.heartbeatwin == true then
+			args[2] = true
+			return old(self,unpack(args))
+		end
+
+		return old(self,...)
+	end))
+
+local ScreechModule = plr.PlayerGui.MainUI.Initiator.Main_Game.RemoteListener.Modules:FindFirstChild("Screech")
+
+local screechToggle = DoorsTab:CreateToggle({
+    Name = "Disable Screech",
+    CurrentValue = false,
+    Flag = "screech", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(val)
+        flags.noscreech = val
+    end,
+})
+
+game:GetService("RunService").RenderStepped:Connect(function()
+    pcall(function()
+        if flags.noscreech then
+        game:GetService("ReplicatedStorage").Entities.Screech:destroy()
+        end
+        end)
+        end)
+
+local haltToggle = DoorsTab:CreateToggle({
+   Name = "Remove Halt",
+   CurrentValue = false,
+   Flag = "halt", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Value)
+    _G.NoHalt = Value
+   end,
+})
+
+local eyesToggle = DoorsTab:CreateToggle({
+    Name = "No Eyes Damage",
+    CurrentValue = false,
+    Flag = "eyes", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        flags.noeyesdamage = Value
+    end,
+})
+
+local seekToggle = DoorsTab:CreateToggle({
+    Name = "No Seek Chase",
+    CurrentValue = false,
+    Flag = "seek", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(val)
+        flags.noseek = val
+
+		if val then
+			local addconnect
+			addconnect = workspace.CurrentRooms.ChildAdded:Connect(function(room)
+				local trigger = room:WaitForChild("TriggerEventCollision",2)
+
+				if trigger then
+					trigger:Destroy() 
+				end
+			end)
+
+			repeat task.wait() until not flags.noseek
+			addconnect:Disconnect()
+		end 
+    end,
+})
+
+local handsToggle = DoorsTab:CreateToggle({
+    Name = "Remove Seek Arms And Fire",
+    CurrentValue = false,
+    Flag = "seekhands", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(val)
+        flags.noseekarmsfire = val
+    end,
+})
+
+game:GetService("ReplicatedStorage").GameData.LatestRoom:GetPropertyChangedSignal("Value"):Connect(function()
+	task.wait(.1)
+	for _,descendant in pairs(game:GetService("Workspace").CurrentRooms:GetDescendants()) do
+		if descendant.Name == "Seek_Arm" or descendant.Name == "ChandelierObstruction" then
+			descendant.Parent = nil
+			descendant:Destroy()
+		end
+	end
+end)
+
+local heartbeatToggle = DoorsTab:CreateToggle({
+    Name = "Always Win Heartbeat Minigame",
+    CurrentValue = false,
+    Flag = "heartbeat", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(val)
+        flags.heartbeatwin = val
+    end,
+})
+
+
+local Toggle = DoorsTab:CreateToggle({
+    Name = "Anti-Glitch",
+    CurrentValue = false,
+    Flag = "glitch", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(val)
+        DisableGlitch = val
+    end,
+})
+
+local dupeToggle = DoorsTab:CreateToggle({
+    Name = "Anti-Dupe",
+    CurrentValue = false,
+    Flag = "Tdupe", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(val)
+        _G.Fake_Hitbox = val
+
+        while wait() and _G.Fake_Hitbox == true do
+            for i, v in ipairs(workspace:GetDescendants()) do
+                if v.Name == "Closet" then
+                    local Hitbox = v:FindFirstChild("Hitbox")
+            
+                    Hitbox.CanTouch = false
+                end
+            end
+        end
+    end,
+})
+
+local snareToggle = DoorsTab:CreateToggle({
+    Name = "Anti-Snare",
+    CurrentValue = false,
+    Flag = "Tsnare", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        _G.Snare_Hitbox = Value
+
+        while wait() and _G.Snare_Hitbox == true do
+            for i, v in ipairs(workspace:GetDescendants()) do
+                if v.Name == "Snare" then
+                    local Hitbox = v:FindFirstChild("Hitbox")
+            
+                    Hitbox.CanTouch = false
+                end
+            end
+        end
+    end,
+})
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local TextChatService = game:GetService("TextChatService")
+local Lighting = game:GetService("Lighting")
+local LocalPlayer = Players.LocalPlayer
+local Character = LocalPlayer.Character
+local Backpack = LocalPlayer.Backpack
+local Humanoid = Character:WaitForChild("Humanoid")
+local AvatarIcon = Players:GetUserThumbnailAsync(LocalPlayer.UserId,Enum.ThumbnailType.HeadShot,Enum.ThumbnailSize.Size420x420)
+local MainUI = LocalPlayer.PlayerGui.MainUI
+local Main_Game = MainUI.Initiator.Main_Game
+local Modules = Main_Game.RemoteListener.Modules
+local ScreechSafeRooms = {}
+local PrimaryPart = Character.PrimaryPart
+local CurrentRooms = workspace.CurrentRooms
+local EntityInfo = ReplicatedStorage.EntityInfo
+local ClientModules = ReplicatedStorage.ClientModules
+local DeathHint = EntityInfo.DeathHint
+local CamLock = EntityInfo.CamLock
+local MotorReplication = EntityInfo.MotorReplication
+local EntityModules = ClientModules.EntityModules
+local ItemESP = false
+local EntityESP = false
+local OtherESP = false
+local EyesOnMap = false
+local InstantInteract = false
+local IncreasedDistance = false
+local InteractNoclip = false
+local EnableInteractions = false
+local DisableDupe = false
+local DisableSeek = false
+local NoDark = false
+local Noclip = false
+local DisableTimothy = false
+local DisableA90 = false
+local NoclipNext = false
+local IsExiting = false
+local RemoveDeathHint = false
+local ClosetExitFix = false
+local NoBreaker = false
+local DisableEyes = false
+local DisableGlitch = false
+local DisableSnare = false
+local WasteItems = false
+local ScreechModule
+local CustomScreechModule
+local TimothyModule
+local CustomTimothyModule
+local A90Module
+local CustomA90Module
+local DoorRange
+local SpoofMotor
+local ESP_Items = {KeyObtain={"Key",1.5},LiveHintBook={"Book",1.5},Lighter={"Lighter",1.5},Lockpick={"Lockpicks",1.5},Vitamins={"Vitamins",1.5},Crucifix={"Crucifix",1.5},CrucifixWall={"Crucifix",1.5},SkeletonKey={"Skeleton Key",1.5},Flashlight={"Flashlight",1.5},Candle={"Candle",1.5},LiveBreakerPolePickup={"Fuse",1.5},Shears={"Shears",1.5},Battery={"Battery",1.5},PickupItem={"Paper",1.5},ElectricalKeyObtain={"Electrical Key",1.5},Shakelight={"Shakelight",1.5},Scanner={"iPad",1.5}}
+local ESP_Entities = {RushMoving={"Rush",5},AmbushMoving={"Ambush",5},FigureRagdoll={"Figure",7},FigureLibrary={"Figure",7},SeekMoving={"Seek",5.5},Screech={"Screech",2},Eyes={"Eyes",4},Snare={"Snare",2},A60={"A-60",10},A120={"A-120",10}}
+local ESP_Other = {Door={"Door",5},LeverForGate={"Lever",3},GoldPile={"Gold",0.5},Bandage={"Bandage",0.5}}
+local MainFrame = MainUI.MainFrame
+local GameData = ReplicatedStorage.GameData
+local LatestRoom = GameData.LatestRoom
+local Floor = GameData.Floor
+local OldEnabled = {}
+local Module_Events = require(ClientModules.Module_Events)
+local ShatterFunction = Module_Events.shatter
+local HideTick = tick()
+local GlitchModule = EntityModules.Glitch
+local CustomGlitchModule = GlitchModule:Clone()
+
+CustomGlitchModule.Name = "CustomGlitch"
+CustomGlitchModule.Parent = GlitchModule.Parent
+GlitchModule:Destroy()
+EntityInfo.UseEnemyModule.OnClientEvent:Connect(function(Entity,x,...)
+    if Entity == "Glitch" then
+        if not DisableGlitch then
+            require(CustomGlitchModule).stuff(require(Main_Game),table.unpack({...}))
+        end
+    end
+end)
+DeathHint.OnClientEvent:Connect(function()
+    if RemoveDeathHint then
+        task.wait()
+        firesignal(DeathHint.OnClientEvent,{},"Blue")
+    end
+end)
+for _,Player in pairs(Players:GetPlayers()) do
+    if Player ~= LocalPlayer then
+        ESP_Other[Player.Name] = {Player.DisplayName,4}
+    end
+end
+local function ReplacePainting(Painting,NewImage,NewTitle)
+    Painting:WaitForChild("Canvas").SurfaceGui.ImageLabel.Image = NewImage
+    Painting.Canvas.SurfaceGui.ImageLabel.BackgroundTransparency = 1
+    Painting.Canvas.SurfaceGui.ImageLabel.ImageTransparency = 0
+    Painting.Canvas.SurfaceGui.ImageLabel.ImageColor3 = Color3.new(1,1,1)
+    local NewPrompt = Painting:WaitForChild("InteractPrompt"):Clone()
+    Painting.InteractPrompt:Destroy()
+    NewPrompt.Parent = Painting
+    NewPrompt.Triggered:Connect(function()
+        require(Main_Game).caption("This painting is titled \"" .. NewTitle .. "\".")
+    end)
+end
+local function ApplyCustoms(DontYield)
+    task.wait(DontYield and 0 or 1)
+    ScreechModule = Modules:WaitForChild("Screech")
+    TimothyModule = Modules.SpiderJumpscare
+    A90Module = Modules.A90
+    CustomScreechModule = ScreechModule:Clone()
+    CustomTimothyModule = TimothyModule:Clone()
+    CustomA90Module = A90Module:Clone() 
+    CustomScreechModule.Name = "CustomScreech"
+    CustomTimothyModule.Name = "CustomTimothy"
+    CustomA90Module.Name = "CustomA90"
+    CustomScreechModule.Parent = ScreechModule.Parent
+    CustomTimothyModule.Parent = TimothyModule.Parent
+    CustomA90Module.Parent = A90Module.Parent
+    ScreechModule:Destroy()
+    TimothyModule:Destroy()
+    A90Module:Destroy()
+end
+
+local function ApplySettings(Object)
+    task.spawn(function()
+        task.wait()
+        if (ESP_Items[Object.Name] or ESP_Entities[Object.Name] or ESP_Other[Object.Name]) and Object.ClassName == "Model" then
+            if Object:FindFirstChild("RushNew") then
+                if not Object.RushNew:WaitForChild("PlaySound").Playing then return end
+            end
+            local Color = ESP_Items[Object.Name] and Color3.new(1,1) or ESP_Entities[Object.Name] and Color3.new(1) or Color3.new(0,1,1)
+            if Object.Name == "RushMoving" or Object.Name == "AmbushMoving" or Object.Name == "Eyes" or Object.Name == "A60" or Object.Name == "A120" then
+                for i = 1, 100 do
+                    if Object:FindFirstChildOfClass("Part") then
+                        break
+                    end
+                    if i == 100 then
+                        return
+                    end
+                end
+                Object:FindFirstChildOfClass("Part").Transparency = 0.99
+                Instance.new("Humanoid",Object)
+            end
+            local function ApplyHighlight(IsValid,Bool)
+                if IsValid then
+                    if Bool then
+                        local TXT = IsValid[1]
+                        if IsValid[1] == "Door" then
+                            local RoomName
+                            if Floor.Value == "Rooms" then
+                                RoomName = ""
+                            else
+                                workspace.CurrentRooms:WaitForChild(tonumber(Object.Parent.Name) + 1,math.huge)
+                                if not OtherESP then return end
+                                local OldString = workspace.CurrentRooms[tonumber(Object.Parent.Name) + 1]:GetAttribute("OriginalName"):sub(7,99)
+                                local NewString = ""
+                                for i = 1, #OldString do
+                                    if i == 1 then
+                                        NewString = NewString .. OldString:sub(i,i)
+                                        continue
+                                    end
+                                    if OldString:sub(i,i) == OldString:sub(i,i):upper() and OldString:sub(i-1,i-1) ~= "_" then
+                                        NewString = NewString .. " "
+                                    end
+                                    if OldString:sub(i,i) ~= "_" then
+                                        NewString = NewString .. OldString:sub(i,i)
+                                    end
+                                end
+                                RoomName = " (" .. NewString .. ")"
+                            end
+                            TXT = "Door " .. (Floor.Value == "Rooms" and "A-" or "") .. tonumber(Object.Parent.Name) + 1 .. RoomName
+                        end
+                        if IsValid[1] == "Gold" then
+                            TXT = Object:GetAttribute("GoldValue") .. " Gold"
+                        end
+                        local UI = Instance.new("BillboardGui",Object)
+                        UI.Size = UDim2.new(0,1000,0,30)
+                        UI.AlwaysOnTop = true
+                        UI.StudsOffset = Vector3.new(0,IsValid[2],0)
+                        local Label = Instance.new("TextLabel",UI)
+                        Label.Size = UDim2.new(1,0,1,0)
+                        Label.BackgroundTransparency = 1
+                        Label.TextScaled = true
+                        Label.Text = TXT
+                        Label.TextColor3 = Color
+                        Label.FontFace = Font.new("rbxasset://fonts/families/Oswald.json")
+                        Label.TextStrokeTransparency = 0
+                        Label.TextStrokeColor3 = Color3.new(Color.R/2,Color.G/2,Color.B/2)
+                    elseif Object:FindFirstChild("BillboardGui") then
+                        Object.BillboardGui:Destroy()
+                    end
+                    local Target = Object
+                    if IsValid[1] == "Door" and Object.Parent.Name ~= "49" and Object.Parent.Name ~= "50" then
+                        Target = Object:WaitForChild("Door")
+                    end
+                    if Bool then
+                        local Highlight = Instance.new("Highlight",Target)
+                        Highlight.FillColor = Color
+                        Highlight.OutlineColor = Color
+                    elseif Target:FindFirstChild("Highlight") then
+                        Target.Highlight:Destroy()
+                    end
+                end
+            end
+            ApplyHighlight(ESP_Items[Object.Name],ItemESP)
+            ApplyHighlight(ESP_Entities[Object.Name],EntityESP)
+            ApplyHighlight(ESP_Other[Object.Name],OtherESP)
+        end
+        if Object:IsA("ProximityPrompt") then
+            if InstantInteract then
+                Object.HoldDuration = -Object.HoldDuration
+            end
+            if IncreasedDistance and Object.Parent and Object.Parent.Name ~= "Shears" then
+                Object.MaxActivationDistance *= IncreasedDistance and 2 or 0.5
+            end
+            if InteractNoclip then
+                Object.RequiresLineOfSight = not InteractNoclip
+            end
+            if EnableInteractions then
+                if Object.Enabled then
+                    table.insert(OldEnabled,Object)
+                end
+                Object.Enabled = true
+            end
+            Object:GetPropertyChangedSignal("Enabled"):Connect(function()
+                if EnableInteractions then
+                    Object.Enabled = true
+                end
+            end)
+        end
+        if Object.Name == "DoorFake" then
+            Object:WaitForChild("Hidden").CanTouch = not DisableDupe
+            if Object:FindFirstChild("LockPart") then
+                Object.LockPart:WaitForChild("UnlockPrompt", 1).Enabled = not DisableDupe
+            end
+            Object.Door.Color = DisableDupe and Color3.new(0.5,0,0) or Color3.fromRGB(129,111,100)
+            Object.Door.SignPart.Color = DisableDupe and Color3.new(0.5,0,0) or Color3.fromRGB(129,111,100)
+            for _,DoorNumber in pairs({Object.Sign.Stinker,Object.Sign.Stinker.Highlight,Object.Sign.Stinker.Shadow}) do
+                DoorNumber.Text = DisableDupe and "DUPE" or string.format("%0.4i",LatestRoom.Value)
+            end
+        end
+        if Object.Parent and Object.Parent.Name == "TriggerEventCollision" then
+            Object.CanCollide = not DisableSeek
+            Object.CanTouch = not DisableSeek
+        end
+        if Object.Name == "Shears" and Object.Parent.Name == "LootItem" then
+            if not Object:FindFirstChild("FakeShears") then
+                local FakePrompt = Object.ModulePrompt:Clone()
+                Object.ModulePrompt.Enabled = false
+                FakePrompt.Parent = Object
+                FakePrompt.MaxActivationDistance = 13.1
+                FakePrompt.Name = "FakePrompt"
+                FakePrompt.Triggered:Connect(function()
+                    if (Object.Main.Position - PrimaryPart.Position).magnitude < 12 then
+                        fireproximityprompt(Object.ModulePrompt)
+                        return
+                    end
+                    local NoclipOn = Noclip
+                    Noclip = false
+                    repeat
+                        Character:PivotTo(Object.Main.CFrame + Vector3.new(0,5,0))
+                        fireproximityprompt(Object.ModulePrompt)
+                        Character.PrimaryPart.Velocity = Vector3.new()
+                        task.wait()
+                    until Character:FindFirstChild("Shears")
+                    Character:PivotTo(PrimaryPart.CFrame + Vector3.new(0,7,0))
+                    Noclip = NoclipOn
+                end)
+            end
+        end
+        if Object.Name == "Eyes" then
+            EyesOnMap = true
+            if DisableEyes then
+                MotorReplication:FireServer(0,-120,0,false)
+            end
+        end
+        if Object.Name == "Snare" then
+            Object.Hitbox.CanTouch = not DisableSnare
+        end
+    end)
+end
+local function ApplyCharacter(DontYield)
+    task.wait(DontYield and 0 or 1)
+    Character:GetAttributeChangedSignal("Hiding"):Connect(function()
+        HideTick = tick()
+        repeat task.wait() until not PrimaryPart.Anchored
+        Character.Collision.CanCollide = not Noclip
+        PrimaryPart.CanCollide = not Noclip
+        return
+    end)
+    Lighting:GetPropertyChangedSignal("Ambient"):Connect(function()
+        if NoDark then
+            Lighting.Ambient = Color3.fromRGB(67, 51, 56)
+        end
+    end)
+    Humanoid:GetPropertyChangedSignal("WalkSpeed"):Connect(ApplySpeed)
+    Character:GetPropertyChangedSignal("WorldPivot"):Connect(function()
+        if not Noclip then return end
+        if NoclipNext then return end
+        if Character:GetAttribute("Hiding") == true and Character:FindFirstChild("Collision") then return end
+        if PrimaryPart.Anchored then return end
+        if tick() - HideTick < 1 then return end
+        NoclipNext = true
+        task.wait(0.1)
+        Character:PivotTo(CFrame.new(Humanoid.MoveDirection * 100000 * -1))
+        Character:GetPropertyChangedSignal("WorldPivot"):Wait()
+        task.wait(0.1)
+        NoclipNext = false
+    end)
+    Humanoid:GetPropertyChangedSignal("MoveDirection"):Connect(function()
+        if ClosetExitFix and Character:FindFirstChild("Collision") and Character:GetAttribute("Hiding") == true and tick() - HideTick > 1 then
+            CamLock:FireServer()
+        end
+    end)
+    Main_Game.PromptService.Highlight:Destroy()
+end
+ApplyCharacter(true)
+ApplyCustoms(true)
+LocalPlayer.CharacterAdded:Connect(function(NewCharacter)
+    Character = NewCharacter
+    Humanoid = Character:WaitForChild("Humanoid")
+    Character:WaitForChild("Collision").CanCollide = not Noclip
+    PrimaryPart = Character.PrimaryPart
+    PrimaryPart.CanCollide = not Noclip
+    MainUI = LocalPlayer.PlayerGui.MainUI
+    Main_Game = MainUI.Initiator.Main_Game
+    MainFrame = MainUI.MainFrame
+    ApplySpeed(true)
+    ApplyCustoms()
+    ApplyCharacter()
+end)
+workspace.DescendantAdded:Connect(ApplySettings)
+workspace.ChildRemoved:Connect(function(Object)
+    if Object.Name == "Eyes" then
+        if not workspace:FindFirstChild("Eyes") then
+            EyesOnMap = false
+        end
+    end
+end)
+EntityInfo.Screech.OnClientEvent:Connect(function()
+    if not table.find(ScreechSafeRooms, tostring(LocalPlayer:GetAttribute("CurrentRoom"))) and CurrentRooms[LocalPlayer:GetAttribute("CurrentRoom")]:GetAttribute("Ambient") == Color3.new() then
+        require(CustomScreechModule)(require(Main_Game))
+    else
+        EntityInfo.Screech:FireServer(true)
+    end
+end)
+EntityInfo.SpiderJumpscare.OnClientEvent:Connect(function(...)
+    local Args = {...}
+    if not DisableTimothy then
+        task.spawn(function()
+            require(CustomTimothyModule)(table.unpack(Args))
+        end)
+    end
+end)
 
