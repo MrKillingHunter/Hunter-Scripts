@@ -79,8 +79,13 @@ if _G.infinJumpStarted == nil then
 	_G.infinJumpStarted = true
 	
 	--Notifies readiness
-	game.StarterGui:SetCore("SendNotification", {Title="Youtube Hub"; Text="Infinite Jump Activated!"; Duration=5;})
-
+Library:Notify({
+    Title = "Infinite Jump Ready",
+    Content = "Hunter Library - Infinite Jump",
+    Duration = 2,
+    Image = nil,
+ }
+)
 	--The actual infinite jump
 	local plr = game:GetService('Players').LocalPlayer
 	local m = plr:GetMouse()
