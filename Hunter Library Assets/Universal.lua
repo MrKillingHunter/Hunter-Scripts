@@ -1,4 +1,4 @@
-local Library = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+local Library = loadstring(game:HttpGet('https://raw.githubusercontent.com/MrKillingHunter/Hunter-Scripts/main/Hunter%20Library%20Assets/RayHunt%20Library'))()
 
 local Window = Library:CreateWindow({
     Name = " Welcome To Hunter Library v3 -  Universal",
