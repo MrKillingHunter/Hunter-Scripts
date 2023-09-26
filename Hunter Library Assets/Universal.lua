@@ -50,8 +50,7 @@ local WalkSpeedSlider = UniversalTab:CreateSlider({
     CurrentValue = 16,
     Flag = "",
     Callback = function(Value)
-        while true do
-           wait (0.5)
+       
             game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = (Value)
      
         end   
