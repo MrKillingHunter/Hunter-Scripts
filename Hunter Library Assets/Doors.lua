@@ -765,11 +765,13 @@ local Destroy = GUITAB:CreateButton({
     
 local CreditsSection = GUITAB:CreateSection("Credits")
 
-local executorename = getexecutorname()
+local executorname = getexecutorname()
+local plyar = game.Players.LocalPlayer.DisplayName
     
 local UILabel = GUITAB:CreateLabel("User Interface Suite - Sirius")
 local SCRLabel = GUITAB:CreateLabel("Scripting - mrkillinghunter_")
-local executor = GUITAB:CreateLabel("Your Executor, " .. executorename .. ", Is Supported")
+local namelabel = GUITAB:CreateLabel("Welcome " .. plyar)
+local executor = GUITAB:CreateLabel("Your Executor, " .. executorname .. ", Is Supported")
     
 local MAINDOORS = DoorsTab:CreateSection("Main")
     
