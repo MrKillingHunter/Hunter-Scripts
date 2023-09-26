@@ -53,7 +53,7 @@ local WalkSpeedSlider = UniversalTab:CreateSlider({
        
             game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = (Value)
      
-        end   
+         
         
     end,
 })
